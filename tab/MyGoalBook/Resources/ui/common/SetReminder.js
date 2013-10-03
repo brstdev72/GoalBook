@@ -13,6 +13,10 @@ while (settingResultSet.isValidRow()) {
 }
 settingResultSet.close();
 
+var tmp = (Titanium.Platform.displayCaps.platformHeight * 3.8) / 100;
+var tmp2 = (Titanium.Platform.displayCaps.platformHeight * 2.8) / 100;
+var tmp3 = (Titanium.Platform.displayCaps.platformHeight * 2) / 100;
+
 var Today = '';
 var Tomonth = '';
 var Toyear = '';
@@ -46,7 +50,7 @@ var label = Ti.UI.createLabel({
 	color : 'white',
 	font : {
 		fontWeight : 'bold',
-		fontSize : 20
+		fontSize : tmp
 	},
 	shadowColor : '#eee',
 	shadowOffset : {
@@ -61,7 +65,7 @@ var edit_name = Titanium.UI.createTextField({
 	top : '12%',
 	hintText : 'Title',
 	font : {
-		fontSize : 14
+		fontSize : tmp2
 	},
 	width : '90%',
 	height : '10%',
@@ -78,6 +82,9 @@ var From = Ti.UI.createLabel({
 	color : 'black',
 	top : '22%',
 	left : '5%',
+	font : {
+		fontSize : tmp2
+	}
 });
 
 // Add to the parent view.
@@ -117,7 +124,10 @@ var from_date_button = Ti.UI.createButton({
 	height : '10%',
 	width : '48%',
 	top : '27%',
-	left : '5%'
+	left : '5%',
+	font : {
+		fontSize : tmp2
+	}
 });
 from_date_button.addEventListener('click', function() {
 	reminder_View.add(fromDateview);
@@ -130,6 +140,9 @@ var from_time_button = Ti.UI.createButton({
 	width : '38%',
 	top : '27%',
 	left : '57%',
+	font : {
+		fontSize : tmp2
+	}
 });
 from_time_button.addEventListener('click', function() {
 	reminder_View.add(fromTimeview);
@@ -167,6 +180,9 @@ var Set = Ti.UI.createButton({
 	height : '100%',
 	width : '40%',
 	left : '10%',
+	font : {
+		fontSize : tmp2
+	}
 });
 Set.addEventListener('click', function() {
 	var Frompickervalue = Frompicker.value;
@@ -197,6 +213,9 @@ var Cancel = Ti.UI.createButton({
 	height : '100%',
 	width : '40%',
 	right : '10%',
+	font : {
+		fontSize : tmp2
+	}
 });
 Cancel.addEventListener('click', function() {
 	reminder_View.remove(fromDateview);
@@ -233,6 +252,9 @@ var TimeSet = Ti.UI.createButton({
 	height : '100%',
 	width : '40%',
 	left : '10%',
+	font : {
+		fontSize : tmp2
+	}
 });
 TimeSet.addEventListener('click', function() {
 	var FromTimepickervalue = FromTimepicker.value;
@@ -263,6 +285,9 @@ var TimeCancel = Ti.UI.createButton({
 	height : '100%',
 	width : '40%',
 	right : '10%',
+	font : {
+		fontSize : tmp2
+	}
 });
 TimeCancel.addEventListener('click', function() {
 	reminder_View.remove(fromTimeview);
@@ -274,6 +299,9 @@ var To = Ti.UI.createLabel({
 	color : 'black',
 	top : '38%',
 	left : '5%',
+	font : {
+		fontSize : tmp2
+	}
 });
 
 // Add to the parent view.
@@ -284,7 +312,10 @@ var To_date_button = Ti.UI.createButton({
 	height : '10%',
 	width : '43%',
 	top : '43%',
-	left : '5%'
+	left : '5%',
+	font : {
+		fontSize : tmp2
+	}
 });
 To_date_button.addEventListener('click', function() {
 	reminder_View.add(ToDateview);
@@ -297,6 +328,9 @@ var To_time_button = Ti.UI.createButton({
 	width : '38%',
 	top : '43%',
 	left : '57%',
+	font : {
+		fontSize : tmp2
+	}
 });
 To_time_button.addEventListener('click', function() {
 	reminder_View.add(ToTimeview);
@@ -334,6 +368,9 @@ var ToSet = Ti.UI.createButton({
 	height : '100%',
 	width : '40%',
 	left : '10%',
+	font : {
+		fontSize : tmp2
+	}
 });
 ToSet.addEventListener('click', function() {
 	var Topickervalue = Topicker.value;
@@ -364,6 +401,9 @@ var ToCancel = Ti.UI.createButton({
 	height : '100%',
 	width : '40%',
 	right : '10%',
+	font : {
+		fontSize : tmp2
+	}
 });
 ToCancel.addEventListener('click', function() {
 	reminder_View.remove(ToDateview);
@@ -400,6 +440,9 @@ var ToTimeSet = Ti.UI.createButton({
 	height : '100%',
 	width : '40%',
 	left : '10%',
+	font : {
+		fontSize : tmp2
+	}
 });
 
 ToTimeSet.addEventListener('click', function() {
@@ -465,7 +508,10 @@ var alldays = Ti.UI.createLabel({
 	text : 'All Days',
 	top : '56.5%',
 	right : '17%',
-	color : 'black'
+	color : 'black',
+	font : {
+		fontSize : tmp2
+	}
 });
 
 // Add to the parent view.
@@ -497,7 +543,10 @@ var Save = Ti.UI.createButton({
 	height : '10%',
 	width : '45%',
 	left : '5%',
-	bottom : '0%'
+	bottom : '0%',
+	font : {
+		fontSize : tmp2
+	}
 });
 Save.addEventListener('click', function() {
 
@@ -640,7 +689,10 @@ var CancelReminder = Ti.UI.createButton({
 	height : '10%',
 	width : '45%',
 	right : '5%',
-	bottom : '0%'
+	bottom : '0%',
+	font : {
+		fontSize : tmp2
+	}
 });
 CancelReminder.addEventListener('click', function() {
 
@@ -664,7 +716,7 @@ function indicator() {
 		opacity : 0.7,
 		borderRadius : 10
 	});
-	subself.add(indicatorView);
+	reminder_View.add(indicatorView);
 	var activityIndicator = Ti.UI.createActivityIndicator({
 		style : Ti.UI.ActivityIndicatorStyle.BIG,
 

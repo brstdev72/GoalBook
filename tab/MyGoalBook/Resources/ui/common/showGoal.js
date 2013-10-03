@@ -54,8 +54,8 @@ while (create_goalResultSet.isValidRow()) {
 var count = this_title.length;
 create_goalResultSet.close();
 
-var tmp = (Titanium.Platform.displayCaps.platformHeight * 4) / 100;
-var tmp2 = (Titanium.Platform.displayCaps.platformHeight * 2.5) / 100;
+var tmp = (Titanium.Platform.displayCaps.platformHeight * 3.8) / 100;
+var tmp2 = (Titanium.Platform.displayCaps.platformHeight * 2.3) / 100;
 var corner = Math.round(Ti.Platform.displayCaps.platformWidth * 0.01);
 var corner1 = Math.round(Ti.Platform.displayCaps.platformWidth * 0.02);
 var width = Math.round(Ti.Platform.displayCaps.platformWidth * 0.003);
@@ -68,6 +68,8 @@ var second = Titanium.UI.createView({
 showGoal.add(second);
 
 var secondsubself = Titanium.UI.createView({
+	backgroundColor : 'white',
+	top : '2%',
 	width : '96%',
 	height : '96%',
 	backgroundImage : this_path
@@ -88,6 +90,7 @@ var secondmyGoalBook = Ti.UI.createView({
 	height : '96%',
 	width : '20%',
 	borderRadius : corner,
+	top : '2%'
 });
 
 // Add to the parent view.
@@ -95,8 +98,8 @@ secondsubselfBottom.add(secondmyGoalBook);
 
 var secondmyGoalBookicon = Ti.UI.createView({
 	backgroundImage : '/images/MyGoalBook.png',
-	height : 80,
-	width : 80
+	height : 65,
+	width : 65
 });
 secondmyGoalBook.add(secondmyGoalBookicon);
 
@@ -128,15 +131,15 @@ secondsubselfBottom.add(secondCreate_goal);
 
 var secondCreate_goalicon = Ti.UI.createView({
 	backgroundImage : '/images/createGoal.png',
-	height : 80,
-	width : 80
+	height : 65,
+	width : 65
 
 });
 secondCreate_goal.add(secondCreate_goalicon);
 
 var secondcompleteGoal = Ti.UI.createView({
 	height : '96%',
-	width : '20%',
+	width : '19.5%',
 	borderRadius : corner,
 });
 
@@ -160,16 +163,17 @@ secondsubselfBottom.add(secondcompleteGoal);
 
 var secondcompleteGoalicon = Ti.UI.createView({
 	backgroundImage : '/images/Goal_complete.png',
-	height : 80,
-	width : 80
+	height : 65,
+	width : 65
 });
 secondcompleteGoal.add(secondcompleteGoalicon);
 
 // Create a Button.
 var secondsetting = Ti.UI.createView({
 	height : '96%',
-	width : '20%',
+	width : '19.5%',
 	borderRadius : corner,
+
 });
 
 // Listen for click events.
@@ -192,8 +196,8 @@ secondsubselfBottom.add(secondsetting);
 
 var secondsettingicon = Ti.UI.createView({
 	backgroundImage : '/images/settings.png',
-	height : 80,
-	width : 80
+	height : 65,
+	width : 65
 });
 secondsetting.add(secondsettingicon);
 
@@ -202,6 +206,7 @@ var secondhome = Ti.UI.createView({
 	height : '96%',
 	width : '20%',
 	borderRadius : corner,
+
 });
 
 // Listen for click events.
@@ -224,8 +229,8 @@ secondsubselfBottom.add(secondhome);
 
 var secondhomeicon = Ti.UI.createView({
 	backgroundImage : '/images/home.png',
-	height : 80,
-	width : 80
+	height : 65,
+	width : 65
 });
 secondhome.add(secondhomeicon);
 
@@ -299,8 +304,8 @@ for (var i = 0; i < count; i++) {
 		height : '46%',
 		top : '8%',
 		borderRadius : corner1,
-		borderWidth : width,
-		borderColor : 'black',
+		// borderWidth : width,
+		// borderColor : 'black',
 	});
 	GoalImage.addEventListener('click', function(e) {
 		temp = e.source.id;
@@ -375,7 +380,7 @@ for (var i = 0; i < count; i++) {
 
 	// Create a Label.
 	var Description = Ti.UI.createLabel({
-		text : 'Goal Description',
+		text : 'Goal Description:',
 		color : 'black',
 		font : {
 			fontSize : tmp2,
@@ -407,9 +412,9 @@ for (var i = 0; i < count; i++) {
 		width : '43%',
 		left : '5%',
 		id : i,
-		borderRadius : corner1,
-		borderWidth : width,
-		borderColor : 'black',
+		// borderRadius : corner1,
+		// borderWidth : width,
+		// borderColor : 'black',
 		layout : 'vertical'
 	});
 	detailView.addEventListener('click', function(e) {
@@ -435,7 +440,7 @@ for (var i = 0; i < count; i++) {
 			fontSize : tmp2,
 			fontFamily : this_font
 		},
-		left : '5%',
+		left : 0,
 		id : i
 	});
 
@@ -443,7 +448,7 @@ for (var i = 0; i < count; i++) {
 	detailView.add(Goal_Description);
 
 	var AffirmationTitle = Ti.UI.createLabel({
-		text : 'Affirmation',
+		text : 'Next Step:',
 		color : 'black',
 		font : {
 			fontSize : tmp2,
@@ -475,9 +480,9 @@ for (var i = 0; i < count; i++) {
 		width : '44%',
 		right : '5%',
 		id : i,
-		borderRadius : corner1,
-		borderWidth : width,
-		borderColor : 'black',
+		// borderRadius : corner1,
+		// borderWidth : width,
+		// borderColor : 'black',
 		layout : 'vertical'
 	});
 	affirmationView.addEventListener('click', function(e) {
@@ -502,7 +507,7 @@ for (var i = 0; i < count; i++) {
 			fontSize : tmp2,
 			fontFamily : this_font
 		},
-		left : '5%',
+		left : 0,
 		id : i
 	});
 
@@ -586,7 +591,9 @@ for (var i = 0; i < count; i++) {
 		id : i,
 		height : '100%',
 		top : '0%',
-		left : '0%'
+		left : '0%',
+		borderColor : 'black',
+		borderWidth : width
 	});
 	checkImage.addEventListener('click', function(e) {
 	});
@@ -728,8 +735,8 @@ for (var r = 0; r < count; r++) {
 		height : '88%',
 		top : '12%',
 		left : '3%',
-		borderWidth : width,
-		borderColor : 'black',
+		// borderWidth : width,
+		// borderColor : 'black',
 	});
 	GoalImage.addEventListener('click', function(e) {
 		temp = e.source.id;
@@ -748,7 +755,7 @@ for (var r = 0; r < count; r++) {
 
 	// Create a Label.
 	var Description = Ti.UI.createLabel({
-		text : 'Goal Description',
+		text : 'Goal Description:',
 		color : 'black',
 		font : {
 			fontSize : tmp2,
@@ -780,8 +787,8 @@ for (var r = 0; r < count; r++) {
 		width : '45%',
 		right : '3%',
 		id : r,
-		borderWidth : width,
-		borderColor : 'black',
+		// borderWidth : width,
+		// borderColor : 'black',
 		layout : 'vertical'
 	});
 	detailView.addEventListener('click', function(e) {
@@ -807,7 +814,7 @@ for (var r = 0; r < count; r++) {
 			fontSize : tmp2,
 			fontFamily : this_font
 		},
-		left : '5%',
+		left : 0,
 	});
 
 	// Add to the parent view.
@@ -870,7 +877,7 @@ for (var r = 0; r < count; r++) {
 	viewer[r].add(deleteView);
 
 	var AffirmationTitle = Ti.UI.createLabel({
-		text : 'Affirmation',
+		text : 'Next Step:',
 		color : 'black',
 		font : {
 			fontSize : tmp2,
@@ -904,8 +911,8 @@ for (var r = 0; r < count; r++) {
 		width : '45%',
 		right : '3%',
 		id : r,
-		borderWidth : width,
-		borderColor : 'black',
+		// borderWidth : width,
+		// borderColor : 'black',
 		layout : 'vertical'
 	});
 	affirmationView.addEventListener('click', function(e) {
@@ -930,7 +937,7 @@ for (var r = 0; r < count; r++) {
 			fontSize : tmp2,
 			fontFamily : this_font
 		},
-		left : '5%'
+		left : 0
 	});
 
 	affirmationView.add(Affirmation);
@@ -994,6 +1001,8 @@ for (var r = 0; r < count; r++) {
 		image : '/images/checkboxs-1.png',
 		width : '50%',
 		height : '100%',
+		borderColor : 'black',
+		borderWidth : width
 	});
 	checkImageView.add(checkImage);
 
@@ -1034,6 +1043,7 @@ for (var r = 0; r < count; r++) {
 		id : r,
 	});
 	checktickView.addEventListener('click', function(e) {
+
 		indicator();
 
 		var comp = e.source.id;
@@ -1101,4 +1111,3 @@ function indicator() {
 	indicatorView.add(activityIndicator);
 	activityIndicator.show();
 }
-

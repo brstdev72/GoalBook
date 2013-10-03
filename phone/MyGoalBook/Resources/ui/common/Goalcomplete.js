@@ -130,6 +130,7 @@ var second = Titanium.UI.createView({
 Goalcomplete.add(second);
 
 var secondsubself = Titanium.UI.createView({
+	backgroundColor : 'white',
 	width : '96%',
 	height : '96%',
 	backgroundImage : this_path
@@ -171,8 +172,8 @@ secondsubselfBottom.add(secondmyGoalBook);
 
 var secondmyGoalBookicon = Ti.UI.createView({
 	backgroundImage : '/images/MyGoalBook.png',
-	height : 40,
-	width : 40
+	height : 35,
+	width : 35
 });
 secondmyGoalBook.add(secondmyGoalBookicon);
 
@@ -203,17 +204,17 @@ secondsubselfBottom.add(secondCreate_goal);
 
 var secondCreate_goalicon = Ti.UI.createView({
 	backgroundImage : '/images/createGoal.png',
-	height : 40,
-	width : 40
+	height : 35,
+	width : 35
 });
 secondCreate_goal.add(secondCreate_goalicon);
 
 var secondcompleteGoal = Ti.UI.createView({
 	backgroundColor : this_color,
 	height : '96%',
-	width : '20%',
+	width : '19.5%',
 	borderRadius : corner,
-	top:'2%'
+	top : '2%'
 });
 
 // Add to the parent view.
@@ -221,8 +222,8 @@ secondsubselfBottom.add(secondcompleteGoal);
 
 var secondcompleteGoalicon = Ti.UI.createView({
 	backgroundImage : '/images/Goal_complete.png',
-	height : 40,
-	width : 40
+	height : 35,
+	width : 35
 });
 secondcompleteGoal.add(secondcompleteGoalicon);
 
@@ -253,8 +254,8 @@ secondsubselfBottom.add(secondsetting);
 
 var secondsettingicon = Ti.UI.createView({
 	backgroundImage : '/images/settings.png',
-	height : 40,
-	width : 40
+	height : 35,
+	width : 35
 });
 secondsetting.add(secondsettingicon);
 
@@ -285,8 +286,8 @@ secondsubselfBottom.add(secondhome);
 
 var secondhomeicon = Ti.UI.createView({
 	backgroundImage : '/images/home.png',
-	height : 40,
-	width : 40,
+	height : 35,
+	width : 35
 
 });
 secondhome.add(secondhomeicon);
@@ -360,14 +361,14 @@ for (var i = 0; i < count; i++) {
 		height : '46%',
 		top : '8%',
 		borderRadius : corner1,
-		borderWidth : width,
-		borderColor : 'black',
+		// borderWidth : width,
+		// borderColor : 'black',
 	});
 	view[i].add(GoalImage);
 
 	// Create a Label.
 	var Description = Ti.UI.createLabel({
-		text : 'Goal Description',
+		text : 'Goal Description:',
 		color : 'black',
 		font : {
 			fontSize : tmp2,
@@ -387,9 +388,9 @@ for (var i = 0; i < count; i++) {
 		height : '40%',
 		width : '43%',
 		left : '5%',
-		borderRadius : corner1,
-		borderWidth : width,
-		borderColor : 'black',
+		// borderRadius : corner1,
+		// borderWidth : width,
+		// borderColor : 'black',
 		layout : 'vertical'
 	});
 	view[i].add(detailView);
@@ -402,14 +403,14 @@ for (var i = 0; i < count; i++) {
 			fontSize : tmp2,
 			fontFamily : this_font
 		},
-		left : '5%'
+		left : 0
 	});
 
 	// Add to the parent view.
 	detailView.add(Goal_Description);
 
 	var AffirmationTitle = Ti.UI.createLabel({
-		text : 'Next Step',
+		text : 'Next Step:',
 		color : 'black',
 		font : {
 			fontSize : tmp2,
@@ -428,9 +429,9 @@ for (var i = 0; i < count; i++) {
 		height : '19%',
 		width : '44%',
 		right : '5%',
-		borderRadius : corner1,
-		borderWidth : width,
-		borderColor : 'black',
+		// borderRadius : corner1,
+		// borderWidth : width,
+		// borderColor : 'black',
 		layout : 'vertical'
 	});
 	view[i].add(affirmationView);
@@ -442,7 +443,7 @@ for (var i = 0; i < count; i++) {
 			fontSize : tmp2,
 			fontFamily : this_font
 		},
-		left : '5%'
+		left : 0
 	});
 
 	// Add to the parent view.
@@ -493,11 +494,11 @@ for (var i = 0; i < count; i++) {
 
 	// Create a Button.
 	var facebook = Ti.UI.createButton({
-		backgroundImage : '/images/icon_facebook.png',
-		height : 40,
-		width : 40,
-		left : '3%',
-		id : i
+	backgroundImage : '/images/icon_facebook.png',
+	height : 35,
+	width : 35,
+	left : '3%',
+	id : i
 	});
 
 	// Listen for click events.
@@ -511,11 +512,11 @@ for (var i = 0; i < count; i++) {
 
 	// Create a Button.
 	var twitter = Ti.UI.createButton({
-		backgroundImage : '/images/icon_twitter.png',
-		height : 40,
-		width : 40,
-		right : '36.5%',
-		id : i
+	backgroundImage : '/images/icon_twitter.png',
+	height : 35,
+	width : 35,
+	right : '36.5%',
+	id : i
 	});
 
 	// Listen for click events.
@@ -527,11 +528,11 @@ for (var i = 0; i < count; i++) {
 	});
 
 	var pinterest = Ti.UI.createButton({
-		backgroundImage : '/images/Pinterest.png',
-		height : 40,
-		width : 40,
-		right : '3%',
-		id : i
+	backgroundImage : '/images/Pinterest.png',
+	height : 35,
+	width : 35,
+	right : '3%',
+	id : i
 	});
 	pinterest.addEventListener('click', function(e) {
 		temp = e.source.id;
@@ -640,7 +641,7 @@ for (var r = 0; r < count; r++) {
 	// Add to the parent view.
 
 	var Description = Ti.UI.createLabel({
-		text : 'Goal Description',
+		text : 'Goal Description:',
 		color : 'black',
 		font : {
 			fontSize : tmp2,
@@ -657,8 +658,8 @@ for (var r = 0; r < count; r++) {
 		height : '36%',
 		width : '45%',
 		right : '3%',
-		borderWidth : width,
-		borderColor : 'black',
+		// borderWidth : width,
+		// borderColor : 'black',
 		layout : 'vertical'
 	});
 	viewer[r].add(detailView);
@@ -671,14 +672,14 @@ for (var r = 0; r < count; r++) {
 			fontSize : tmp2,
 			fontFamily : this_font
 		},
-		left : '5%'
+		left : 0
 	});
 
 	// Add to the parent view.
 	detailView.add(Goal_Description);
 
 	var AffirmationTitle = Ti.UI.createLabel({
-		text : 'Next Step',
+		text : 'Next Step:',
 		color : 'black',
 		font : {
 			fontSize : tmp2,
@@ -698,8 +699,8 @@ for (var r = 0; r < count; r++) {
 		width : '45%',
 		right : '3%',
 		id : r,
-		borderWidth : width,
-		borderColor : 'black',
+		// borderWidth : width,
+		// borderColor : 'black',
 		layout : 'vertical'
 	});
 	viewer[r].add(affirmationView);
@@ -711,7 +712,7 @@ for (var r = 0; r < count; r++) {
 			fontSize : tmp2,
 			fontFamily : this_font
 		},
-		left : '5%',
+		left : 0,
 	});
 	// Add to the parent view.
 	affirmationView.add(Affirmation);
@@ -752,12 +753,12 @@ for (var r = 0; r < count; r++) {
 
 	// Create a Button.
 	var facebook = Ti.UI.createButton({
-		backgroundImage : '/images/icon_facebook.png',
-		height : 40,
-		width : 40,
-		right : '45%',
-		bottom : '0%',
-		id : r
+	backgroundImage : '/images/icon_facebook.png',
+	height : 35,
+	width : 35,
+	right : '45%',
+	bottom : '0%',
+	id : r
 	});
 
 	// Listen for click events.
@@ -770,12 +771,12 @@ for (var r = 0; r < count; r++) {
 
 	// Create a Button.
 	var twitter = Ti.UI.createButton({
-		backgroundImage : '/images/icon_twitter.png',
-		height : 40,
-		width : 40,
-		right : '23.5%',
-		bottom : '0%',
-		id : r
+	backgroundImage : '/images/icon_twitter.png',
+	height : 35,
+	width : 35,
+	right : '23.5%',
+	bottom : '0%',
+	id : r
 	});
 
 	// Listen for click events.
@@ -787,12 +788,12 @@ for (var r = 0; r < count; r++) {
 	});
 
 	var pinterest = Ti.UI.createButton({
-		backgroundImage : '/images/Pinterest.png',
-		height : 40,
-		width : 40,
-		right : '3%',
-		bottom : '0%',
-		id : i
+	backgroundImage : '/images/Pinterest.png',
+	height : 35,
+	width : 35,
+	right : '3%',
+	bottom : '0%',
+	id : i
 	});
 	pinterest.addEventListener('click', function(e) {
 		temp = e.source.id;

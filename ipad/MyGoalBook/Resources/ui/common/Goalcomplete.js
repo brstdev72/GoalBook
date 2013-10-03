@@ -326,8 +326,8 @@ for (var i = 0; i < count; i++) {
 		left : '5%',
 		top : '8%',
 		borderRadius : corner1,
-		borderWidth : width,
-		borderColor : 'black',
+		// borderWidth : width,
+		// borderColor : 'black',
 	});
 	GoalImage.addEventListener('click', function(e) {
 	});
@@ -335,7 +335,7 @@ for (var i = 0; i < count; i++) {
 
 	// Create a Label.
 	var Description = Ti.UI.createLabel({
-		text : 'Goal Description',
+		text : 'Goal Description:',
 		color : 'black',
 		font : {
 			fontSize : tmp2,
@@ -359,9 +359,9 @@ for (var i = 0; i < count; i++) {
 		width : '43%',
 		left : '5%',
 		id : i,
-		borderRadius : corner1,
-		borderWidth : width,
-		borderColor : 'black',
+		// borderRadius : corner1,
+		// borderWidth : width,
+		// borderColor : 'black',
 		layout : 'vertical'
 	});
 	detailView.addEventListener('click', function(e) {
@@ -377,7 +377,7 @@ for (var i = 0; i < count; i++) {
 			fontSize : tmp2,
 			fontFamily : this_font
 		},
-		left : '5%',
+		left : 0,
 		id : i
 	});
 	Goal_Description.addEventListener('click', function(e) {
@@ -388,7 +388,7 @@ for (var i = 0; i < count; i++) {
 	detailView.add(Goal_Description);
 
 	var AffirmationTitle = Ti.UI.createLabel({
-		text : 'Next Step',
+		text : 'Next Step:',
 		color : 'black',
 		font : {
 			fontSize : tmp2,
@@ -411,9 +411,9 @@ for (var i = 0; i < count; i++) {
 		width : '44%',
 		right : '5%',
 		id : i,
-		borderRadius : corner1,
-		borderWidth : width,
-		borderColor : 'black',
+		// borderRadius : corner1,
+		// borderWidth : width,
+		// borderColor : 'black',
 		layout : 'vertical'
 	});
 	affirmationView.addEventListener('click', function(e) {
@@ -428,7 +428,7 @@ for (var i = 0; i < count; i++) {
 			fontSize : tmp2,
 			fontFamily : this_font
 		},
-		left : '5%',
+		left : 0,
 		id : i
 	});
 	Affirmation.addEventListener('click', function(e) {
@@ -448,7 +448,7 @@ for (var i = 0; i < count; i++) {
 	});
 	dateView.addEventListener('click', function(e) {
 		//temp = e.source.id;
-	})
+	});
 	view[i].add(dateView);
 
 	var DateCompletion = Ti.UI.createLabel({
@@ -493,7 +493,7 @@ for (var i = 0; i < count; i++) {
 	});
 	SocialView.addEventListener('click', function(e) {
 		temp = e.source.id;
-	})
+	});
 	dateView.add(SocialView);
 
 	// Create a Button.
@@ -693,8 +693,8 @@ for (var r = 0; r < count; r++) {
 		height : '88%',
 		top : '12%',
 		left : '3%',
-		borderWidth : width,
-		borderColor : 'black',
+		// borderWidth : width,
+		// borderColor : 'black',
 	});
 	GoalImage.addEventListener('click', function(e) {
 		//temp = e.source.id;
@@ -703,7 +703,7 @@ for (var r = 0; r < count; r++) {
 	// Add to the parent view.
 
 	var Description = Ti.UI.createLabel({
-		text : 'Goal Description',
+		text : 'Goal Description:',
 		color : 'black',
 		font : {
 			fontSize : tmp2,
@@ -723,8 +723,8 @@ for (var r = 0; r < count; r++) {
 		width : '45%',
 		right : '3%',
 		id : r,
-		borderWidth : width,
-		borderColor : 'black',
+		// borderWidth : width,
+		// borderColor : 'black',
 		layout : 'vertical'
 	});
 	viewer[r].add(detailView);
@@ -737,7 +737,7 @@ for (var r = 0; r < count; r++) {
 			fontSize : tmp2,
 			fontFamily : this_font
 		},
-		left : '5%',
+		left : 0,
 		id : r
 	});
 
@@ -745,7 +745,7 @@ for (var r = 0; r < count; r++) {
 	detailView.add(Goal_Description);
 
 	var AffirmationTitle = Ti.UI.createLabel({
-		text : 'Next Step',
+		text : 'Next Step:',
 		color : 'black',
 		font : {
 			fontSize : tmp2,
@@ -768,8 +768,8 @@ for (var r = 0; r < count; r++) {
 		width : '45%',
 		right : '3%',
 		id : r,
-		borderWidth : width,
-		borderColor : 'black',
+		// borderWidth : width,
+		// borderColor : 'black',
 		layout : 'vertical'
 	});
 	affirmationView.addEventListener('click', function(e) {
@@ -784,7 +784,7 @@ for (var r = 0; r < count; r++) {
 			fontSize : tmp2,
 			fontFamily : this_font
 		},
-		left : '5%',
+		left : 0,
 		id : r
 	});
 	// Add to the parent view.
@@ -799,7 +799,7 @@ for (var r = 0; r < count; r++) {
 	});
 	dateView.addEventListener('click', function(e) {
 		//temp = e.source.id;
-	})
+	});
 	viewer[r].add(dateView);
 
 	var DateCompletion = Ti.UI.createLabel({
@@ -878,7 +878,7 @@ for (var r = 0; r < count; r++) {
 
 	// Listen for click events.
 	twitter.addEventListener('click', function(e) {
-		temp = e.source.id
+		temp = e.source.id;
 		module.showSheet({
 			service : 'twitter',
 			message : "Hey, I've just completed another Goal! \n\nGoal Title:\n" + this_title[temp],

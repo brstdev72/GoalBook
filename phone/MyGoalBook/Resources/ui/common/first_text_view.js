@@ -49,6 +49,7 @@ var first = Titanium.UI.createView({
 first_text_view.add(first);
 
 var subself = Titanium.UI.createView({
+	backgroundColor : 'white',
 	width : '96%',
 	height : '96%',
 	backgroundImage : this_path
@@ -329,7 +330,7 @@ Topsubself6.add(subselfcenter);
 
 // Create a Label.
 var bodyText = Ti.UI.createLabel({
-	text : "Think about your Goals – it’s always worth starting out with a clean piece of paper and writing constantly for 10 minutes a list of all the things that you desire, want to achieve, would like to experience, places to visit etc.\n\nOnce you are happy with this list, prioritise them – which ones are you determined to achieve?\n\nFor each one of these, write a brief description, find a suitable image and draft a clear affirmation. Finally attach a date by which you wish to achieve this goal. \n\nGo to ‘Create Goal’ and upload all of this within the app. Press ‘Save’ Congratulations, you’ve just created your first Goal Card within MyGoalBook. Repeat for as many Goals as you like.\n\nNow go to ‘Settings’ and set specific times and frequencies that you would like to be reminded to “Visualise” your Goals.\n\nYou can also upload a copy of your Goal Card to the most popular Social Media sites.",
+	text : "Think about your Goals – it’s always worth starting out with a clean piece of paper and writing constantly for 10 minutes a list of all the things that you desire, want to achieve, would like to experience, places to visit etc.\n\nOnce you are happy with this list, prioritise them – which ones are you determined to achieve?\n\nFor each one of these, write a brief description, find a suitable image and identify a step that you can take soon to move forward towards your goal. Finally attach a date by which you wish to achieve this goal. \n\nGo to ‘Create Goal’ and upload all of this within the app. Press ‘Save’ Congratulations, you’ve just created your first Goal Card within MyGoalBook. Repeat for as many Goals as you like.\n\nNow go to ‘Settings’ and set specific times and frequencies that you would like to be reminded to “Visualise” your Goals.\n\nYou can also upload a copy of your Goal Card to the most popular Social Media sites.",
 	color : 'black',
 	font : {
 		fontSize : tmp1,
@@ -696,7 +697,7 @@ var secondsubselfBottom = Titanium.UI.createView({
 	height : '11%',
 	bottom : '0%',
 	backgroundImage : '/images/topbar.png',
-	layout:'horizontal'
+	layout : 'horizontal'
 });
 subself.add(secondsubselfBottom);
 // Create a Button.
@@ -711,7 +712,7 @@ var secondmyGoalBook = Ti.UI.createView({
 // Listen for click events.
 secondmyGoalBook.addEventListener('click', function() {
 
-indicator();
+	indicator();
 
 	var showGoal = Ti.UI.createWindow({
 		backgroundColor : 'white',
@@ -727,8 +728,8 @@ indicator();
 secondsubselfBottom.add(secondmyGoalBook);
 var secondmyGoalBookicon = Ti.UI.createView({
 	backgroundImage : '/images/MyGoalBook.png',
-	height : 40,
-	width : 40,
+	height : 35,
+	width : 35,
 
 });
 secondmyGoalBook.add(secondmyGoalBookicon);
@@ -743,7 +744,7 @@ var secondCreate_goal = Ti.UI.createView({
 // Listen for click events.
 secondCreate_goal.addEventListener('click', function() {
 
-indicator();
+	indicator();
 
 	var check = Ti.App.Properties.setBool('check', false);
 	var Create_Goal = Titanium.UI.createWindow({
@@ -761,22 +762,22 @@ secondsubselfBottom.add(secondCreate_goal);
 
 var secondCreate_goalicon = Ti.UI.createView({
 	backgroundImage : '/images/createGoal.png',
-	height : 40,
-	width : 40,
+	height : 35,
+	width : 35,
 
 });
 secondCreate_goal.add(secondCreate_goalicon);
 
 var secondcompleteGoal = Ti.UI.createView({
 	height : '96%',
-	width : '20%',
+	width : '19.5%',
 	borderRadius : corner,
 });
 
 // Listen for click events.
 secondcompleteGoal.addEventListener('click', function() {
 
-indicator();
+	indicator();
 
 	var Goalcomplete = Titanium.UI.createWindow({
 		backgroundColor : 'white',
@@ -793,8 +794,8 @@ secondsubselfBottom.add(secondcompleteGoal);
 
 var secondcompleteGoalicon = Ti.UI.createView({
 	backgroundImage : '/images/Goal_complete.png',
-	height : 40,
-	width : 40,
+	height : 35,
+	width : 35,
 
 });
 secondcompleteGoal.add(secondcompleteGoalicon);
@@ -809,7 +810,7 @@ var secondsetting = Ti.UI.createView({
 // Listen for click events.
 secondsetting.addEventListener('click', function() {
 
-indicator();
+	indicator();
 
 	var Settings = Titanium.UI.createWindow({
 		backgroundColor : 'white',
@@ -826,19 +827,17 @@ secondsubselfBottom.add(secondsetting);
 
 var secondsettingicon = Ti.UI.createView({
 	backgroundImage : '/images/settings.png',
-	height : 40,
-	width : 40,
+	height : 35,
+	width : 35,
 
 });
 secondsetting.add(secondsettingicon);
 
 var secondhome = Ti.UI.createView({
-	//backgroundImage : '/images/home.png',
 	backgroundColor : this_color,
 	height : '96%',
 	width : '20%',
 	borderRadius : corner,
-	top:'2%'
 });
 
 // Listen for click events.
@@ -850,8 +849,8 @@ secondsubselfBottom.add(secondhome);
 
 var secondhomeicon = Ti.UI.createView({
 	backgroundImage : '/images/home.png',
-	height : 40,
-	width : 40,
+	height : 35,
+	width : 35,
 
 });
 secondhome.add(secondhomeicon);
@@ -886,7 +885,7 @@ function indicator() {
 		height : '25%',
 		width : '40%',
 		opacity : 0.7,
-		borderRadius:10
+		borderRadius : 10
 	});
 	subself.add(indicatorView);
 	var activityIndicator = Ti.UI.createActivityIndicator({

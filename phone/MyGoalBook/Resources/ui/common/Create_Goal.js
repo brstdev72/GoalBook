@@ -98,6 +98,7 @@ var scrollView = Titanium.UI.createView({
 });
 
 var subself = Titanium.UI.createView({
+	backgroundColor : 'white',
 	width : '96%',
 	height : '96%',
 	backgroundImage : this_path,
@@ -363,6 +364,9 @@ edit_date.addEventListener('click', function() {
 	var set = Ti.UI.createButton({
 		title : 'set',
 		height : '80%',
+		font:{
+			fontSize:tmp2
+		},
 		width : '20%',
 		top : '10%',
 		right : '5%'
@@ -387,7 +391,9 @@ edit_date.addEventListener('click', function() {
 		title : 'Cancel',
 		height : '80%',
 		width : '25%',
-
+		font:{
+			fontSize:tmp2
+		},
 		top : '10%',
 		left : '5%'
 	});
@@ -447,14 +453,16 @@ subself.add(secondsubselfBottom);
 // Create a Button.
 var Cancel = Ti.UI.createButton({
 	backgroundImage : '/images/cancel.png',
-	height : 40,
-	width : 40,
+	height : 35,
+	width : 35,
 	left : '2%',
 });
 
 // Listen for click events.
 Cancel.addEventListener('click', function() {
-	if (!show) {
+	if (show) {
+		Create_Goal.close();
+	} else {
 		indicator();
 		var showGoal = Ti.UI.createWindow({
 			backgroundColor : 'white',
@@ -494,8 +502,8 @@ if (check) {
 // Create a Button.
 var Save = Ti.UI.createButton({
 	backgroundImage : '/images/save.png',
-	height : 40,
-	width : 40,
+	height : 35,
+	width : 35,
 	right : '2%'
 });
 
@@ -515,20 +523,10 @@ Save.addEventListener('click', function() {
 	if (title == '' || date == '') {
 		alert('Please Enter Goal Title and Date');
 	} else {
+		indicator();
 
-		if (!show) {
-
-			indicator();
-
-			if (check) {
-				myDatabase.execute('UPDATE create_goal SET title=?,description=?,affirmation=?,image=?,date=?,facebook_image=? WHERE rowid=?', title, description, affirmation, imagepath, date, facebook_image, viewdata);
-			} else {
-				myDatabase.execute('INSERT INTO create_goal (title,description,affirmation,image,date,facebook_image) VALUES(?,?,?,?,?,?)', title, description, affirmation, imagepath, date, facebook_image);
-
-			}
-			myDatabase.close();
-			//alert('Name' + ': ' + title + ',' + 'Description' + ': ' + description + ',' + 'Affirmation' + ': ' + affirmation + 'imagepath' + ': ' + imagepath + ',' + 'date' + ': ' + date + ',' + 'achieved' + ': ' + achieved);
-
+		if (check) {
+			myDatabase.execute('UPDATE create_goal SET title=?,description=?,affirmation=?,image=?,date=?,facebook_image=? WHERE rowid=?', title, description, affirmation, imagepath, date, facebook_image, viewdata);
 			var showGoal = Ti.UI.createWindow({
 				backgroundColor : 'white',
 				url : 'showGoal.js',
@@ -537,7 +535,7 @@ Save.addEventListener('click', function() {
 				exitOnClose : true
 			});
 			showGoal.open();
-			var come = Ti.App.Properties.setBool('come', false);
+
 		} else {
 			Ti.App.Properties.setString('titl', title);
 			Ti.App.Properties.setString('descriptio', description);
@@ -547,7 +545,7 @@ Save.addEventListener('click', function() {
 			Ti.App.Properties.setString('facebook_imag', facebook_image);
 
 			var firstShare = Ti.UI.createWindow({
-				backgroundColor : 'white',
+				backgroundColor : 'black',
 				url : 'firstShare.js',
 				navBarHidden : true,
 				fullscreen : true,
@@ -556,6 +554,10 @@ Save.addEventListener('click', function() {
 			firstShare.open();
 
 		}
+		myDatabase.close();
+		var come = Ti.App.Properties.setBool('come', false);
+		//alert('Name' + ': ' + title + ',' + 'Description' + ': ' + description + ',' + 'Affirmation' + ': ' + affirmation + 'imagepath' + ': ' + imagepath + ',' + 'date' + ': ' + date + ',' + 'achieved' + ': ' + achieved);
+
 	}
 });
 
@@ -570,7 +572,7 @@ function indicator() {
 		height : '25%',
 		width : '40%',
 		opacity : 0.7,
-		borderRadius:10
+		borderRadius : 10
 	});
 	subself.add(indicatorView);
 	var activityIndicator = Ti.UI.createActivityIndicator({

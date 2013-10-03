@@ -778,7 +778,7 @@ var font_top_view = Ti.UI.createView({
 });
 font_top_view.addEventListener('click', function() {
 	subself.remove(font_view);
-})
+});
 font_view.add(font_top_view);
 
 var font_bottom_main_view = Ti.UI.createView({
@@ -843,7 +843,7 @@ var font1 = Ti.UI.createLabel({
 		fontFamily : 'Chantelli_Antiqua'
 	},
 	left : '5%'
-})
+});
 
 fontView1.add(font1);
 

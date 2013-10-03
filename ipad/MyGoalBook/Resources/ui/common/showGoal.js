@@ -302,8 +302,8 @@ for (var i = 0; i < count; i++) {
 		left : '5%',
 		top : '8%',
 		borderRadius : corner1,
-		borderWidth : width,
-		borderColor : 'black'
+		// borderWidth : width,
+		// borderColor : 'black'
 	});
 	GoalImage.addEventListener('click', function(e) {
 		temp = e.source.id;
@@ -386,7 +386,7 @@ for (var i = 0; i < count; i++) {
 
 	// Create a Label.
 	var Description = Ti.UI.createLabel({
-		text : 'Goal Description',
+		text : 'Goal Description:',
 		color : 'black',
 		font : {
 			fontSize : tmp2,
@@ -420,9 +420,9 @@ for (var i = 0; i < count; i++) {
 		width : '43%',
 		left : '5%',
 		id : i,
-		borderRadius : corner1,
-		borderWidth : width,
-		borderColor : 'black',
+		// borderRadius : corner1,
+		// borderWidth : width,
+		// borderColor : 'black',
 		layout : 'vertical'
 	});
 	detailView.addEventListener('click', function(e) {
@@ -448,7 +448,7 @@ for (var i = 0; i < count; i++) {
 			fontSize : tmp2,
 			fontFamily : this_font
 		},
-		left : '5%',
+		left : 0,
 		id : i
 	});
 	Goal_Description.addEventListener('click', function(e) {
@@ -458,7 +458,7 @@ for (var i = 0; i < count; i++) {
 	detailView.add(Goal_Description);
 
 	var AffirmationTitle = Ti.UI.createLabel({
-		text : 'Next Step',
+		text : 'Next Step:',
 		color : 'black',
 		font : {
 			fontSize : tmp2,
@@ -492,9 +492,9 @@ for (var i = 0; i < count; i++) {
 		width : '44%',
 		right : '5%',
 		id : i,
-		borderRadius : corner1,
-		borderWidth : width,
-		borderColor : 'black',
+		// borderRadius : corner1,
+		// borderWidth : width,
+		// borderColor : 'black',
 		layout : 'vertical'
 	});
 	affirmationView.addEventListener('click', function(e) {
@@ -519,7 +519,7 @@ for (var i = 0; i < count; i++) {
 			fontSize : tmp2,
 			fontFamily : this_font
 		},
-		left : '5%',
+		left : 0,
 		id : i
 	});
 	Affirmation.addEventListener('click', function(e) {
@@ -783,8 +783,8 @@ for (var r = 0; r < count; r++) {
 		height : '88%',
 		top : '12%',
 		left : '3%',
-		borderWidth : width,
-		borderColor : 'black',
+		// borderWidth : width,
+		// borderColor : 'black',
 	});
 	GoalImage.addEventListener('click', function(e) {
 		temp = e.source.id;
@@ -803,7 +803,7 @@ for (var r = 0; r < count; r++) {
 
 	// Create a Label.
 	var Description = Ti.UI.createLabel({
-		text : 'Goal Description',
+		text : 'Goal Description:',
 		color : 'black',
 		font : {
 			fontSize : tmp2,
@@ -838,8 +838,8 @@ for (var r = 0; r < count; r++) {
 		right : '3%',
 		id : r,
 		//borderRadius : corner1,
-		borderWidth : width,
-		borderColor : 'black',
+		// borderWidth : width,
+		// borderColor : 'black',
 		layout : 'vertical'
 	});
 	detailView.addEventListener('click', function(e) {
@@ -865,7 +865,7 @@ for (var r = 0; r < count; r++) {
 			fontSize : tmp2,
 			fontFamily : this_font
 		},
-		left : '5%',
+		left : 0,
 		id : r
 	});
 	Goal_Description.addEventListener('click', function(e) {
@@ -940,7 +940,7 @@ for (var r = 0; r < count; r++) {
 	viewer[r].add(deleteView);
 
 	var AffirmationTitle = Ti.UI.createLabel({
-		text : 'Next Step',
+		text : 'Next Step:',
 		color : 'black',
 		font : {
 			fontSize : tmp2,
@@ -975,8 +975,8 @@ for (var r = 0; r < count; r++) {
 		right : '3%',
 		id : r,
 		//borderRadius : corner1,
-		borderWidth : width,
-		borderColor : 'black',
+		// borderWidth : width,
+		// borderColor : 'black',
 		layout : 'vertical'
 	});
 	affirmationView.addEventListener('click', function(e) {
@@ -1001,7 +1001,7 @@ for (var r = 0; r < count; r++) {
 			fontSize : tmp2,
 			fontFamily : this_font
 		},
-		left : '5%',
+		left : 0,
 		id : r
 	});
 	Affirmation.addEventListener('click', function(e) {

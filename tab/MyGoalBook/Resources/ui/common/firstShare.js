@@ -1,5 +1,7 @@
 var firstShare = Ti.UI.currentWindow;
 
+var show = Ti.App.Properties.getBool('show');
+
 var title = Ti.App.Properties.getString('titl');
 var description = Ti.App.Properties.getString('descriptio');
 var affirmation = Ti.App.Properties.getString('affirmatio');
@@ -21,14 +23,26 @@ while (settingResultSet.isValidRow()) {
 }
 settingResultSet.close();
 
+//****************************************************************************Fonts***************************************************
+
+var fontsResultSet = myDatabase.execute('SELECT * FROM fonts WHERE selected=?', '1');
+var this_font = '';
+while (fontsResultSet.isValidRow()) {
+	this_font = fontsResultSet.fieldByName('name');
+	//   Ti.API.info(this_username + ' ' + this_user_name + ' ' + this_user_email  + ' ' + this_user_password);
+	fontsResultSet.next();
+}
+fontsResultSet.close();
+
 var tmp = (Titanium.Platform.displayCaps.platformHeight * 3.8) / 100;
 var corner = Math.round(Ti.Platform.displayCaps.platformWidth * 0.025);
 var width = Math.round(Ti.Platform.displayCaps.platformWidth * 0.005);
 
 var AllView = Ti.UI.createView({
+	backgroundColor:'white',
 	backgroundImage : this_path,
-	width : '100%',
-	height : '100%'
+	width : '96%',
+	height : '96%'
 });
 
 firstShare.add(AllView);
@@ -36,7 +50,7 @@ firstShare.add(AllView);
 var share = Ti.UI.createView({
 	backgroundColor : 'black',
 	opacity : 0.7,
-	height : '45%',
+	height : '55%',
 	width : '85%',
 	borderColor : '#000',
 	borderWidth : width,
@@ -45,10 +59,11 @@ var share = Ti.UI.createView({
 
 // Create a Label.
 var sharelabel = Ti.UI.createLabel({
-	text : 'Please Share on Social Media',
+	text : 'Commit to this goal by sharing it with others',
 	color : 'white',
 	font : {
-		fontSize : tmp
+		fontSize : tmp,
+		fontFamily : this_font
 	},
 	top : '7%',
 	textAlign : 'center'
@@ -60,10 +75,10 @@ share.add(sharelabel);
 // Create a Button.
 var facebook = Ti.UI.createButton({
 	backgroundImage : '/images/icon_facebook.png',
-	height : '45%',
+	height : '35%',
 	width : '35%',
 	left : '10%',
-	bottom : '15%'
+	bottom : '22%'
 });
 share.add(facebook);
 // Listen for click events.
@@ -77,9 +92,9 @@ facebook.addEventListener('click', function(e) {
 // Create a Button.
 var twitter = Ti.UI.createButton({
 	backgroundImage : '/images/icon_twitter.png',
-	height : '45%',
+	height : '35%',
 	width : '35%',
-	bottom : '15%',
+	bottom : '22%',
 	right : '10%'
 
 });
@@ -92,6 +107,49 @@ twitter.addEventListener('click', function(e) {
 
 });
 share.add(twitter);
+
+// Create a Label.
+var uploadlater = Ti.UI.createLabel({
+	text : "I'll upload later",
+	color : 'white',
+	font : {
+		fontSize : tmp,
+		fontFamily : this_font
+	},
+	bottom : '7%',
+	textAlign : 'center',
+	height : 'auto',
+	width : 'auto'
+});
+uploadlater.addEventListener('click', function() {
+	indicator();
+	var myDatabase = Ti.Database.install('/myDatabase.sqlite', 'myDatabase.sqlite');
+	myDatabase.execute('INSERT INTO create_goal (title,description,affirmation,image,date,facebook_image) VALUES(?,?,?,?,?,?)', title, description, affirmation, imagepath, date, facebook_image);
+	myDatabase.close();
+	Ti.App.Properties.setBool('show', false);
+	Ti.App.Properties.setInt('start', 1);
+	var showGoal = Ti.UI.createWindow({
+		backgroundColor : 'white',
+		url : 'showGoal.js',
+		navBarHidden : true,
+		fullscreen : true,
+		exitOnClose : true
+	});
+	showGoal.open();
+});
+
+// Add to the parent view.
+share.add(uploadlater);
+
+var bottom_line = Ti.UI.createView({
+	backgroundColor : 'white',
+	height : 1,
+	width : 'auto',
+	left : '20%',
+	right : '20%',
+	bottom : '6%'
+});
+share.add(bottom_line);
 
 AllView.add(share);
 
@@ -112,7 +170,21 @@ function login(message) {
 			var myDatabase = Ti.Database.install('/myDatabase.sqlite', 'myDatabase.sqlite');
 			myDatabase.execute('INSERT INTO create_goal (title,description,affirmation,image,date,facebook_image) VALUES(?,?,?,?,?,?)', title, description, affirmation, imagepath, date, facebook_image);
 			myDatabase.close();
-			showAlert();
+			var show = Ti.App.Properties.getBool('show');
+			if (show) {
+				showAlert();
+			} else {
+				Ti.App.Properties.setBool('show', false);
+				Ti.App.Properties.setInt('start', 1);
+				var showGoal = Ti.UI.createWindow({
+					backgroundColor : 'white',
+					url : 'showGoal.js',
+					navBarHidden : true,
+					fullscreen : true,
+					exitOnClose : true
+				});
+				showGoal.open();
+			}
 
 		}
 	});
@@ -146,7 +218,21 @@ function update_tweets(txt) {
 					var myDatabase = Ti.Database.install('/myDatabase.sqlite', 'myDatabase.sqlite');
 					myDatabase.execute('INSERT INTO create_goal (title,description,affirmation,image,date,facebook_image) VALUES(?,?,?,?,?,?)', title, description, affirmation, imagepath, date, facebook_image);
 					myDatabase.close();
-					showAlert();
+					var show = Ti.App.Properties.getBool('show');
+					if (show) {
+						showAlert();
+					} else {
+						Ti.App.Properties.setBool('show', false);
+						Ti.App.Properties.setInt('start', 1);
+						var showGoal = Ti.UI.createWindow({
+							backgroundColor : 'white',
+							url : 'showGoal.js',
+							navBarHidden : true,
+							fullscreen : true,
+							exitOnClose : true
+						});
+						showGoal.open();
+					}
 				} else {
 					Ti.App.Properties.setString('twitterAccessTokenKey', null);
 					Ti.App.Properties.setString('twitterAccessTokenSecret', null);
@@ -187,6 +273,7 @@ function showAlert() {
 				break;
 			//This will never be reached, if you specified cancel for index 1
 			case 1:
+				Ti.App.Properties.setBool('show', false);
 				Ti.App.Properties.setInt('start', 1);
 				var showGoal = Ti.UI.createWindow({
 					backgroundColor : 'white',
@@ -204,3 +291,21 @@ function showAlert() {
 	alertDialog.show();
 
 }
+
+function indicator() {
+	var indicatorView = Ti.UI.createView({
+		backgroundColor : 'black',
+		height : '25%',
+		width : '40%',
+		opacity : 0.7,
+		borderRadius : 10
+	});
+	AllView.add(indicatorView);
+	var activityIndicator = Ti.UI.createActivityIndicator({
+		style : Ti.UI.ActivityIndicatorStyle.BIG,
+
+	});
+	indicatorView.add(activityIndicator);
+	activityIndicator.show();
+}
+

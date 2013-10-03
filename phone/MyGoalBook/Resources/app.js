@@ -8,6 +8,8 @@ while (create_goalResultSet.isValidRow()) {
 var count = this_title.length;
 create_goalResultSet.close();
 
+var tmp1 = (Titanium.Platform.displayCaps.platformHeight * 3.8) / 100;
+
 var settingResultSet = myDatabase.execute('SELECT * FROM Background_images WHERE selected_view=?', '1');
 var this_path = '';
 var this_color = '';
@@ -29,7 +31,7 @@ var instial = Ti.App.Properties.getInt('start', this_title.length);
 if (instial > 0) {
 	Ti.App.Properties.setBool('show', false);
 	var app = Ti.UI.createWindow({
-		backgroundColor : 'white',
+		backgroundColor : 'black',
 		url : 'ui/common/showGoal.js',
 		navBarHidden : true,
 		fullscreen : true,
@@ -39,25 +41,43 @@ if (instial > 0) {
 	instial = 1;
 } else {
 	var app = Ti.UI.createWindow({
-		backgroundColor : 'white',
+		backgroundColor : 'black',
 		navBarHidden : true,
 		fullscreen : true,
 		exitOnClose : true
 	});
 
 	var AllView = Ti.UI.createView({
+		backgroundColor:'white',
 		backgroundImage : this_path,
-		width : '100%',
-		height : '100%'
+		width : '96%',
+		height : '96%'
 	});
 
 	app.add(AllView);
+
+	// Create a Label.
+	var aLabel = Ti.UI.createLabel({
+		text : "Congratulations! You've taken the first step to achieving your dreams. Let's get started straight away - Click on the link below",
+		color : 'black',
+		font : {
+			fontSize : tmp1,
+			fontFamily : 'Aaargh'
+		},
+		top : '20%',
+		left : '7%',
+		right:'7%'
+	});
+
+	// Add to the parent view.
+	AllView.add(aLabel);
 
 	// Create a Button.
 	var Ok = Ti.UI.createButton({
 		backgroundImage : '/images/first.png',
 		height : '20%',
 		width : '85%',
+		bottom :'20%'
 	});
 
 	// Listen for click events.

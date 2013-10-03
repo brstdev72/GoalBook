@@ -1,11 +1,21 @@
 var Create_Goal = Ti.UI.currentWindow;
 
-Create_Goal.orientationModes = [Ti.UI.PORTRAIT];
-
 var show = Ti.App.Properties.getBool('show');
 
-var tmp = (Titanium.Platform.displayCaps.platformHeight * 4) / 100;
-var tmp2 = (Titanium.Platform.displayCaps.platformHeight * 2.5) / 100;
+var myDatabase = Ti.Database.install('/myDatabase.sqlite', 'myDatabase.sqlite');
+var create_goalResultSet = myDatabase.execute('SELECT * FROM create_goal');
+var this_title = [];
+while (create_goalResultSet.isValidRow()) {
+	this_title.push(create_goalResultSet.fieldByName('title'));
+	create_goalResultSet.next();
+}
+var count = this_title.length;
+create_goalResultSet.close();
+
+Create_Goal.orientationModes = [Ti.UI.PORTRAIT];
+
+var tmp = (Titanium.Platform.displayCaps.platformHeight * 3.8) / 100;
+var tmp2 = (Titanium.Platform.displayCaps.platformHeight * 2.3) / 100;
 var tmp3 = (Titanium.Platform.displayCaps.platformHeight * 1) / 100;
 var corner = Math.round(Ti.Platform.displayCaps.platformWidth * 0.025);
 var width = Math.round(Ti.Platform.displayCaps.platformWidth * 0.005);
@@ -88,6 +98,7 @@ var scrollView = Titanium.UI.createView({
 });
 
 var subself = Titanium.UI.createView({
+	backgroundColor : 'white',
 	width : '96%',
 	height : '96%',
 	backgroundImage : this_path,
@@ -172,7 +183,7 @@ var edit_description = Titanium.UI.createTextArea({
 moveableview.add(edit_description);
 
 var aLabel_affirmation = Ti.UI.createLabel({
-	text : 'Affirmation :',
+	text : 'Next Step :',
 	color : 'black',
 	font : {
 		fontSize : tmp2,
@@ -353,6 +364,9 @@ edit_date.addEventListener('click', function() {
 	var set = Ti.UI.createButton({
 		title : 'set',
 		height : '80%',
+		font:{
+			fontSize:tmp2
+		},
 		width : '20%',
 		top : '10%',
 		right : '5%'
@@ -377,7 +391,9 @@ edit_date.addEventListener('click', function() {
 		title : 'Cancel',
 		height : '80%',
 		width : '25%',
-
+		font:{
+			fontSize:tmp2
+		},
 		top : '10%',
 		left : '5%'
 	});
@@ -437,16 +453,17 @@ subself.add(secondsubselfBottom);
 // Create a Button.
 var Cancel = Ti.UI.createButton({
 	backgroundImage : '/images/cancel.png',
-	height : 80,
-	width : 80,
+	height : 65,
+	width : 65,
 	left : '2%',
 });
 
 // Listen for click events.
 Cancel.addEventListener('click', function() {
-	if (!show) {
+	if (show) {
+		Create_Goal.close();
+	} else {
 		indicator();
-
 		var showGoal = Ti.UI.createWindow({
 			backgroundColor : 'white',
 			url : 'showGoal.js',
@@ -485,8 +502,8 @@ if (check) {
 // Create a Button.
 var Save = Ti.UI.createButton({
 	backgroundImage : '/images/save.png',
-	height : 80,
-	width : 80,
+	height : 65,
+	width : 65,
 	right : '2%'
 });
 
@@ -506,20 +523,10 @@ Save.addEventListener('click', function() {
 	if (title == '' || date == '') {
 		alert('Please Enter Goal Title and Date');
 	} else {
+		indicator();
 
-		if (!show) {
-
-			indicator();
-
-			if (check) {
-				myDatabase.execute('UPDATE create_goal SET title=?,description=?,affirmation=?,image=?,date=?,facebook_image=? WHERE rowid=?', title, description, affirmation, imagepath, date, facebook_image, viewdata);
-			} else {
-				myDatabase.execute('INSERT INTO create_goal (title,description,affirmation,image,date,facebook_image) VALUES(?,?,?,?,?,?)', title, description, affirmation, imagepath, date, facebook_image);
-
-			}
-			myDatabase.close();
-			//alert('Name' + ': ' + title + ',' + 'Description' + ': ' + description + ',' + 'Affirmation' + ': ' + affirmation + 'imagepath' + ': ' + imagepath + ',' + 'date' + ': ' + date + ',' + 'achieved' + ': ' + achieved);
-
+		if (check) {
+			myDatabase.execute('UPDATE create_goal SET title=?,description=?,affirmation=?,image=?,date=?,facebook_image=? WHERE rowid=?', title, description, affirmation, imagepath, date, facebook_image, viewdata);
 			var showGoal = Ti.UI.createWindow({
 				backgroundColor : 'white',
 				url : 'showGoal.js',
@@ -528,7 +535,7 @@ Save.addEventListener('click', function() {
 				exitOnClose : true
 			});
 			showGoal.open();
-			var come = Ti.App.Properties.setBool('come', false);
+
 		} else {
 			Ti.App.Properties.setString('titl', title);
 			Ti.App.Properties.setString('descriptio', description);
@@ -538,7 +545,7 @@ Save.addEventListener('click', function() {
 			Ti.App.Properties.setString('facebook_imag', facebook_image);
 
 			var firstShare = Ti.UI.createWindow({
-				backgroundColor : 'white',
+				backgroundColor : 'black',
 				url : 'firstShare.js',
 				navBarHidden : true,
 				fullscreen : true,
@@ -547,6 +554,10 @@ Save.addEventListener('click', function() {
 			firstShare.open();
 
 		}
+		myDatabase.close();
+		var come = Ti.App.Properties.setBool('come', false);
+		//alert('Name' + ': ' + title + ',' + 'Description' + ': ' + description + ',' + 'Affirmation' + ': ' + affirmation + 'imagepath' + ': ' + imagepath + ',' + 'date' + ': ' + date + ',' + 'achieved' + ': ' + achieved);
+
 	}
 });
 

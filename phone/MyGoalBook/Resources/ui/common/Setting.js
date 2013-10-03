@@ -1,6 +1,8 @@
 var Setting = Ti.UI.currentWindow;
 Setting.orientationModes = [Ti.UI.PORTRAIT];
 
+var hgt = Titanium.Platform.displayCaps.platformHeight;
+
 var myDatabase = Ti.Database.install('/myDatabase.sqlite', 'myDatabase.sqlite');
 var settingResultSet = myDatabase.execute('SELECT * FROM Background_images');
 var this_path = [];
@@ -67,8 +69,9 @@ var background = 'gray';
 var fonts = 'georgia';
 var tmp = (Titanium.Platform.displayCaps.platformHeight * 3.8) / 100;
 var tmp2 = (Titanium.Platform.displayCaps.platformHeight * 2.8) / 100;
-var tmp3 = (Titanium.Platform.displayCaps.platformHeight * 2) / 100;
+var tmp3 =(Titanium.Platform.displayCaps.platformHeight * 2) / 100;
 var corner = Math.round(Ti.Platform.displayCaps.platformWidth * 0.01);
+var width = Math.round(Ti.Platform.displayCaps.platformWidth * 0.003);
 
 //create object instance, a parasitic subclass of Observable
 var self = Titanium.UI.createView({
@@ -79,6 +82,7 @@ var self = Titanium.UI.createView({
 Setting.add(self);
 
 var subself = Titanium.UI.createView({
+	backgroundColor : 'white',
 	width : '96%',
 	height : '96%',
 	backgroundImage : path
@@ -132,8 +136,8 @@ secondsubselfBottom.add(secondmyGoalBook);
 
 var secondmyGoalBookicon = Ti.UI.createView({
 	backgroundImage : '/images/MyGoalBook.png',
-	height : 40,
-	width : 40
+	height : 35,
+	width : 35
 });
 secondmyGoalBook.add(secondmyGoalBookicon);
 
@@ -164,15 +168,15 @@ secondsubselfBottom.add(secondCreate_goal);
 
 var secondCreate_goalicon = Ti.UI.createView({
 	backgroundImage : '/images/createGoal.png',
-	height : 40,
-	width : 40,
+	height : 35,
+	width : 35
 
 });
 secondCreate_goal.add(secondCreate_goalicon);
 
 var secondcompleteGoal = Ti.UI.createView({
 	height : '96%',
-	width : '20%',
+	width : '19.5%',
 	borderRadius : corner,
 });
 
@@ -195,8 +199,8 @@ secondcompleteGoal.addEventListener('click', function() {
 secondsubselfBottom.add(secondcompleteGoal);
 var secondcompleteGoalicon = Ti.UI.createView({
 	backgroundImage : '/images/Goal_complete.png',
-	height : 40,
-	width : 40
+height : 35,
+	width : 35
 });
 secondcompleteGoal.add(secondcompleteGoalicon);
 
@@ -206,7 +210,7 @@ var secondsetting = Ti.UI.createView({
 	height : '96%',
 	width : '20%',
 	borderRadius : corner,
-	top:'2%'
+	top : '2%'
 });
 
 // Add to the parent view.
@@ -214,8 +218,8 @@ secondsubselfBottom.add(secondsetting);
 
 var secondsettingicon = Ti.UI.createView({
 	backgroundImage : '/images/settings.png',
-	height : 40,
-	width : 40
+	height : 35,
+	width : 35
 });
 secondsetting.add(secondsettingicon);
 
@@ -246,8 +250,8 @@ secondsubselfBottom.add(secondhome);
 
 var secondhomeicon = Ti.UI.createView({
 	backgroundImage : '/images/home.png',
-	height : 40,
-	width : 40,
+	height : 35,
+	width : 35
 
 });
 secondhome.add(secondhomeicon);
@@ -258,7 +262,9 @@ var view1 = Ti.UI.createView({
 	top : '9%',
 	left : '5%',
 	width : '90%',
-	borderRadius : corner
+	borderRadius : corner,
+	borderColor : 'black',
+	borderWidth : width
 });
 view1.addEventListener('click', function() {
 	subself.add(font_view);
@@ -333,9 +339,11 @@ var view2 = Ti.UI.createView({
 	left : '5%',
 	width : '90%',
 	borderRadius : corner,
+	borderColor : 'black',
+	borderWidth : width
 });
 view2.addEventListener('click', function() {
-	background_view.show();
+	subself.add(CARDs);
 });
 subself.add(view2);
 
@@ -376,6 +384,8 @@ var view3 = Ti.UI.createView({
 	left : '5%',
 	width : '90%',
 	borderRadius : corner,
+	borderColor : 'black',
+	borderWidth : width
 });
 subself.add(view3);
 
@@ -457,6 +467,8 @@ var view4 = Ti.UI.createView({
 	left : '5%',
 	width : '90%',
 	borderRadius : corner,
+	borderColor : 'black',
+	borderWidth : width
 });
 
 subself.add(view4);
@@ -478,7 +490,11 @@ view4.add(Choose_title);
 
 var setReminder = Ti.UI.createButton({
 	height : '90%',
+	width:'30%',
 	top : '5%',
+	font : {
+		fontSize : tmp2
+	},
 	title : 'Reminder',
 	right : '1%'
 });
@@ -522,8 +538,6 @@ var background_view = Ti.UI.createView({
 	borderRadius : 5,
 	borderWidth : 2
 });
-subself.add(background_view);
-background_view.hide();
 
 var background1 = Ti.UI.createView({
 	backgroundImage : '/images/bg1.png',
@@ -537,7 +551,6 @@ var background1 = Ti.UI.createView({
 });
 background1.addEventListener('click', function() {
 	indicator();
-
 	myDatabase.execute('UPDATE Background_images SET selected_view=?', '0');
 	myDatabase.execute('UPDATE Background_images SET selected_view=? WHERE name=?', '1', 'gray');
 	var Settings = Titanium.UI.createWindow({
@@ -635,6 +648,50 @@ background4.addEventListener('click', function() {
 });
 background_view.add(background4);
 
+var background_view2 = Ti.UI.createView({
+	backgroundImage : '/images/topbar_dark.png',
+	height : '90%',
+	width : '90%',
+	borderColor : 'black',
+	borderRadius : 5,
+	borderWidth : 2
+});
+
+var background21 = Ti.UI.createView({
+	backgroundColor : 'white',
+	backgroundImage : 'none',
+	height : '50%',
+	width : '50%',
+	top : '0%',
+	left : '0%',
+	borderColor : 'black',
+	borderRadius : 5,
+	borderWidth : 2
+});
+background21.addEventListener('click', function() {
+	indicator();
+	myDatabase.execute('UPDATE Background_images SET selected_view=?', '0');
+	myDatabase.execute('UPDATE Background_images SET selected_view=? WHERE name=?', '1', 'white');
+	var Settings = Titanium.UI.createWindow({
+		backgroundColor : 'white',
+		url : 'Setting.js',
+		navBarHidden : true,
+		fullscreen : true,
+		exitOnClose : true
+	});
+	Settings.open();
+	subself.remove(background_view);
+});
+background_view2.add(background21);
+
+var CARDs = Ti.UI.createScrollableView({
+	backgroundImage : '/images/topbar_dark.png',
+	height : '90%',
+	width : '90%',
+	views : [background_view, background_view2]
+	//showPagingControl : true
+});
+
 //**************************************************************************************Font View*****************************************************
 
 var font_view = Ti.UI.createView({
@@ -665,17 +722,17 @@ font_view.add(font_bottom_main_view);
 
 var font_bottom_view = Ti.UI.createScrollView({
 	backgroundColor : 'white',
-	height : 'auto',
+	height : '85%',
 	top : '10%',
-	width : '100%',
+	width : '90%',
 	layout : 'vertical'
 });
 font_bottom_main_view.add(font_bottom_view);
 
 var fontView1 = Ti.UI.createView({
 	backgroundImage : '/images/topbar.png',
-	width : '90%',
-	height : 50,
+	width : '95%',
+	height : hgt * 0.1,
 	borderColor : 'black',
 	borderRadius : 5,
 	borderWidth : 2
@@ -721,8 +778,8 @@ fontView1.add(font1);
 font_bottom_view.add(fontView1);
 var fontView2 = Ti.UI.createView({
 	backgroundImage : '/images/topbar.png',
-	width : '90%',
-	height : 50,
+	width : '95%',
+	height : hgt * 0.1,
 	borderColor : 'black',
 	borderRadius : 5,
 	borderWidth : 2
@@ -770,8 +827,8 @@ font_bottom_view.add(fontView2);
 
 var fontView3 = Ti.UI.createView({
 	backgroundImage : '/images/topbar.png',
-	width : '90%',
-	height : 50,
+	width : '95%',
+	height : hgt * 0.1,
 	borderColor : 'black',
 	borderRadius : 5,
 	borderWidth : 2
@@ -818,8 +875,8 @@ font_bottom_view.add(fontView3);
 
 var fontView4 = Ti.UI.createView({
 	backgroundImage : '/images/topbar.png',
-	width : '90%',
-	height : 50,
+	width : '95%',
+	height : hgt * 0.1,
 	borderColor : 'black',
 	borderRadius : 5,
 	borderWidth : 2
@@ -867,8 +924,8 @@ font_bottom_view.add(fontView4);
 
 var fontView5 = Ti.UI.createView({
 	backgroundImage : '/images/topbar.png',
-	width : '90%',
-	height : 50,
+	width : '95%',
+	height : hgt * 0.1,
 	borderColor : 'black',
 	borderRadius : 5,
 	borderWidth : 2
@@ -915,8 +972,8 @@ fontView5.add(font5);
 font_bottom_view.add(fontView5);
 
 var fontView6 = Ti.UI.createView({
-	width : '90%',
-	height : 50,
+	width : '95%',
+	height : hgt * 0.1,
 	borderColor : 'black',
 	borderRadius : 5,
 	borderWidth : 2
@@ -963,8 +1020,8 @@ fontView6.add(font6);
 font_bottom_view.add(fontView6);
 
 var fontView7 = Ti.UI.createView({
-	width : '90%',
-	height : 50,
+	width : '95%',
+	height : hgt * 0.1,
 	borderColor : 'black',
 	borderRadius : 5,
 	borderWidth : 2
@@ -1016,7 +1073,7 @@ function indicator() {
 		height : '25%',
 		width : '40%',
 		opacity : 0.7,
-		borderRadius:10
+		borderRadius : 10
 	});
 	subself.add(indicatorView);
 	var activityIndicator = Ti.UI.createActivityIndicator({

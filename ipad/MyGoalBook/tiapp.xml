@@ -3,10 +3,10 @@
     <id>com.my.goal.book</id>
     <name>MyGoalBook</name>
     <version>1.0</version>
-    <publisher>root</publisher>
+    <publisher>brst981</publisher>
     <url>http://</url>
     <description>not specified</description>
-    <copyright>2013 by root</copyright>
+    <copyright>2013 by brst981</copyright>
     <icon>appicon.png</icon>
     <persistent-wifi>false</persistent-wifi>
     <prerendered-icon>false</prerendered-icon>
@@ -15,7 +15,7 @@
     <fullscreen>false</fullscreen>
     <navbar-hidden>false</navbar-hidden>
     <analytics>true</analytics>
-    <guid>34e97172-e5d0-46b9-bf2f-9413c41755c5</guid>
+    <guid>de5012f7-3c67-4abb-b970-1548af4e8bba</guid>
     <property name="ti.ui.defaultunit" type="string">system</property>
     <iphone>
         <orientations device="iphone">
@@ -38,8 +38,8 @@
         <theme>default</theme>
     </mobileweb>
     <modules>
-        <module platform="iphone">com.gs.calendar</module>
         <module platform="iphone">de.marcelpociot.social</module>
+        <module platform="iphone">com.gs.calendar</module>
     </modules>
     <deployment-targets>
         <target device="android">false</target>

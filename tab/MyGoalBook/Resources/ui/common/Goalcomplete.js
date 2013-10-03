@@ -116,8 +116,8 @@ while (reminderResultSet.isValidRow()) {
 }
 reminderResultSet.close();
 
-var tmp = (Titanium.Platform.displayCaps.platformHeight * 4) / 100;
-var tmp2 = (Titanium.Platform.displayCaps.platformHeight * 2.5) / 100;
+var tmp = (Titanium.Platform.displayCaps.platformHeight * 3.8) / 100;
+var tmp2 = (Titanium.Platform.displayCaps.platformHeight * 2.3) / 100;
 var corner = Math.round(Ti.Platform.displayCaps.platformWidth * 0.01);
 var corner1 = Math.round(Ti.Platform.displayCaps.platformWidth * 0.02);
 var width = Math.round(Ti.Platform.displayCaps.platformWidth * 0.003);
@@ -130,6 +130,7 @@ var second = Titanium.UI.createView({
 Goalcomplete.add(second);
 
 var secondsubself = Titanium.UI.createView({
+	backgroundColor : 'white',
 	width : '96%',
 	height : '96%',
 	backgroundImage : this_path
@@ -148,7 +149,7 @@ secondsubself.add(secondsubselfBottom);
 var secondmyGoalBook = Ti.UI.createView({
 	height : '96%',
 	width : '20%',
-	borderRadius : corner
+	borderRadius : corner,
 });
 
 // Listen for click events.
@@ -171,8 +172,8 @@ secondsubselfBottom.add(secondmyGoalBook);
 
 var secondmyGoalBookicon = Ti.UI.createView({
 	backgroundImage : '/images/MyGoalBook.png',
-	height : 80,
-	width : 80
+	height : 65,
+	width : 65
 });
 secondmyGoalBook.add(secondmyGoalBookicon);
 
@@ -203,16 +204,17 @@ secondsubselfBottom.add(secondCreate_goal);
 
 var secondCreate_goalicon = Ti.UI.createView({
 	backgroundImage : '/images/createGoal.png',
-	height : 80,
-	width : 80
+	height : 65,
+	width : 65
 });
 secondCreate_goal.add(secondCreate_goalicon);
 
 var secondcompleteGoal = Ti.UI.createView({
 	backgroundColor : this_color,
 	height : '96%',
-	width : '20%',
+	width : '19.5%',
 	borderRadius : corner,
+	top:'2%'
 });
 
 // Add to the parent view.
@@ -220,8 +222,8 @@ secondsubselfBottom.add(secondcompleteGoal);
 
 var secondcompleteGoalicon = Ti.UI.createView({
 	backgroundImage : '/images/Goal_complete.png',
-	height : 80,
-	width : 80
+height : 65,
+	width : 65
 });
 secondcompleteGoal.add(secondcompleteGoalicon);
 
@@ -252,8 +254,8 @@ secondsubselfBottom.add(secondsetting);
 
 var secondsettingicon = Ti.UI.createView({
 	backgroundImage : '/images/settings.png',
-	height : 80,
-	width : 80
+	height : 65,
+	width : 65
 });
 secondsetting.add(secondsettingicon);
 
@@ -284,8 +286,8 @@ secondsubselfBottom.add(secondhome);
 
 var secondhomeicon = Ti.UI.createView({
 	backgroundImage : '/images/home.png',
-	height : 80,
-	width : 80,
+	height : 65,
+	width : 65
 
 });
 secondhome.add(secondhomeicon);
@@ -346,7 +348,6 @@ for (var i = 0; i < count; i++) {
 			fontFamily : this_font
 		},
 		left : '0%',
-		height : '100%',
 		top : '0%'
 	});
 	TitleView.add(Getting_Started);
@@ -360,14 +361,14 @@ for (var i = 0; i < count; i++) {
 		height : '46%',
 		top : '8%',
 		borderRadius : corner1,
-		borderWidth : width,
-		borderColor : 'black',
+		// borderWidth : width,
+		// borderColor : 'black',
 	});
 	view[i].add(GoalImage);
 
 	// Create a Label.
 	var Description = Ti.UI.createLabel({
-		text : 'Goal Description',
+		text : 'Goal Description:',
 		color : 'black',
 		font : {
 			fontSize : tmp2,
@@ -387,9 +388,9 @@ for (var i = 0; i < count; i++) {
 		height : '40%',
 		width : '43%',
 		left : '5%',
-		borderRadius : corner1,
-		borderWidth : width,
-		borderColor : 'black',
+		// borderRadius : corner1,
+		// borderWidth : width,
+		// borderColor : 'black',
 		layout : 'vertical'
 	});
 	view[i].add(detailView);
@@ -402,14 +403,14 @@ for (var i = 0; i < count; i++) {
 			fontSize : tmp2,
 			fontFamily : this_font
 		},
-		left : '5%'
+		left : 0
 	});
 
 	// Add to the parent view.
 	detailView.add(Goal_Description);
 
 	var AffirmationTitle = Ti.UI.createLabel({
-		text : 'Affirmation',
+		text : 'Next Step:',
 		color : 'black',
 		font : {
 			fontSize : tmp2,
@@ -428,9 +429,9 @@ for (var i = 0; i < count; i++) {
 		height : '19%',
 		width : '44%',
 		right : '5%',
-		borderRadius : corner1,
-		borderWidth : width,
-		borderColor : 'black',
+		// borderRadius : corner1,
+		// borderWidth : width,
+		// borderColor : 'black',
 		layout : 'vertical'
 	});
 	view[i].add(affirmationView);
@@ -442,14 +443,14 @@ for (var i = 0; i < count; i++) {
 			fontSize : tmp2,
 			fontFamily : this_font
 		},
-		left : '5%'
+		left : 0
 	});
 
 	// Add to the parent view.
 	affirmationView.add(Affirmation);
 
 	dateView = Ti.UI.createView({
-		top : '79%',
+		top : '78%',
 		height : '21%',
 		width : '44%',
 		right : '5%',
@@ -494,8 +495,8 @@ for (var i = 0; i < count; i++) {
 	// Create a Button.
 	var facebook = Ti.UI.createButton({
 		backgroundImage : '/images/icon_facebook.png',
-		height : 80,
-		width : 80,
+		height : 65,
+		width : 65,
 		left : '3%',
 		id : i
 	});
@@ -503,7 +504,7 @@ for (var i = 0; i < count; i++) {
 	// Listen for click events.
 	facebook.addEventListener('click', function(e) {
 		temp = e.source.id;
-		var msg = "Hey, I've just completed another Goal! \n\nGoal Description:\n" + this_description[temp] + "\n\nAffirmation: \n" + this_affirmation[temp] + "\n";
+		var msg = "Hey, I've just completed another Goal! \n\nGoal Description:\n" + this_description[temp] + "\n\nNext Step: \n" + this_affirmation[temp] + "\n";
 		login(msg);
 	});
 
@@ -512,8 +513,8 @@ for (var i = 0; i < count; i++) {
 	// Create a Button.
 	var twitter = Ti.UI.createButton({
 		backgroundImage : '/images/icon_twitter.png',
-		height : 80,
-		width : 80,
+		height : 65,
+		width : 65,
 		right : '36.5%',
 		id : i
 	});
@@ -528,14 +529,14 @@ for (var i = 0; i < count; i++) {
 
 	var pinterest = Ti.UI.createButton({
 		backgroundImage : '/images/Pinterest.png',
-		height : 80,
-		width : 80,
+		height : 65,
+		width : 65,
 		right : '3%',
 		id : i
 	});
 	pinterest.addEventListener('click', function(e) {
 		temp = e.source.id;
-		var dis = "Hey, I've just completed another Goal! Goal Description:" + this_description[temp] + "Affirmation: " + this_affirmation[temp] + " I've achieved one of my goals with the help of MyGoalBook";
+		var dis = "Hey, I've just completed another Goal! Goal Description:" + this_description[temp] + "Next Step: " + this_affirmation[temp] + " I've achieved one of my goals with the help of MyGoalBook";
 		var pinterestShare = require('pinterestShare');
 		pinterestShare( image = "https://fbcdn-sphotos-a-a.akamaihd.net/hphotos-ak-ash3/1045123_492486897501157_501197205_n.jpg", link = "http://mygoalbook.net/", description = dis);
 	});
@@ -622,7 +623,6 @@ for (var r = 0; r < count; r++) {
 			fontFamily : this_font
 		},
 		left : '0%',
-		height : '100%',
 		top : '1%'
 	});
 	TitleView_land.add(Getting_Started);
@@ -641,7 +641,7 @@ for (var r = 0; r < count; r++) {
 	// Add to the parent view.
 
 	var Description = Ti.UI.createLabel({
-		text : 'Goal Description',
+		text : 'Goal Description:',
 		color : 'black',
 		font : {
 			fontSize : tmp2,
@@ -658,8 +658,8 @@ for (var r = 0; r < count; r++) {
 		height : '36%',
 		width : '45%',
 		right : '3%',
-		borderWidth : width,
-		borderColor : 'black',
+		// borderWidth : width,
+		// borderColor : 'black',
 		layout : 'vertical'
 	});
 	viewer[r].add(detailView);
@@ -672,14 +672,14 @@ for (var r = 0; r < count; r++) {
 			fontSize : tmp2,
 			fontFamily : this_font
 		},
-		left : '5%'
+		left : 0
 	});
 
 	// Add to the parent view.
 	detailView.add(Goal_Description);
 
 	var AffirmationTitle = Ti.UI.createLabel({
-		text : 'Affirmation',
+		text : 'Next Step:',
 		color : 'black',
 		font : {
 			fontSize : tmp2,
@@ -699,8 +699,8 @@ for (var r = 0; r < count; r++) {
 		width : '45%',
 		right : '3%',
 		id : r,
-		borderWidth : width,
-		borderColor : 'black',
+		// borderWidth : width,
+		// borderColor : 'black',
 		layout : 'vertical'
 	});
 	viewer[r].add(affirmationView);
@@ -712,13 +712,13 @@ for (var r = 0; r < count; r++) {
 			fontSize : tmp2,
 			fontFamily : this_font
 		},
-		left : '5%',
+		left : 0,
 	});
 	// Add to the parent view.
 	affirmationView.add(Affirmation);
 
 	dateView = Ti.UI.createView({
-		top : '77%',
+		top : '76%',
 		height : '23%',
 		width : '45%',
 		right : '3%'
@@ -733,7 +733,7 @@ for (var r = 0; r < count; r++) {
 			fontFamily : this_font
 		},
 		left : '0%',
-		bottom : '60%'
+		bottom : '63%'
 	});
 	// Add to the parent view.
 	dateView.add(DateCompletion);
@@ -754,8 +754,8 @@ for (var r = 0; r < count; r++) {
 	// Create a Button.
 	var facebook = Ti.UI.createButton({
 		backgroundImage : '/images/icon_facebook.png',
-		height : 80,
-		width : 80,
+		height : 65,
+		width : 65,
 		right : '45%',
 		bottom : '0%',
 		id : r
@@ -765,15 +765,15 @@ for (var r = 0; r < count; r++) {
 	var j = 1;
 	facebook.addEventListener('click', function(e) {
 		temp = e.source.id;
-		var msg = "Hey, I've just completed another Goal! \n\nGoal Description:\n" + this_description[temp] + "\n\nAffirmation: \n" + this_affirmation[temp] + "\n";
+		var msg = "Hey, I've just completed another Goal! \n\nGoal Description:\n" + this_description[temp] + "\n\nNext Step: \n" + this_affirmation[temp] + "\n";
 		login(msg);
 	});
 
 	// Create a Button.
 	var twitter = Ti.UI.createButton({
 		backgroundImage : '/images/icon_twitter.png',
-		height : 80,
-		width : 80,
+		height : 65,
+		width : 65,
 		right : '23.5%',
 		bottom : '0%',
 		id : r
@@ -789,8 +789,8 @@ for (var r = 0; r < count; r++) {
 
 	var pinterest = Ti.UI.createButton({
 		backgroundImage : '/images/Pinterest.png',
-		height : 80,
-		width : 80,
+		height : 65,
+		width : 65,
 		right : '3%',
 		bottom : '0%',
 		id : i
@@ -798,7 +798,7 @@ for (var r = 0; r < count; r++) {
 	pinterest.addEventListener('click', function(e) {
 		temp = e.source.id;
 
-		var dis = "Hey, I've just completed another Goal! Goal Description:" + this_description[temp] + "Affirmation: " + this_affirmation[temp] + " I've achieved one of my goals with the help of MyGoalBook";
+		var dis = "Hey, I've just completed another Goal! Goal Description:" + this_description[temp] + "Next Step: " + this_affirmation[temp] + " I've achieved one of my goals with the help of MyGoalBook";
 		var pinterestShare = require('pinterestShare');
 		pinterestShare( image = "https://fbcdn-sphotos-a-a.akamaihd.net/hphotos-ak-ash3/1045123_492486897501157_501197205_n.jpg", link = "http://mygoalbook.net/", description = dis);
 	});
@@ -841,9 +841,9 @@ if (count == 0) {
 } else {
 	secondsubselfcenterLandscape.add(CARDs);
 }
-var fb = require('facebook');
-function login(message) {
 
+function login(message) {
+	var fb = require('facebook');
 	fb.appid = 1399943216883877;
 	fb.permissions = ['publish_stream'];
 	fb.authorize();
