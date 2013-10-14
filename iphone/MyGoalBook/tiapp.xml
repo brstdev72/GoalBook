@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ti:app xmlns:ti="http://ti.appcelerator.org">
-    <id>com.my.goal.book</id>
+    <id>com.mygoalbook</id>
     <name>MyGoalBook</name>
-    <version>1.0</version>
+    <version>1.0.0</version>
     <publisher>brst981</publisher>
     <url>http://</url>
     <description>not specified</description>

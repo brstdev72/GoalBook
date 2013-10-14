@@ -8,7 +8,7 @@
 	<property name="acs-api-key-development" type="string">peV1iRj1ocnbJG5xGrKuZiY8HEsfUXvT</property>
 	<id>com.my.goal.book</id>
 	<name>MyGoalBook</name>
-	<version>1.0</version>
+	<version>1.1</version>
 	<publisher>brst</publisher>
 	<url>http://</url>
 	<description>not specified</description>
@@ -35,8 +35,24 @@
 		</orientations>
 	</iphone>
 	<android xmlns:android="http://schemas.android.com/apk/res/android">
-		<manifest android:installLocation="preferExternal">
+		<manifest android:installLocation="preferExternal"
+		android:versionCode="2" android:versionName="1.1T" package="com.my.goal.book">
 			<uses-sdk android:minSdkVersion="9"/>
+			<compatible-screens>
+
+				<!-- all xlarge size screens -->
+				<screen android:screenSize="xlarge" android:screenDensity="ldpi" />
+				<screen android:screenSize="xlarge" android:screenDensity="mdpi" />
+				<screen android:screenSize="xlarge" android:screenDensity="hdpi" />
+				<screen android:screenSize="xlarge" android:screenDensity="xhdpi" />
+
+				<!-- Special case for Nexus 7 -->
+				<screen android:screenSize="large" android:screenDensity="213" />
+				<screen android:screenSize="normal" android:screenDensity="480" />
+				<screen android:screenSize="large" android:screenDensity="480" />
+				<screen android:screenSize="xlarge" android:screenDensity="480" />
+
+			</compatible-screens>
 		</manifest>
 	</android>
 	<mobileweb>

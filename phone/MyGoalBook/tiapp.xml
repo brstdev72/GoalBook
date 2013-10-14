@@ -8,7 +8,7 @@
 	<property name="acs-api-key-development" type="string">peV1iRj1ocnbJG5xGrKuZiY8HEsfUXvT</property>
 	<id>com.my.goal.book</id>
 	<name>MyGoalBook</name>
-	<version>1.0</version>
+	<version>1.1</version>
 	<publisher>brst</publisher>
 	<url>http://</url>
 	<description>not specified</description>
@@ -35,8 +35,36 @@
 		</orientations>
 	</iphone>
 	<android xmlns:android="http://schemas.android.com/apk/res/android">
-		<manifest android:installLocation="preferExternal">
+		<manifest  package="com.my.goal.book"
+		android:versionCode="2"
+		android:versionName="1.1"
+		android:installLocation="preferExternal">
 			<uses-sdk android:minSdkVersion="9"/>
+			<compatible-screens>
+				<!--no small size screens -->
+
+				<!--all normal size screens -->
+				<screen android:screenSize="normal" android:screenDensity="ldpi" />
+				<screen android:screenSize="normal" android:screenDensity="mdpi" />
+				<screen android:screenSize="normal" android:screenDensity="hdpi" />
+				<screen android:screenSize="normal" android:screenDensity="xhdpi" />
+
+				<!-- all large size screens -->
+				<screen android:screenSize="large" android:screenDensity="ldpi" />
+				<screen android:screenSize="large" android:screenDensity="mdpi" />
+				<screen android:screenSize="large" android:screenDensity="hdpi" />
+				<screen android:screenSize="large" android:screenDensity="xhdpi" />
+
+				<!-- all xlarge size screens
+				<screen android:screenSize="xlarge" android:screenDensity="ldpi" />
+				<screen android:screenSize="xlarge" android:screenDensity="mdpi" />
+				<screen android:screenSize="xlarge" android:screenDensity="hdpi" />
+				<screen android:screenSize="xlarge" android:screenDensity="xhdpi" /> -->
+
+				<!-- Special case for Nexus 7 -->
+				<screen android:screenSize="large" android:screenDensity="213" />
+
+			</compatible-screens>
 		</manifest>
 	</android>
 	<mobileweb>
