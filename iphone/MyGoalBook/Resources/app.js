@@ -29,17 +29,9 @@ var instial = Ti.App.Properties.getInt('start', this_title.length);
 
 if (instial > 0) {
 	Ti.App.Properties.setBool('show', false);
-	var app = Ti.UI.createWindow({
-		backgroundColor : 'black',
-		url : 'ui/common/showGoal.js',
-		navBarHidden : true,
-		fullscreen : true,
-		exitOnClose : true
-	});
+   var Show_Goal = require('ui/common/Goal_Tab');
+		new Show_Goal('showGoal').open();
 
-	setTimeout(function() {
-		app.open(); 
-	}, 1000);
 
 	instial = 1;
 } else {
@@ -86,15 +78,8 @@ if (instial > 0) {
 	// Listen for click events.
 	Ok.addEventListener('click', function(e) {
 		Ti.App.Properties.setBool('show', true);
-		var Create_Goal = Titanium.UI.createWindow({
-			backgroundColor : 'white',
-			url : 'ui/common/Create_Goal.js',
-			navBarHidden : true,
-			fullscreen : true,
-			exitOnClose : true
-		});
-
-		Create_Goal.open();
+		var Show_Goal = require('ui/common/Goal_Tab');
+		new Show_Goal('Create_Goal').open();
 
 	});
 	AllView.add(Ok);

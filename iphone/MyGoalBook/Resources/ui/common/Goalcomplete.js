@@ -1,4 +1,18 @@
-var Goalcomplete = Ti.UI.currentWindow;
+function Goalcomplete() {
+var Goalcomplete = Ti.UI.createWindow({
+		//title : 'Ecotour',
+		backgroundColor : 'white',
+		//barColor : colors.titlebar,
+		tabBarHidden : true,
+		animated : false,
+		
+		transition : Titanium.UI.iPhone.AnimationStyle.NONE,
+		//modalTransitionStyle:Titanium.UI.iPhone.MODAL_TRANSITION_STYLE_COVER_VERTICAL,
+
+		navBarHidden : true,
+	    translucent : false
+	});
+
 Goalcomplete.orientationModes = [Titanium.UI.PORTRAIT, Titanium.UI.UPSIDE_PORTRAIT, Titanium.UI.LANDSCAPE_LEFT, Titanium.UI.LANDSCAPE_RIGHT];
 
 var module = require('de.marcelpociot.social');
@@ -63,6 +77,8 @@ while (fontsResultSet.isValidRow()) {
 }
 fontsResultSet.close();
 
+var buy = Ti.App.Properties.getBool('buy', false);
+
 var tmp = 18;
 var tmp2 = 12;
 var corner = Math.round(Ti.Platform.displayCaps.platformWidth * 0.01);
@@ -103,7 +119,17 @@ var secondmyGoalBook = Ti.UI.createView({
 // Listen for click events.
 secondmyGoalBook.addEventListener('click', function() {
 
-	indicator();
+	var newWindowClass = require('/ui/common/showGoal');
+					var newWindow = new newWindowClass();
+			
+                 var currentWin=Goalcomplete;
+					newWindow.containingTab = currentWin.containingTab;
+					
+					currentWin.containingTab.open(newWindow, {
+						animated : false
+					});
+					//currentWin.close();
+/*	indicator();
 
 	var showGoal = Ti.UI.createWindow({
 		backgroundColor : 'white',
@@ -112,6 +138,7 @@ secondmyGoalBook.addEventListener('click', function() {
 		fullscreen : true
 	});
 	showGoal.open();
+	secondsubself.remove(adView);*/
 });
 
 // Add to the parent view.
@@ -120,7 +147,7 @@ secondsubselfBottom.add(secondmyGoalBook);
 var secondmyGoalBookicon = Ti.UI.createView({
 	backgroundImage : '/images/MyGoalBook.png',
 	height : 35,
-	width : 35
+	width : 30
 });
 secondmyGoalBook.add(secondmyGoalBookicon);
 
@@ -134,14 +161,15 @@ var secondCreate_goal = Ti.UI.createView({
 // Listen for click events.
 secondCreate_goal.addEventListener('click', function() {
 	var check = Ti.App.Properties.setBool('check', false);
-	var Create_Goal = Titanium.UI.createWindow({
-		backgroundColor : 'white',
-		url : 'Create_Goal.js',
-		orientationModes : 'PORTRAIT',
-		navBarHidden : true,
-		fullscreen : true
-	});
-	Create_Goal.open();
+	var newWindowClass = require('/ui/common/Create_Goal');
+					var newWindow = new newWindowClass();
+			
+                 var currentWin=Goalcomplete;
+					newWindow.containingTab = currentWin.containingTab;
+					
+					currentWin.containingTab.open(newWindow, {
+						animated : false
+					});
 });
 // Add to the parent view.
 secondsubselfBottom.add(secondCreate_goal);
@@ -149,7 +177,7 @@ secondsubselfBottom.add(secondCreate_goal);
 var secondCreate_goalicon = Ti.UI.createView({
 	backgroundImage : '/images/createGoal.png',
 	height : 35,
-	width : 35,
+	width : 30,
 
 });
 secondCreate_goal.add(secondCreate_goalicon);
@@ -169,9 +197,9 @@ secondcompleteGoal.addEventListener('click', function() {
 secondsubselfBottom.add(secondcompleteGoal);
 
 var secondcompleteGoalicon = Ti.UI.createView({
-	backgroundImage : '/images/Goal_complete.png',
+	backgroundImage : '/images/Goal_complete1.png',
 	height : 35,
-	width : 35
+	width : 30
 });
 secondcompleteGoal.add(secondcompleteGoalicon);
 
@@ -184,14 +212,15 @@ var secondsetting = Ti.UI.createView({
 
 // Listen for click events.
 secondsetting.addEventListener('click', function() {
-	var Settings = Titanium.UI.createWindow({
-		backgroundColor : 'white',
-		url : 'Setting.js',
-		orientationModes : 'PORTRAIT',
-		navBarHidden : true,
-		fullscreen : true
-	});
-	Settings.open();
+	var newWindowClass = require('/ui/common/Setting');
+					var newWindow = new newWindowClass();
+			
+                 var currentWin=Goalcomplete;
+					newWindow.containingTab = currentWin.containingTab;
+					
+					currentWin.containingTab.open(newWindow, {
+						animated : false
+					});
 });
 
 // Add to the parent view.
@@ -200,7 +229,7 @@ secondsubselfBottom.add(secondsetting);
 var secondsettingicon = Ti.UI.createView({
 	backgroundImage : '/images/settings.png',
 	height : 35,
-	width : 35
+	width : 30
 });
 secondsetting.add(secondsettingicon);
 
@@ -213,13 +242,15 @@ var secondhome = Ti.UI.createView({
 
 // Listen for click events.
 secondhome.addEventListener('click', function() {
-	var first_text_view = Ti.UI.createWindow({
-		backgroundColor : 'white',
-		url : 'first_text_view.js',
-		navBarHidden : true,
-		fullscreen : true
-	});
-	first_text_view.open();
+		var newWindowClass = require('/ui/common/first_text_view');
+					var newWindow = new newWindowClass();
+			
+                 var currentWin=Goalcomplete;
+					newWindow.containingTab = currentWin.containingTab;
+					
+					currentWin.containingTab.open(newWindow, {
+						animated : false
+					});
 });
 
 // Add to the parent view.
@@ -228,7 +259,7 @@ secondsubselfBottom.add(secondhome);
 var secondhomeicon = Ti.UI.createView({
 	backgroundImage : '/images/home.png',
 	height : 35,
-	width : 35
+	width : 30
 
 });
 secondhome.add(secondhomeicon);
@@ -237,12 +268,14 @@ Titanium.Gesture.addEventListener('orientationchange', function(e) {
 	switch(e.orientation) {
 		case Ti.UI.PORTRAIT:
 		case Ti.UI.UPSIDE_PORTRAIT:
+		secondsubselfBottom.height = '11%';
 			secondsubself.remove(secondsubselfcenterLandscape);
 			secondsubself.add(secondsubselfcenter);
 			CARD.setCurrentPage(CARDs.getCurrentPage());
 			break;
 		case Ti.UI.LANDSCAPE_LEFT:
 		case Ti.UI.LANDSCAPE_RIGHT:
+		secondsubselfBottom.height = '13%';
 			secondsubself.remove(secondsubselfcenter);
 			secondsubself.add(secondsubselfcenterLandscape);
 			CARDs.setCurrentPage(CARD.getCurrentPage());
@@ -256,9 +289,52 @@ Titanium.Gesture.addEventListener('orientationchange', function(e) {
 //*******************************************************POTRAIT MODE****************************************************
 var secondsubselfcenter = Titanium.UI.createView({
 	width : '100%',
-	height : '85%',
+	height : '87%',
 	top : '2%'
 
+});
+
+var tftModule = require('com.tapfortap.ti');
+Ti.API.info("module is => " + tftModule);
+
+var tft = tftModule.createTapForTap();
+tft.initializeWithApiKey("9b510387a2449fa08cc3be137c35b760");
+
+var interstitial = tftModule.createInterstitial();
+interstitial.addEventListener("receive", function(d) {
+	Ti.API.info("Interstitial received");
+});
+
+interstitial.addEventListener("show", function(d) {
+	Ti.API.info("Interstitial shown");
+});
+
+interstitial.addEventListener("dismiss", function(d) {
+	Ti.API.info("Interstitial dismissed");
+});
+
+interstitial.addEventListener("fail", function(d) {
+	Ti.API.info("Interstitial dismissed failed because: ", JSON.stringify(d, null, 2));
+});
+var adView = tftModule.createAdView({
+	width : '100%',
+	height : '12%',
+	top : 0,
+	left : 0
+});
+
+Ti.API.info("adView is => " + adView);
+
+adView.addEventListener("tap", function(d) {
+	Ti.API.info("Banner was tapped");
+});
+
+adView.addEventListener("receive", function(d) {
+	Ti.API.info("Banner was received");
+});
+
+adView.addEventListener("error", function(d) {
+	Ti.API.info("Failed to receive banner because ", JSON.stringify(d, null, 2));
 });
 
 var view = [];
@@ -354,11 +430,12 @@ for (var i = 0; i < count; i++) {
 	// Add to the parent view.
 	detailView = Ti.UI.createScrollView({
 		bottom : '0%',
-		backgroundColor : 'white',
+		//backgroundColor : 'white',
 		height : '40%',
 		width : '43%',
 		left : '5%',
 		id : i,
+		scrollType : 'vertical',
 		// borderRadius : corner1,
 		// borderWidth : width,
 		// borderColor : 'black',
@@ -388,7 +465,7 @@ for (var i = 0; i < count; i++) {
 	detailView.add(Goal_Description);
 
 	var AffirmationTitle = Ti.UI.createLabel({
-		text : 'Next Step:',
+		text : 'Congratulations:',
 		color : 'black',
 		font : {
 			fontSize : tmp2,
@@ -406,11 +483,12 @@ for (var i = 0; i < count; i++) {
 
 	affirmationView = Ti.UI.createScrollView({
 		top : '60%',
-		backgroundColor : 'white',
+		//backgroundColor : 'white',
 		height : '19%',
 		width : '44%',
 		right : '5%',
 		id : i,
+		scrollType : 'vertical',
 		// borderRadius : corner1,
 		// borderWidth : width,
 		// borderColor : 'black',
@@ -422,7 +500,7 @@ for (var i = 0; i < count; i++) {
 	view[i].add(affirmationView);
 
 	var Affirmation = Ti.UI.createLabel({
-		text : this_affirmation[i],
+		text : "Well done you, you rock!  You've achieved your goal!  Give yourself a slap on the back!  Share you success with your friends.",
 		color : 'black',
 		font : {
 			fontSize : tmp2,
@@ -439,8 +517,8 @@ for (var i = 0; i < count; i++) {
 	affirmationView.add(Affirmation);
 
 	dateView = Ti.UI.createView({
-		top : '79%',
-		height : '21%',
+		top : '80%',
+		height : '23%',
 		width : '44%',
 		right : '5%',
 		id : i,
@@ -452,7 +530,7 @@ for (var i = 0; i < count; i++) {
 	view[i].add(dateView);
 
 	var DateCompletion = Ti.UI.createLabel({
-		text : 'Date for completion:',
+		text : 'Goal Achieved:',
 		color : 'black',
 
 		font : {
@@ -460,7 +538,6 @@ for (var i = 0; i < count; i++) {
 			fontFamily : this_font
 		},
 		left : '0%',
-		top : '10%',
 		id : i
 	});
 	DateCompletion.addEventListener('click', function(e) {
@@ -489,7 +566,7 @@ for (var i = 0; i < count; i++) {
 
 	SocialView = Ti.UI.createView({
 		height : '50%',
-		width : '100%'
+		width : '100%',
 	});
 	SocialView.addEventListener('click', function(e) {
 		temp = e.source.id;
@@ -577,13 +654,13 @@ for (var i = 0; i < count; i++) {
 		SocialView.add(pinterest);
 	}
 
-	// Create an ImageView.
-	var completeImage = Ti.UI.createImageView({
-		image : '/images/mark_sign2.png',
-		width : '70%',
-		height : '60%'
-	});
-	view[i].add(completeImage);
+	// // Create an ImageView.
+	// var completeImage = Ti.UI.createImageView({
+	// image : '/images/mark_sign2.png',
+	// width : '70%',
+	// height : '60%'
+	// });
+	// view[i].add(completeImage);
 
 }
 
@@ -591,8 +668,30 @@ var CARD = Ti.UI.createScrollableView({
 	views : view,
 	//showPagingControl : true
 });
-CARD.addEventListener('click', function(e) {
-});
+if (buy) {
+
+} else {
+	viewNumber = 0;
+	var swipecount = 0;
+	CARD.addEventListener('scroll', function(e) {
+		if (viewNumber != e.currentPage) {
+			viewNumber = e.currentPage;
+			swipecount++;
+			// And saving for next time change notification
+			if (swipecount > 4) {
+				swipecount = 0;
+				CARD.fireEvent('pageChanged', e);
+			}
+			// And I am fire my pageChanged event on scroller
+		}
+		//Do something here
+	});
+
+	CARD.addEventListener('pageChanged', function(e) {
+		interstitial.show();
+		//Do something here
+	});
+}
 if (count == 0) {
 
 	// Create a Label.
@@ -626,10 +725,20 @@ var pWidth = Ti.Platform.displayCaps.platformWidth;
 var pHeight = Ti.Platform.displayCaps.platformHeight;
 if (pWidth > pHeight) {
 	var oriCurrent = 'landscape';
+	secondsubselfBottom.height = '13%';
 	secondsubself.add(secondsubselfcenterLandscape);
 } else {
 	var oriCurrent = 'portrait';
+	secondsubselfBottom.height = '11%';
 	secondsubself.add(secondsubselfcenter);
+	if (buy) {
+
+	} else {
+		secondsubself.add(adView);
+		setTimeout(function() {
+			secondsubself.remove(adView);
+		}, 15000);
+	}
 }
 
 var viewer = [];
@@ -718,11 +827,12 @@ for (var r = 0; r < count; r++) {
 
 	detailView = Ti.UI.createScrollView({
 		top : '12%',
-		backgroundColor : 'white',
+		//backgroundColor : 'white',
 		height : '36%',
 		width : '45%',
 		right : '3%',
 		id : r,
+		scrollType : 'vertical',
 		// borderWidth : width,
 		// borderColor : 'black',
 		layout : 'vertical'
@@ -745,7 +855,7 @@ for (var r = 0; r < count; r++) {
 	detailView.add(Goal_Description);
 
 	var AffirmationTitle = Ti.UI.createLabel({
-		text : 'Next Step:',
+		text : 'Congratulations:',
 		color : 'black',
 		font : {
 			fontSize : tmp2,
@@ -763,11 +873,12 @@ for (var r = 0; r < count; r++) {
 
 	affirmationView = Ti.UI.createScrollView({
 		top : '55%',
-		backgroundColor : 'white',
+		//backgroundColor : 'white',
 		height : '22%',
 		width : '45%',
 		right : '3%',
 		id : r,
+		scrollType : 'vertical',
 		// borderWidth : width,
 		// borderColor : 'black',
 		layout : 'vertical'
@@ -778,7 +889,7 @@ for (var r = 0; r < count; r++) {
 	viewer[r].add(affirmationView);
 
 	var Affirmation = Ti.UI.createLabel({
-		text : this_affirmation[r],
+		text : "Well done you, you rock!  You've achieved your goal!  Give yourself a slap on the back!  Share you success with your friends.",
 		color : 'black',
 		font : {
 			fontSize : tmp2,
@@ -803,7 +914,7 @@ for (var r = 0; r < count; r++) {
 	viewer[r].add(dateView);
 
 	var DateCompletion = Ti.UI.createLabel({
-		text : 'Date for completion:',
+		text : 'Goal Achieved:',
 		color : 'black',
 		font : {
 			fontSize : tmp2,
@@ -918,13 +1029,13 @@ for (var r = 0; r < count; r++) {
 		dateView.add(twitter);
 	}
 
-	var completeImage = Ti.UI.createImageView({
-		image : '/images/mark_sign2.png',
-		width : '60%',
-		id : i,
-		height : '70%',
-	});
-	viewer[r].add(completeImage);
+	// var completeImage = Ti.UI.createImageView({
+	// image : '/images/mark_sign2.png',
+	// width : '60%',
+	// id : i,
+	// height : '70%',
+	// });
+	// viewer[r].add(completeImage);
 
 }
 
@@ -932,8 +1043,29 @@ var CARDs = Ti.UI.createScrollableView({
 	views : viewer,
 	//showPagingControl : true
 });
-CARDs.addEventListener('click', function(e) {
-});
+if (buy) {
+
+} else {
+	var swipecounts = 0;
+	CARD.addEventListener('scroll', function(e) {
+		if (viewNumber != e.currentPage) {
+			viewNumber = e.currentPage;
+			swipecount++;
+			// And saving for next time change notification
+			if (swipecounts > 4) {
+				swipecounts = 0;
+				CARDs.fireEvent('pageChanged', e);
+			}
+			// And I am fire my pageChanged event on scroller
+		}
+		//Do something here
+	});
+
+	CARDs.addEventListener('pageChanged', function(e) {
+		interstitial.show();
+		//Do something here
+	});
+}
 
 if (count == 0) {
 
@@ -956,18 +1088,23 @@ if (count == 0) {
 }
 
 function indicator() {
- var indicatorView = Ti.UI.createView({
-  backgroundColor : 'black',
-  height : '25%',
-  width : '40%',
-  opacity : 0.7,
-  borderRadius:10
- });
- secondsubself.add(indicatorView);
- var activityIndicator = Ti.UI.createActivityIndicator({
-   style : Ti.UI.iPhone.ActivityIndicatorStyle.BIG,
+	var indicatorView = Ti.UI.createView({
+		backgroundColor : 'black',
+		height : '25%',
+		width : '40%',
+		opacity : 0.7,
+		borderRadius : 10
+	});
+	secondsubself.add(indicatorView);
+	var activityIndicator = Ti.UI.createActivityIndicator({
+		style : Ti.UI.iPhone.ActivityIndicatorStyle.BIG,
 
- });
- indicatorView.add(activityIndicator);
- activityIndicator.show();
+	});
+	indicatorView.add(activityIndicator);
+	activityIndicator.show();
 }
+
+	return Goalcomplete;
+};
+
+module.exports = Goalcomplete;

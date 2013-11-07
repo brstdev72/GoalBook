@@ -1,9 +1,20 @@
-//FirstView Component Constructor
-var first_text_view = Ti.UI.currentWindow;
+function first_text_view() {
+var first_text_view = Ti.UI.createWindow({
+		//title : 'Ecotour',
+		backgroundColor : 'white',
+		//barColor : colors.titlebar,
+		tabBarHidden : true,
+		animated : false,
+		transition : Titanium.UI.iPhone.AnimationStyle.NONE,
+		//modalTransitionStyle:Titanium.UI.iPhone.MODAL_TRANSITION_STYLE_COVER_VERTICAL,
+
+		navBarHidden : true,
+	    translucent : false
+	});
 
 first_text_view.orientationModes = [Titanium.UI.PORTRAIT, Titanium.UI.UPSIDE_PORTRAIT, Titanium.UI.LANDSCAPE_LEFT, Titanium.UI.LANDSCAPE_RIGHT];
 var tmp = 18;
-var tmp1 = 16;
+var tmp1 = 14;
 var hgt = (Titanium.Platform.displayCaps.platformHeight * 6) / 100;
 var tmp2 = (Titanium.Platform.displayCaps.platformHeight * 2.5) / 100;
 var corner = Math.round(Ti.Platform.displayCaps.platformWidth * 0.01);
@@ -37,18 +48,31 @@ fontsResultSet.close();
 
 //create object instance, a parasitic subclass of Observable
 AddViews();
+var pWidth = Ti.Platform.displayCaps.platformWidth;
+	var pHeight = Ti.Platform.displayCaps.platformHeight;
+	if (pWidth > pHeight) {
+		var oriCurrent = 'landscape';
+		secondsubselfBottom.height = '13%';
+	} else {
+		var oriCurrent = 'portrait';
+		secondsubselfBottom.height = '11%';
+	}
 
 var subself;
+var secondsubselfBottom ;
 
 Titanium.Gesture.addEventListener('orientationchange', function(e) {
 	switch(e.orientation) {
 		case Ti.UI.PORTRAIT:
 		case Ti.UI.UPSIDE_PORTRAIT:
+		
 			AddViews();
+			secondsubselfBottom.height = '11%';
 			break;
 		case Ti.UI.LANDSCAPE_LEFT:
-		case Ti.UI.LANDSCAPE_RIGHT:
+		case Ti.UI.LANDSCAPE_RIGHT:		
 			AddViews();
+			secondsubselfBottom.height = '13%';
 			break;
 		case Ti.UI.UNKNOWN:
 		default:
@@ -64,31 +88,33 @@ function AddViews() {
 	});
 	first_text_view.add(first);
 
-	subself = Titanium.UI.createView({
+	supersubself = Titanium.UI.createScrollView({
 		backgroundColor : 'white',
-		Left : '2%',
-		right : '2%',
 		width : '96%',
 		height : '96%',
-		backgroundImage : this_path
+		backgroundImage : this_path,
+		scrollType:'vertical'
 	});
-	first.add(subself);
+	first.add(supersubself);
 
-	var subselfcenter = Titanium.UI.createScrollView({
-		width : '90%',
-		height : '65%',
-		top : '18%',
-		backgroundImage : '/images/topbar.png'
+	subself = Titanium.UI.createScrollView({
+		width : '100%',
+		height : '87%',
+		top : '0%',
+		layout : 'vertical',
+
 	});
-	subself.add(subselfcenter);
+	supersubself.add(subself);
+
+	// var subselfcenter = Titanium.UI.createScrollView({
+	// width : '90%',
+	// height : '65%',
+	// top : '18%',
+	// backgroundImage : '/images/topbar.png'
+	// });
+	// subself.add(subselfcenter);
 
 	//**************************************************************View 1*************************************************************
-
-	var Topsubself1 = Titanium.UI.createView({
-		width : '100%',
-		height : '95%',
-		top : '0%',
-	});
 
 	var Getting_Started = Ti.UI.createLabel({
 		text : 'Say YES to Your DREAMS',
@@ -100,22 +126,12 @@ function AddViews() {
 		},
 		left : '2%',
 		right : '2%',
-		top : '4%'
+		top : '1%'
 	});
-	Topsubself1.add(Getting_Started);
-
-	var subselfcenter = Titanium.UI.createView({
-		width : '90%',
-		height : '77%',
-		top : '23%',
-		//backgroundImage : '/images/topbar.png'
-	});
-	subselfcenter.addEventListener('click', function() {
-	});
-	Topsubself1.add(subselfcenter);
+	subself.add(Getting_Started);
 
 	// Create a Label.
-	var bodyText = Ti.UI.createLabel({
+	var bodyText1 = Ti.UI.createLabel({
 		text : "You have the power to create whatever you want…greater happiness, more joy, deeper fulfillment and more abundance. \n \nMyGoalBook provides you with a unique visualization tool to allow you to embrace the principles of the Law of Attraction.",
 		color : 'black',
 		font : {
@@ -130,43 +146,26 @@ function AddViews() {
 
 	// Add to the parent view
 
-	subselfcenter.add(bodyText);
+	subself.add(bodyText1);
 
 	//**************************************************************View 2*************************************************************
 
-	var Topsubself2 = Titanium.UI.createView({
-		width : '100%',
-		height : '95%',
-		top : '0%',
-	});
-
-	var Getting_Started = Ti.UI.createLabel({
+	var Getting_Started2 = Ti.UI.createLabel({
 		text : 'Empower Yourself. Envision Your Future',
 		color : 'black',
 		font : {
 			fontSize : tmp,
 			fontWeight : 'bold',
 			fontFamily : this_font
-
 		},
 		left : '2%',
 		right : '2%',
-		top : '4%',
+		top : '1%',
 	});
-	Topsubself2.add(Getting_Started);
-
-	var subselfcenter = Titanium.UI.createView({
-		width : '90%',
-		height : '77%',
-		top : '23%',
-		//backgroundImage : '/images/topbar.png'
-	});
-	subselfcenter.addEventListener('click', function() {
-	});
-	Topsubself2.add(subselfcenter);
+	subself.add(Getting_Started2);
 
 	// Create a Label.
-	var bodyText = Ti.UI.createLabel({
+	var bodyText2 = Ti.UI.createLabel({
 		text : "Personal Success results from the ability to act, the ability to take action and the ability to produce results. ",
 		color : 'black',
 		font : {
@@ -181,17 +180,11 @@ function AddViews() {
 
 	// Add to the parent view
 
-	subselfcenter.add(bodyText);
+	subself.add(bodyText2);
 
 	//**************************************************************View 3*************************************************************
 
-	var Topsubself3 = Titanium.UI.createView({
-		width : '100%',
-		height : '95%',
-		top : '0%',
-	});
-
-	var Getting_Started = Ti.UI.createLabel({
+	var Getting_Started3 = Ti.UI.createLabel({
 		text : 'Applying the Laws of Attraction',
 		color : 'black',
 		font : {
@@ -201,22 +194,12 @@ function AddViews() {
 		},
 		left : '2%',
 		right : '2%',
-		top : '4%'
+		top : '1%'
 	});
-	Topsubself3.add(Getting_Started);
-
-	var subselfcenter = Titanium.UI.createView({
-		width : '90%',
-		height : '77%',
-		top : '23%',
-		//backgroundImage : '/images/topbar.png'
-	});
-	subselfcenter.addEventListener('click', function() {
-	});
-	Topsubself3.add(subselfcenter);
+	subself.add(Getting_Started3);
 
 	// Create a Label.
-	var bodyText = Ti.UI.createLabel({
+	var bodyText3 = Ti.UI.createLabel({
 		text : "By making simple, small changes daily, you will absolutely transform the quality of your life more quickly than you ever thought possible. Not only will you learn to take control of your own life through personal development, but you’ll learn to help others make life-altering changes as well. ",
 		color : 'black',
 		font : {
@@ -231,17 +214,11 @@ function AddViews() {
 
 	// Add to the parent view
 
-	subselfcenter.add(bodyText);
+	subself.add(bodyText3);
 
 	//**************************************************************View 4*************************************************************
 
-	var Topsubself4 = Titanium.UI.createView({
-		width : '100%',
-		height : '95%',
-		top : '0%',
-	});
-
-	var Getting_Started = Ti.UI.createLabel({
+	var Getting_Started4 = Ti.UI.createLabel({
 		text : 'A Powerful and Versatile Visualization Tool',
 		color : 'black',
 		font : {
@@ -249,24 +226,14 @@ function AddViews() {
 			fontWeight : 'bold',
 			fontFamily : this_font
 		},
-		left : '0%',
-		right : '0%',
-		top : '4%'
+		left : '2%',
+		right : '2%',
+		top : '1%'
 	});
-	Topsubself4.add(Getting_Started);
-
-	var subselfcenter = Titanium.UI.createScrollView({
-		width : '90%',
-		height : '77%',
-		top : '23%',
-		//backgroundImage : '/images/topbar.png'
-	});
-	subselfcenter.addEventListener('click', function() {
-	});
-	Topsubself4.add(subselfcenter);
+	subself.add(Getting_Started4);
 
 	// Create a Label.
-	var bodyText = Ti.UI.createLabel({
+	var bodyText4 = Ti.UI.createLabel({
 		text : "Often the biggest challenge to achieving what we desire is our ability to repeatedly review our Goals on a daily basis - if you don’t see them, they will soon be out of sight… and out of mind. \n \nMyGoalBook removes this obstacle by providing you with access to your Goals Wherever and Whenever You Like – it will even remind you to Visualize What You Desire. ",
 		color : 'black',
 		font : {
@@ -281,17 +248,11 @@ function AddViews() {
 
 	// Add to the parent view
 
-	subselfcenter.add(bodyText);
+	subself.add(bodyText4);
 
 	//**************************************************************View 5*************************************************************
 
-	var Topsubself5 = Titanium.UI.createView({
-		width : '100%',
-		height : '95%',
-		top : '0%',
-	});
-
-	var Getting_Started = Ti.UI.createLabel({
+	var Getting_Started5 = Ti.UI.createLabel({
 		text : 'It Only Works',
 		color : 'black',
 		font : {
@@ -300,23 +261,13 @@ function AddViews() {
 			fontFamily : this_font
 		},
 		left : '2%',
-		top : '4%',
+		top : '1%',
 		right : '2%'
 	});
-	Topsubself5.add(Getting_Started);
-
-	var subselfcenter = Titanium.UI.createScrollView({
-		width : '90%',
-		height : '77%',
-		top : '23%',
-		//backgroundImage : '/images/topbar.png'
-	});
-	subselfcenter.addEventListener('click', function() {
-	});
-	Topsubself5.add(subselfcenter);
+	subself.add(Getting_Started5);
 
 	// Create a Label.
-	var bodyText = Ti.UI.createLabel({
+	var bodyText5 = Ti.UI.createLabel({
 		text : "MyGoalBook keeps you focused and on track towards achieving your goals. Don’t downplay the simplicity of MyGoalBook.\n\nIt works, and there are countless examples of high achievers who have put these principles into play in their lives and are reaping great rewards as a result.",
 		color : 'black',
 		font : {
@@ -331,17 +282,11 @@ function AddViews() {
 
 	// Add to the parent view
 
-	subselfcenter.add(bodyText);
+	subself.add(bodyText5);
 
 	//**************************************************************View 6*************************************************************
 
-	var Topsubself6 = Titanium.UI.createView({
-		width : '100%',
-		height : '95%',
-		top : '0%',
-	});
-
-	var Getting_Started = Ti.UI.createLabel({
+	var Getting_Started6 = Ti.UI.createLabel({
 		text : 'How to use MyGoalBook',
 		color : 'black',
 		font : {
@@ -350,24 +295,14 @@ function AddViews() {
 			fontFamily : this_font
 		},
 		left : '2%',
-		top : '4%',
+		top : '1%',
 		right : '2%'
 	});
-	Topsubself6.add(Getting_Started);
-
-	var subselfcenter = Titanium.UI.createScrollView({
-		width : '90%',
-		height : '77%',
-		top : '23%',
-		layout : 'vertical'
-	});
-	subselfcenter.addEventListener('click', function() {
-	});
-	Topsubself6.add(subselfcenter);
+	subself.add(Getting_Started6);
 
 	// Create a Label.
-	var bodyText = Ti.UI.createLabel({
-		text : "Think about your Goals – it’s always worth starting out with a clean piece of paper and writing constantly for 10 minutes a list of all the things that you desire, want to achieve, would like to experience, places to visit etc.\n\nOnce you are happy with this list, prioritise them – which ones are you determined to achieve?\n\nFor each one of these, write a brief description, find a suitable image and identify a step that you can take soon to move forward towards your goal. Finally attach a date by which you wish to achieve this goal. \n\nGo to ‘Create Goal’ and upload all of this within the app. Press ‘Save’ Congratulations, you’ve just created your first Goal Card within MyGoalBook. Repeat for as many Goals as you like.\n\nNow go to ‘Settings’ and set specific times and frequencies that you would like to be reminded to “Visualise” your Goals.\n\nYou can also upload a copy of your Goal Card to the most popular Social Media sites.",
+	var bodyText7 = Ti.UI.createLabel({
+		text : "Think about your Goals – it’s always worth starting out with a clean piece of paper and writing constantly for 10 minutes a list of all the things that you desire, want to achieve, would like to experience, places to visit etc.\n\nOnce you are happy with this list, prioritise them – which ones are you determined to achieve?\n\nFor each one of these, write a brief description, find a suitable image and identify a step that you can take soon to move forward towards your goal. Finally attach a date by which you wish to achieve this goal. \n\nGo to ‘Create Goal’ and upload all of this within the app. Press ‘Save’ Congratulations, you’ve just created your first Goal Card within MyGoalBook. Repeat for as many Goals as you like.\n\nNow go to ‘Settings’ and set specific times and frequencies that you would like to be reminded to “Visualise” your Goals.\n\nYou can also upload a copy of your Goal Card to the most popular Social Media sites.\n\nOnce you have achieved individual Goals, click on the ‘Achieved’ button within the Goal Card. You can see all of your completed Goals by clicking on the Completed Goals icon.",
 		color : 'black',
 		font : {
 			fontSize : tmp1,
@@ -376,55 +311,16 @@ function AddViews() {
 		height : 'auto',
 		width : 'auto',
 		left : '5%',
-		right : '5%',
-		top : '3%'
+		right : '5%'
 	});
 
 	// Add to the parent view
 
-	subselfcenter.add(bodyText);
-
-	// Create a Label.
-	var bodyText2 = Ti.UI.createLabel({
-		text : "Once you have achieved individual Goals, click on the ‘Achieved’ button within the Goal Card. You can see all of your completed Goals by clicking on the Completed Goals icon.",
-		color : 'black',
-		font : {
-			fontSize : tmp1,
-			fontFamily : this_font
-		},
-		height : 'auto',
-		width : 'auto',
-		left : '5%',
-		right : '5%',
-		top : '3%'
-	});
-
-	// Add to the parent view
-
-	subselfcenter.add(bodyText2);
-
-	// Create a Label.
-	var bodyText3 = Ti.UI.createLabel({
-		text : " ",
-		color : 'black',
-		height : 'auto',
-		width : 'auto',
-		top : '3%'
-	});
-
-	// Add to the parent view
-
-	subselfcenter.add(bodyText3);
+	subself.add(bodyText7);
 
 	//**************************************************************View 7*************************************************************
 
-	var Topsubself7 = Titanium.UI.createView({
-		width : '100%',
-		height : '95%',
-		top : '0%',
-	});
-
-	var Getting_Started = Ti.UI.createLabel({
+	var Getting_Started7 = Ti.UI.createLabel({
 		text : 'About MyGoalBook',
 		color : 'black',
 		font : {
@@ -433,27 +329,14 @@ function AddViews() {
 			fontFamily : this_font
 		},
 		left : '2%',
-		top : '4%',
+		top : '1%',
 		right : '2%'
 	});
 	// Add to the parent view.
-	Topsubself7.add(Getting_Started);
-
-	//Topsubself7.add(decorateLabel_sec(Getting_Started,'#FFF'));
-
-	var subselfcenter = Titanium.UI.createScrollView({
-		width : '90%',
-		height : '77%',
-		top : '23%',
-		//backgroundImage : '/images/topbar.png',
-		layout : 'vertical'
-	});
-	subselfcenter.addEventListener('click', function() {
-	});
-	Topsubself7.add(subselfcenter);
+	subself.add(Getting_Started7);
 
 	// Create a Label.
-	var bodyText = Ti.UI.createLabel({
+	var bodyText8 = Ti.UI.createLabel({
 		text : "Version – 2.5",
 		color : 'black',
 		font : {
@@ -463,12 +346,12 @@ function AddViews() {
 		height : 'auto',
 		width : 'auto',
 		left : '5%',
-		top : '3%'
+		//top : '3%'
 	});
-	subselfcenter.add(bodyText);
+	subself.add(bodyText8);
 
 	// Create a Label.
-	var bodyText2 = Ti.UI.createLabel({
+	var bodyText9 = Ti.UI.createLabel({
 		text : "Send us your feedback ",
 		color : 'black',
 		font : {
@@ -479,9 +362,9 @@ function AddViews() {
 		width : 'auto',
 		left : '5%',
 		right : '5%',
-		top : '3%'
+		top : '0.5%'
 	});
-	bodyText2.addEventListener('click', function(e) {
+	bodyText9.addEventListener('click', function(e) {
 		//open link in safari - application will close
 		var emailDialog = Ti.UI.createEmailDialog();
 		emailDialog.subject = "My Goal Book Feedback";
@@ -489,7 +372,7 @@ function AddViews() {
 		emailDialog.messageBody = '';
 		emailDialog.open();
 	});
-	subselfcenter.add(bodyText2);
+	subself.add(bodyText9);
 
 	var bottom_line = Ti.UI.createView({
 		backgroundColor : 'black',
@@ -498,9 +381,9 @@ function AddViews() {
 		left : '5%',
 		right : '5%',
 	});
-	subselfcenter.add(bottom_line);
+	subself.add(bottom_line);
 
-	var bodyText3 = Ti.UI.createLabel({
+	var bodyText10 = Ti.UI.createLabel({
 		text : "Help",
 		color : 'black',
 		font : {
@@ -511,14 +394,14 @@ function AddViews() {
 		width : 'auto',
 		left : '5%',
 		right : '5%',
-		top : '3%'
+		top : '0.5%'
 	});
-	bodyText3.addEventListener('click', function(e) {
+	bodyText10.addEventListener('click', function(e) {
 		//open link in safari - application will close
 		Titanium.Platform.openURL('http://www.mygoalbook.net/help');
 	});
 
-	subselfcenter.add(bodyText3);
+	subself.add(bodyText10);
 
 	var bottom_line = Ti.UI.createView({
 		backgroundColor : 'black',
@@ -527,9 +410,9 @@ function AddViews() {
 		left : '5%',
 		right : '5%',
 	});
-	subselfcenter.add(bottom_line);
+	subself.add(bottom_line);
 
-	var bodyText4 = Ti.UI.createLabel({
+	var bodyText11 = Ti.UI.createLabel({
 		text : "Terms & Conditions",
 		color : 'black',
 		font : {
@@ -540,14 +423,14 @@ function AddViews() {
 		width : 'auto',
 		left : '5%',
 		right : '5%',
-		top : '3%'
+		top : '0.5%'
 	});
-	bodyText4.addEventListener('click', function(e) {
+	bodyText11.addEventListener('click', function(e) {
 		//open link in safari - application will close
 		Titanium.Platform.openURL('http://www.mygoalbook.net/terms');
 	});
 
-	subselfcenter.add(bodyText4);
+	subself.add(bodyText11);
 
 	var bottom_line = Ti.UI.createView({
 		backgroundColor : 'black',
@@ -556,9 +439,9 @@ function AddViews() {
 		left : '5%',
 		right : '5%',
 	});
-	subselfcenter.add(bottom_line);
+	subself.add(bottom_line);
 
-	var bodyText5 = Ti.UI.createLabel({
+	var bodyText12 = Ti.UI.createLabel({
 		text : "Feedback",
 		color : 'black',
 		font : {
@@ -569,14 +452,14 @@ function AddViews() {
 		width : 'auto',
 		left : '5%',
 		right : '5%',
-		top : '3%'
+		top : '0.5%'
 	});
-	bodyText5.addEventListener('click', function(e) {
+	bodyText12.addEventListener('click', function(e) {
 		//open link in safari - application will close
 		Titanium.Platform.openURL('http://www.mygoalbook.net/feedback');
 	});
 
-	subselfcenter.add(bodyText5);
+	subself.add(bodyText12);
 
 	var bottom_line = Ti.UI.createView({
 		backgroundColor : 'black',
@@ -585,9 +468,9 @@ function AddViews() {
 		left : '5%',
 		right : '5%',
 	});
-	subselfcenter.add(bottom_line);
+	subself.add(bottom_line);
 
-	var bodyText6 = Ti.UI.createLabel({
+	var bodyText13 = Ti.UI.createLabel({
 		text : "Review this App",
 		color : 'black',
 		font : {
@@ -598,13 +481,55 @@ function AddViews() {
 		width : 'auto',
 		left : '5%',
 		right : '5%',
-		top : '3%'
+		top : '0.5%'
 	});
-	bodyText6.addEventListener('click', function(e) {
-		Titanium.Platform.openURL('http://www.mygoalbook.net/feedback');
+	bodyText13.addEventListener('click', function(e) {
+
+		var ApptentiveModule = require('com.apptentive.titanium');
+		Ti.API.info("module is => " + ApptentiveModule);
+
+		//API Key
+		var apiKey = ApptentiveModule.apiKey();
+		if (apiKey) {
+			//throw Error("Apptentive API key should be nil when not set!");
+		}
+		ApptentiveModule.setApiKey('769930e7c3380763bc6777e7ae6896be5b9a85708d0ee6d4d2e63124a2540321');
+		apiKey = ApptentiveModule.apiKey();
+		if (apiKey != '769930e7c3380763bc6777e7ae6896be5b9a85708d0ee6d4d2e63124a2540321') {
+			throw Error("Apptentive API key was not properly set!");
+		}
+
+		//UserName
+		var userName = ApptentiveModule.initialUserName();
+		if (userName) {
+			//throw Error("Apptentive username should be nil when not set!");
+		}
+		ApptentiveModule.setInitialUserName("Steven P. Jobs");
+		userName = ApptentiveModule.initialUserName();
+		if (userName != "Steven P. Jobs") {
+			//throw Error("Apptentive username was not properly set!");
+		}
+
+		//EmailAddress
+		var email = ApptentiveModule.initialUserEmailAddress();
+		if (email) {
+			//throw Error("Apptentive email should be nil when not set!");
+		}
+		ApptentiveModule.setInitialUserEmailAddress("");
+		email = ApptentiveModule.initialUserEmailAddress();
+		if (email != "") {
+			//throw Error("Apptentive email address was not properly set!");
+		}
+
+		//Custom data
+		ApptentiveModule.addCustomDataWithKey("1 Infinite Loop, Cupertino CA", "address");
+		ApptentiveModule.addCustomDataWithKey("RemoveThisData", "remove");
+		ApptentiveModule.removeCustomDataWithKey("remove");
+
+		ApptentiveModule.presentMessageCenter();
 	});
 
-	subselfcenter.add(bodyText6);
+	subself.add(bodyText13);
 
 	var bottom_line = Ti.UI.createView({
 		backgroundColor : 'black',
@@ -613,9 +538,9 @@ function AddViews() {
 		left : '5%',
 		right : '5%',
 	});
-	subselfcenter.add(bottom_line);
+	subself.add(bottom_line);
 
-	var bodyText7 = Ti.UI.createLabel({
+	var bodyText14 = Ti.UI.createLabel({
 		text : "Follow us on Twitter ",
 		color : 'black',
 		font : {
@@ -626,14 +551,14 @@ function AddViews() {
 		width : 'auto',
 		left : '5%',
 		right : '5%',
-		top : '3%'
+		top : '0.5%'
 	});
-	bodyText7.addEventListener('click', function(e) {
+	bodyText14.addEventListener('click', function(e) {
 		//open link in safari - application will close
 		Titanium.Platform.openURL('http://www.twitter.com/mygoalbook');
 	});
 
-	subselfcenter.add(bodyText7);
+	subself.add(bodyText14);
 
 	var bottom_line = Ti.UI.createView({
 		backgroundColor : 'black',
@@ -642,9 +567,9 @@ function AddViews() {
 		left : '5%',
 		right : '5%',
 	});
-	subselfcenter.add(bottom_line);
+	subself.add(bottom_line);
 
-	var bodyText8 = Ti.UI.createLabel({
+	var bodyText15 = Ti.UI.createLabel({
 		text : "Follow us on Facebook ",
 		color : 'black',
 		font : {
@@ -655,14 +580,14 @@ function AddViews() {
 		width : 'auto',
 		left : '5%',
 		right : '5%',
-		top : '3%'
+		top : '0.5%'
 	});
-	bodyText8.addEventListener('click', function(e) {
+	bodyText15.addEventListener('click', function(e) {
 		//open link in safari - application will close
 		Titanium.Platform.openURL('https://facebook.com/MyGoalBook');
 	});
 
-	subselfcenter.add(bodyText8);
+	subself.add(bodyText15);
 
 	var bottom_line = Ti.UI.createView({
 		backgroundColor : 'black',
@@ -671,9 +596,9 @@ function AddViews() {
 		left : '5%',
 		right : '5%',
 	});
-	subselfcenter.add(bottom_line);
+	subself.add(bottom_line);
 
-	var bodyText9 = Ti.UI.createLabel({
+	var bodyText16 = Ti.UI.createLabel({
 		text : "Visit MyGoalBook.net",
 		color : 'black',
 		font : {
@@ -684,13 +609,13 @@ function AddViews() {
 		width : 'auto',
 		left : '5%',
 		right : '5%',
-		top : '3%'
+		top : '0.5%'
 	});
-	bodyText9.addEventListener('click', function(e) {
+	bodyText16.addEventListener('click', function(e) {
 		//open link in safari - application will close
 		Titanium.Platform.openURL('http://www.mygoalbook.net');
 	});
-	subselfcenter.add(bodyText9);
+	subself.add(bodyText16);
 
 	var bottom_line = Ti.UI.createView({
 		backgroundColor : 'black',
@@ -699,10 +624,10 @@ function AddViews() {
 		left : '5%',
 		right : '5%',
 	});
-	subselfcenter.add(bottom_line);
+	subself.add(bottom_line);
 
-	var bodyText10 = Ti.UI.createLabel({
-		text : " ",
+	var bodyText17 = Ti.UI.createLabel({
+		text : "\n\n\n\n\n\n\n\n\n\n\n\n",
 		color : 'black',
 		font : {
 			fontSize : tmp1,
@@ -711,34 +636,33 @@ function AddViews() {
 		height : 'auto',
 		width : 'auto',
 		left : '5%',
-		right : '5%',
-		top : '3%'
+		right : '5%'
 	});
 
-	subselfcenter.add(bodyText10);
-	var fronts = Ti.UI.createScrollableView({
-		//backgroundColor:'red',
-		height : '89%',
-		width : '90%',
-		top : '0%',
-		views : [Topsubself1, Topsubself2, Topsubself3, Topsubself4, Topsubself5, Topsubself6, Topsubself7],
-		showPagingControl : true,
-		pagingControlColor : 'transparent'
-	});
-	fronts.addEventListener('click', function(e) {
-	});
-	subself.add(fronts);
+	subself.add(bodyText17);
+	// var fronts = Ti.UI.createScrollableView({
+	// //backgroundColor:'red',
+	// height : '89%',
+	// width : '90%',
+	// top : '0%',
+	// views : [Topsubself1, Topsubself2, Topsubself3, Topsubself4, Topsubself5, Topsubself6, Topsubself7],
+	// showPagingControl : true,
+	// pagingControlColor : 'transparent'
+	// });
+	// fronts.addEventListener('click', function(e) {
+	// });
+	// subself.add(fronts);
 
 	//*********************************************************bottom View*********************************************
 
-	var secondsubselfBottom = Titanium.UI.createView({
+	secondsubselfBottom = Titanium.UI.createView({
 		width : '100%',
 		height : '11%',
 		bottom : '0%',
 		backgroundImage : '/images/topbar.png',
 		layout : 'horizontal'
 	});
-	subself.add(secondsubselfBottom);
+	supersubself.add(secondsubselfBottom);
 
 	var secondmyGoalBook = Ti.UI.createView({
 		height : '100%',
@@ -748,16 +672,15 @@ function AddViews() {
 
 	// Listen for click events.
 	secondmyGoalBook.addEventListener('click', function() {
-		indicator();
-
-		var showGoal = Ti.UI.createWindow({
-			backgroundColor : 'white',
-			url : 'showGoal.js',
-			exitOnClose : true,
-			navBarHidden : true,
-			fullscreen : true
-		});
-		showGoal.open();
+	var newWindowClass = require('/ui/common/showGoal');
+					var newWindow = new newWindowClass();
+			
+                 var currentWin=first_text_view;
+					newWindow.containingTab = currentWin.containingTab;
+					
+					currentWin.containingTab.open(newWindow, {
+						animated : false
+					});
 	});
 
 	// Add to the parent view.
@@ -765,7 +688,7 @@ function AddViews() {
 	var secondmyGoalBookicon = Ti.UI.createView({
 		backgroundImage : '/images/MyGoalBook.png',
 		height : 35,
-		width : 35,
+		width : 30,
 
 	});
 	secondmyGoalBook.add(secondmyGoalBookicon);
@@ -780,19 +703,16 @@ function AddViews() {
 	// Listen for click events.
 	secondCreate_goal.addEventListener('click', function() {
 
-		indicator();
-
 		var check = Ti.App.Properties.setBool('check', false);
-		var Create_Goal = Titanium.UI.createWindow({
-			backgroundColor : 'white',
-			url : 'Create_Goal.js',
-			orientationModes : 'PORTRAIT',
-			exitOnClose : true,
-			navBarHidden : true,
-			fullscreen : true
-			//windowSoftInputMode : softInput
-		});
-		Create_Goal.open();
+	var newWindowClass = require('/ui/common/Create_Goal');
+					var newWindow = new newWindowClass();
+			
+                 var currentWin=first_text_view;
+					newWindow.containingTab = currentWin.containingTab;
+					
+					currentWin.containingTab.open(newWindow, {
+						animated : false
+					});
 	});
 
 	// Add to the parent view.
@@ -801,7 +721,7 @@ function AddViews() {
 	var secondCreate_goalicon = Ti.UI.createView({
 		backgroundImage : '/images/createGoal.png',
 		height : 35,
-		width : 35,
+		width : 30,
 
 	});
 	secondCreate_goal.add(secondCreate_goalicon);
@@ -814,16 +734,15 @@ function AddViews() {
 
 	// Listen for click events.
 	secondcompleteGoal.addEventListener('click', function() {
-		indicator();
-
-		var Goalcomplete = Titanium.UI.createWindow({
-			backgroundColor : 'white',
-			url : 'Goalcomplete.js',
-			exitOnClose : true,
-			navBarHidden : true,
-			fullscreen : true
-		});
-		Goalcomplete.open();
+		var newWindowClass = require('/ui/common/Goalcomplete');
+					var newWindow = new newWindowClass();
+			
+                 var currentWin=first_text_view;
+					newWindow.containingTab = currentWin.containingTab;
+					
+					currentWin.containingTab.open(newWindow, {
+						animated : false
+					});
 	});
 
 	// Add to the parent view.
@@ -832,7 +751,7 @@ function AddViews() {
 	var secondcompleteGoalicon = Ti.UI.createView({
 		backgroundImage : '/images/Goal_complete.png',
 		height : 35,
-		width : 35,
+		width : 30,
 
 	});
 	secondcompleteGoal.add(secondcompleteGoalicon);
@@ -847,17 +766,15 @@ function AddViews() {
 	// Listen for click events.
 	secondsetting.addEventListener('click', function() {
 
-		indicator();
-
-		var Settings = Titanium.UI.createWindow({
-			backgroundColor : 'white',
-			url : 'Setting.js',
-			orientationModes : 'PORTRAIT',
-			exitOnClose : true,
-			navBarHidden : true,
-			fullscreen : true
-		});
-		Settings.open();
+		var newWindowClass = require('/ui/common/Setting');
+					var newWindow = new newWindowClass();
+			
+                 var currentWin=first_text_view;
+					newWindow.containingTab = currentWin.containingTab;
+					
+					currentWin.containingTab.open(newWindow, {
+						animated : false
+					});
 	});
 
 	// Add to the parent view.
@@ -866,14 +783,14 @@ function AddViews() {
 	var secondsettingicon = Ti.UI.createView({
 		backgroundImage : '/images/settings.png',
 		height : 35,
-		width : 35,
+		width : 30,
 
 	});
 	secondsetting.add(secondsettingicon);
 
 	// Create a Button.
 	var secondhome = Ti.UI.createView({
-		//backgroundImage : '/images/home.png',
+		//backgroundImage : '/images/home1.png',
 		backgroundColor : this_color,
 		height : '96%',
 		width : '20%',
@@ -888,9 +805,9 @@ function AddViews() {
 	secondsubselfBottom.add(secondhome);
 
 	var secondhomeicon = Ti.UI.createView({
-		backgroundImage : '/images/home.png',
+		backgroundImage : '/images/home1.png',
 		height : 35,
-		width : 35,
+		width : 30,
 
 	});
 	secondhome.add(secondhomeicon);
@@ -916,14 +833,15 @@ function Showalert() {
 				myDatabase.execute(sql);
 				myDatabase.execute('INSERT INTO pages (page) VALUES(?)', page);
 				myDatabase.close();
-				var showGoal = Ti.UI.createWindow({
-					backgroundColor : 'white',
-					url : Ti.Filesystem.resourcesDirectory + 'ui/common/showGoal.js',
-					exitOnClose : true,
-					navBarHidden : true,
-					fullscreen : true
-				});
-				showGoal.open();
+				var newWindowClass = require('/ui/common/showGoal');
+					var newWindow = new newWindowClass();
+			
+                 var currentWin=first_text_view;
+					newWindow.containingTab = currentWin.containingTab;
+					
+					currentWin.containingTab.open(newWindow, {
+						animated : false
+					});
 				break;
 			//This will never be reached, if you specified cancel for index 1
 			case 1:
@@ -957,3 +875,8 @@ function indicator() {
 	indicatorView.add(activityIndicator);
 	activityIndicator.show();
 }
+
+	return first_text_view;
+};
+
+module.exports = first_text_view;
