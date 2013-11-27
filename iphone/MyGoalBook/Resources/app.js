@@ -5,7 +5,6 @@ while (create_goalResultSet.isValidRow()) {
 	this_title.push(create_goalResultSet.fieldByName('title'));
 	create_goalResultSet.next();
 }
-var count = this_title.length;
 create_goalResultSet.close();
 
 var settingResultSet = myDatabase.execute('SELECT * FROM Background_images WHERE selected_view=?', '1');
@@ -20,7 +19,7 @@ while (settingResultSet.isValidRow()) {
 }
 settingResultSet.close();
 
-var tmp1 = 16;
+var tmp1 =16;
 var tmp = (Titanium.Platform.displayCaps.platformHeight * 3.8) / 100;
 var corner = Math.round(Ti.Platform.displayCaps.platformWidth * 0.025);
 var width = Math.round(Ti.Platform.displayCaps.platformWidth * 0.005);
@@ -31,14 +30,11 @@ if (instial > 0) {
 	Ti.App.Properties.setBool('show', false);
    var Show_Goal = require('ui/common/Goal_Tab');
 		new Show_Goal('showGoal').open();
-
-
 	instial = 1;
 } else {
 	var app = Ti.UI.createWindow({
 		backgroundColor : 'black',
 		navBarHidden : true,
-		fullscreen : true,
 		exitOnClose : true
 	});
 
@@ -68,8 +64,8 @@ if (instial > 0) {
 	AllView.add(aLabel);
 
 	// Create a Button.
-	var Ok = Ti.UI.createButton({
-		backgroundImage : '/images/first.png',
+	var Ok = Ti.UI.createImageView({
+		image : '/images/first.png',
 		height : '20%',
 		width : '85%',
 		bottom:'20%'
@@ -78,9 +74,9 @@ if (instial > 0) {
 	// Listen for click events.
 	Ok.addEventListener('click', function(e) {
 		Ti.App.Properties.setBool('show', true);
-		var Show_Goal = require('ui/common/Goal_Tab');
-		new Show_Goal('Create_Goal').open();
-
+		var newWindowClass = require('ui/common/Create_Goal');
+		var newWindow = new newWindowClass();
+		newWindow.open();
 	});
 	AllView.add(Ok);
 	setTimeout(function() {

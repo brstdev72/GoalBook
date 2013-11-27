@@ -2,7 +2,7 @@
 <ti:app xmlns:ti="http://ti.appcelerator.org">
     <id>com.mygoalbook</id>
     <name>MyGoalBook</name>
-    <version>1.0.0</version>
+    <version>1.0.3</version>
     <publisher>brst981</publisher>
     <url>http://</url>
     <description>not specified</description>

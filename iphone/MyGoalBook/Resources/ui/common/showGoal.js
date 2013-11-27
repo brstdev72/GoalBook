@@ -26,7 +26,8 @@ function showGoal() {
 	}
 	settingResultSet.close();
 
-	var create_goalResultSet = myDatabase.execute('SELECT * FROM create_goal');
+	var create_goalResultSet = myDatabase.execute('SELECT rowid,* FROM create_goal');
+	var this_rowid = [];
 	var this_title = [];
 	var this_description = [];
 	var this_affirmation = [];
@@ -34,6 +35,7 @@ function showGoal() {
 	var this_date = [];
 	var this_achieved = [];
 	while (create_goalResultSet.isValidRow()) {
+		this_rowid.push(create_goalResultSet.fieldByName('rowid'));
 		this_title.push(create_goalResultSet.fieldByName('title'));
 		this_description.push(create_goalResultSet.fieldByName('description'));
 		this_affirmation.push(create_goalResultSet.fieldByName('affirmation'));
@@ -335,7 +337,8 @@ function showGoal() {
 		view[i] = Ti.UI.createView({
 			height : '100%',
 			id : i,
-			width : '100%'
+			width : '100%',
+			rowid : this_rowid[i]
 		});
 
 		var Tittle_view = Ti.UI.createScrollView({
@@ -345,6 +348,7 @@ function showGoal() {
 			height : '6.7%',
 			left : '5%',
 			top : '0%',
+			rowid : this_rowid[i]
 		});
 		view[i].add(Tittle_view);
 		var name = this_title[i].replace(" ", "\u00A0");
@@ -393,11 +397,12 @@ function showGoal() {
 			left : '5%',
 			top : '8%',
 			borderRadius : corner1,
+			rowid : this_rowid[i]
 			// borderWidth : width,
 			// borderColor : 'black'
 		});
 		GoalImage.addEventListener('click', function(e) {
-			temp = e.source.id;
+			temp = e.source.rowid;
 			var check = Ti.App.Properties.setBool('check', true);
 			var viewdata = Ti.App.Properties.setString('data', temp);
 			var newWindowClass = require('/ui/common/Create_Goal');
@@ -419,6 +424,7 @@ function showGoal() {
 			height : '5%',
 			right : '1.5%',
 			top : '0.5%',
+			rowid : this_rowid[i]
 		});
 		view[i].add(deleteImages);
 
@@ -428,11 +434,12 @@ function showGoal() {
 			height : '10%',
 			right : '0%',
 			top : '0%',
+			rowid : this_rowid[i]
 		});
 		deleteView.addEventListener('click', function(e) {
 			deleteImages.image = '/images/delete-icon1.png';
 			comp = e.source.id;
-			complt = comp + 1;
+			complt = e.source.rowid;
 
 			var alertDialog = Titanium.UI.createAlertDialog({
 				title : 'Delete Goal',
@@ -492,10 +499,11 @@ function showGoal() {
 			},
 			left : '5%',
 			top : '55%',
-			id : i
+			id : i,
+			rowid : this_rowid[i]
 		});
 		Description.addEventListener('click', function(e) {
-			temp = e.source.id;
+			temp = e.source.rowid;
 			var check = Ti.App.Properties.setBool('check', true);
 			var viewdata = Ti.App.Properties.setString('data', temp);
 			var newWindowClass = require('/ui/common/Create_Goal');
@@ -523,10 +531,11 @@ function showGoal() {
 			// borderRadius : corner1,
 			// borderWidth : width,
 			// borderColor : 'black',
-			layout : 'vertical'
+			layout : 'vertical',
+			rowid : this_rowid[i]
 		});
 		detailView.addEventListener('click', function(e) {
-			temp = e.source.id;
+			temp = e.source.rowid;
 			var check = Ti.App.Properties.setBool('check', true);
 			var viewdata = Ti.App.Properties.setString('data', temp);
 			var newWindowClass = require('/ui/common/Create_Goal');
@@ -550,7 +559,8 @@ function showGoal() {
 				fontFamily : this_font
 			},
 			left : 0,
-			id : i
+			id : i,
+			rowid : this_rowid[i]
 		});
 		Goal_Description.addEventListener('click', function(e) {
 		});
@@ -567,10 +577,11 @@ function showGoal() {
 			},
 			left : '51%',
 			top : '55%',
-			id : i
+			id : i,
+			rowid : this_rowid[i]
 		});
 		AffirmationTitle.addEventListener('click', function(e) {
-			temp = e.source.id;
+			temp = e.source.rowid;
 			var check = Ti.App.Properties.setBool('check', true);
 			var viewdata = Ti.App.Properties.setString('data', temp);
 			var newWindowClass = require('/ui/common/Create_Goal');
@@ -598,10 +609,11 @@ function showGoal() {
 			// borderRadius : corner1,
 			// borderWidth : width,
 			// borderColor : 'black',
-			layout : 'vertical'
+			layout : 'vertical',
+			rowid : this_rowid[i]
 		});
 		affirmationView.addEventListener('click', function(e) {
-			temp = e.source.id;
+			temp = e.source.rowid;
 			var check = Ti.App.Properties.setBool('check', true);
 			var viewdata = Ti.App.Properties.setString('data', temp);
 			var newWindowClass = require('/ui/common/Create_Goal');
@@ -624,7 +636,8 @@ function showGoal() {
 				fontFamily : this_font
 			},
 			left : 0,
-			id : i
+			id : i,
+			rowid : this_rowid[i]
 		});
 		Affirmation.addEventListener('click', function(e) {
 		});
@@ -655,7 +668,7 @@ function showGoal() {
 		// Add to the parent view.
 		dateView.add(DateCompletion);
 
-		var Date = Ti.UI.createLabel({
+		var Datelabel = Ti.UI.createLabel({
 			text : this_date[i],
 			color : 'black',
 			font : {
@@ -666,7 +679,7 @@ function showGoal() {
 		});
 
 		// Add to the parent view.
-		dateView.add(Date);
+		dateView.add(Datelabel);
 
 		var checkImageView = Ti.UI.createView({
 			top : '90%',
@@ -674,13 +687,21 @@ function showGoal() {
 			width : '44%',
 			right : '5%',
 			id : i,
-			layout : 'horizontal'
+			layout : 'horizontal',
+			rowid : this_rowid[i]
 		});
+
+		var pickerdate = new Date();
+		var day = pickerdate.getDate();
+		var months = pickerdate.getMonth();
+		var month = months + parseInt('1');
+		var year = pickerdate.getFullYear();
+		newdate = day + "/" + month + "/" + year;
+		date = newdate;
 		checkImageView.addEventListener('click', function(e) {
 			var comp = e.source.id;
-
-			var complt = parseInt(comp + 1);
-			myDatabase.execute('INSERT INTO complete_goal (title,description,affirmation,image,date) VALUES(?,?,?,?,?)', this_title[comp], this_description[comp], this_affirmation[comp], this_image[comp], this_date[comp]);
+			var complt = e.source.rowid;
+			myDatabase.execute('INSERT INTO complete_goal (title,description,affirmation,image,date) VALUES(?,?,?,?,?)', this_title[comp], this_description[comp], this_affirmation[comp], this_image[comp], date);
 			if (count > 1) {
 				myDatabase.execute('DELETE FROM create_goal WHERE rowid=?', complt);
 			} else {
@@ -708,7 +729,8 @@ function showGoal() {
 			top : '0%',
 			left : '0%',
 			borderColor : 'black',
-			borderWidth : 1
+			borderWidth : 1,
+			rowid : this_rowid[i]
 		});
 		checkImageView.add(checkImage);
 
@@ -723,7 +745,8 @@ function showGoal() {
 			},
 			textAlign : 'center',
 			left : '3%',
-			id : i
+			id : i,
+			rowid : this_rowid[i]
 		});
 
 		// Add to the parent view.
@@ -740,19 +763,12 @@ function showGoal() {
 			textAlign : 'center',
 			top : '95%',
 			left : '51%',
-			id : i
+			id : i,
+			rowid : this_rowid[i]
 		});
 		narrative2.addEventListener('click', function(e) {
 			var comp = e.source.id;
-			var complt = parseInt(comp + 1);
-
-			var pickerdate = new Date();
-			var day = pickerdate.getDate();
-			var months = pickerdate.getMonth();
-			var month = months + parseInt('1');
-			var year = pickerdate.getFullYear();
-			newdate = day + "/" + month + "/" + year;
-			date = newdate;
+			var complt = e.source.rowid;
 
 			indicator();
 
@@ -784,9 +800,7 @@ function showGoal() {
 		views : view,
 		//showPagingControl : true
 	});
-	if (buy) {
-
-	} else {
+	if (!buy) {
 		viewNumber = 0;
 		var swipecount = 0;
 		CARD.addEventListener('scroll', function(e) {
@@ -856,6 +870,7 @@ function showGoal() {
 			height : '100%',
 			id : r,
 			width : '100%',
+			rowid : this_rowid[r]
 		});
 		viewer[r].addEventListener('click', function(e) {
 			// temp = e.source.id;
@@ -879,6 +894,7 @@ function showGoal() {
 			height : '10%',
 			left : '3%',
 			top : '1%',
+			rowid : this_rowid[r]
 		});
 		viewer[r].add(Tittle_view_land);
 
@@ -923,11 +939,12 @@ function showGoal() {
 			height : '88%',
 			top : '12%',
 			left : '3%',
+			rowid : this_rowid[r]
 			// borderWidth : width,
 			// borderColor : 'black',
 		});
 		GoalImage.addEventListener('click', function(e) {
-			temp = e.source.id;
+			temp = e.source.rowid;
 			var check = Ti.App.Properties.setBool('check', true);
 			var viewdata = Ti.App.Properties.setString('data', temp);
 			var newWindowClass = require('/ui/common/Create_Goal');
@@ -952,10 +969,11 @@ function showGoal() {
 			},
 			left : '52%',
 			top : '5%',
-			id : r
+			id : r,
+			rowid : this_rowid[r]
 		});
 		Description.addEventListener('click', function(e) {
-			temp = e.source.id;
+			temp = e.source.rowid;
 			var check = Ti.App.Properties.setBool('check', true);
 			var viewdata = Ti.App.Properties.setString('data', temp);
 			var newWindowClass = require('/ui/common/Create_Goal');
@@ -983,10 +1001,11 @@ function showGoal() {
 			//borderRadius : corner1,
 			// borderWidth : width,
 			// borderColor : 'black',
-			layout : 'vertical'
+			layout : 'vertical',
+			rowid : this_rowid[r]
 		});
 		detailView.addEventListener('click', function(e) {
-			temp = e.source.id;
+			temp = e.source.rowid;
 			var check = Ti.App.Properties.setBool('check', true);
 			var viewdata = Ti.App.Properties.setString('data', temp);
 			var newWindowClass = require('/ui/common/Create_Goal');
@@ -1010,7 +1029,8 @@ function showGoal() {
 				fontFamily : this_font
 			},
 			left : 0,
-			id : r
+			id : r,
+			rowid : this_rowid[r]
 		});
 		Goal_Description.addEventListener('click', function(e) {
 		});
@@ -1024,6 +1044,7 @@ function showGoal() {
 			height : '13%',
 			right : '0%',
 			top : '0%',
+			rowid : this_rowid[r]
 		});
 
 		var deleteImage = Ti.UI.createImageView({
@@ -1033,12 +1054,14 @@ function showGoal() {
 			height : '7%',
 			right : '1%',
 			top : '2%',
+			rowid : this_rowid[r]
 		});
 		viewer[r].add(deleteImage);
 
 		deleteView.addEventListener('click', function(e) {
-			deleteImage.image = '/images/delete-icon1.png', comp = e.source.id;
-			complt = comp + 1;
+			deleteImage.image = '/images/delete-icon1.png';
+			comp = e.source.id;
+			complt = e.source.rowid;
 			var alertDialog = Titanium.UI.createAlertDialog({
 				title : 'Delete Goal',
 				message : 'Do you want to delete this Goal',
@@ -1096,10 +1119,11 @@ function showGoal() {
 			},
 			left : '52%',
 			top : '49%',
-			id : r
+			id : r,
+			rowid : this_rowid[r]
 		});
 		AffirmationTitle.addEventListener('click', function(e) {
-			temp = e.source.id;
+			temp = e.source.rowid;
 			var check = Ti.App.Properties.setBool('check', true);
 			var viewdata = Ti.App.Properties.setString('data', temp);
 			var newWindowClass = require('/ui/common/Create_Goal');
@@ -1127,10 +1151,11 @@ function showGoal() {
 			//borderRadius : corner1,
 			// borderWidth : width,
 			// borderColor : 'black',
-			layout : 'vertical'
+			layout : 'vertical',
+			rowid : this_rowid[r]
 		});
 		affirmationView.addEventListener('click', function(e) {
-			temp = e.source.id;
+			temp = e.source.rowid;
 			var check = Ti.App.Properties.setBool('check', true);
 			var viewdata = Ti.App.Properties.setString('data', temp);
 			var newWindowClass = require('/ui/common/Create_Goal');
@@ -1153,7 +1178,8 @@ function showGoal() {
 				fontFamily : this_font
 			},
 			left : 0,
-			id : r
+			id : r,
+			rowid : this_rowid[r]
 		});
 		Affirmation.addEventListener('click', function(e) {
 		});
@@ -1178,14 +1204,15 @@ function showGoal() {
 			},
 			left : '0%',
 			top : '3%',
-			id : r
+			id : r,
+			rowid : this_rowid[r]
 		});
 		DateCompletion.addEventListener('click', function(e) {
 		});
 		// Add to the parent view.
 		dateView.add(DateCompletion);
 
-		var Date = Ti.UI.createLabel({
+		var Datelabel = Ti.UI.createLabel({
 			text : this_date[r],
 			color : 'black',
 			font : {
@@ -1196,7 +1223,7 @@ function showGoal() {
 			bottom : '1%',
 		});
 		// Add to the parent view.
-		dateView.add(Date);
+		dateView.add(Datelabel);
 
 		checkImageView = Ti.UI.createView({
 			top : '92%',
@@ -1204,6 +1231,7 @@ function showGoal() {
 			width : '12%',
 			left : '52%',
 			id : r,
+			rowid : this_rowid[r]
 
 		});
 		viewer[r].add(checkImageView);
@@ -1214,7 +1242,8 @@ function showGoal() {
 			id : r,
 			height : '100%',
 			borderColor : 'black',
-			borderWidth : 1
+			borderWidth : 1,
+			rowid : this_rowid[r]
 		});
 		checkImage.addEventListener('click', function(e) {
 		});
@@ -1232,6 +1261,7 @@ function showGoal() {
 			width : '40%',
 			left : '65%',
 			id : r,
+			rowid : this_rowid[r]
 		});
 		viewer[r].add(narrative_label);
 		narrative_label = Ti.UI.createLabel({
@@ -1246,6 +1276,7 @@ function showGoal() {
 			width : '40%',
 			left : '65%',
 			id : r,
+			rowid : this_rowid[r]
 		});
 		viewer[r].add(narrative_label);
 
@@ -1255,15 +1286,16 @@ function showGoal() {
 			width : '44%',
 			left : '52%',
 			id : r,
+			rowid : this_rowid[r]
 		});
 		checktickView.addEventListener('click', function(e) {
 
 			var comp = e.source.id;
-			var complt = parseInt(comp + 1);
+			var complt = e.source.rowid;
 
 			indicator();
 
-			myDatabase.execute('INSERT INTO complete_goal (title,description,affirmation,image,date) VALUES(?,?,?,?,?)', this_title[comp], this_description[comp], this_affirmation[comp], this_image[comp], this_date[comp]);
+			myDatabase.execute('INSERT INTO complete_goal (title,description,affirmation,image,date) VALUES(?,?,?,?,?)', this_title[comp], this_description[comp], this_affirmation[comp], this_image[comp], date);
 			if (count > 1) {
 				myDatabase.execute('DELETE FROM create_goal WHERE rowid=?', complt);
 			} else {
@@ -1348,13 +1380,13 @@ function showGoal() {
 		activityIndicator.show();
 	}
 
-	if (!buy) {
+	//if (!buy) {
 		//showGoal.add(adView);
 		// setTimeout(function() {
 		// showGoal.remove(adView);
 		// }, 15000);
-	}
+	//}
 	return showGoal;
 };
 
-module.exports = showGoal; 
+module.exports = showGoal;

@@ -5,7 +5,6 @@ while (create_goalResultSet.isValidRow()) {
 	this_title.push(create_goalResultSet.fieldByName('title'));
 	create_goalResultSet.next();
 }
-var count = this_title.length;
 create_goalResultSet.close();
 
 var settingResultSet = myDatabase.execute('SELECT * FROM Background_images WHERE selected_view=?', '1');
@@ -20,7 +19,7 @@ while (settingResultSet.isValidRow()) {
 }
 settingResultSet.close();
 
-var tmp1 = (Titanium.Platform.displayCaps.platformHeight * 2.5) / 100;
+var tmp1 =(Titanium.Platform.displayCaps.platformHeight * 2.8) / 100;
 var tmp = (Titanium.Platform.displayCaps.platformHeight * 3.8) / 100;
 var corner = Math.round(Ti.Platform.displayCaps.platformWidth * 0.025);
 var width = Math.round(Ti.Platform.displayCaps.platformWidth * 0.005);
@@ -29,24 +28,13 @@ var instial = Ti.App.Properties.getInt('start', this_title.length);
 
 if (instial > 0) {
 	Ti.App.Properties.setBool('show', false);
-	var app = Ti.UI.createWindow({
-		backgroundColor : 'black',
-		url : 'ui/common/showGoal.js',
-		navBarHidden : true,
-		fullscreen : true,
-		exitOnClose : true
-	});
-
-	setTimeout(function() {
-		app.open(); 
-	}, 1000);
-
+   var Show_Goal = require('ui/common/Goal_Tab');
+		new Show_Goal('showGoal').open();
 	instial = 1;
 } else {
 	var app = Ti.UI.createWindow({
 		backgroundColor : 'black',
 		navBarHidden : true,
-		fullscreen : true,
 		exitOnClose : true
 	});
 
@@ -86,16 +74,9 @@ if (instial > 0) {
 	// Listen for click events.
 	Ok.addEventListener('click', function(e) {
 		Ti.App.Properties.setBool('show', true);
-		var Create_Goal = Titanium.UI.createWindow({
-			backgroundColor : 'white',
-			url : 'ui/common/Create_Goal.js',
-			navBarHidden : true,
-			fullscreen : true,
-			exitOnClose : true
-		});
-
-		Create_Goal.open();
-
+		var newWindowClass = require('ui/common/Create_Goal');
+		var newWindow = new newWindowClass();
+		newWindow.open();
 	});
 	AllView.add(Ok);
 	setTimeout(function() {

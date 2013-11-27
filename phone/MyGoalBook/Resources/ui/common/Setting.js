@@ -22,9 +22,11 @@ settingResultSet.close();
 var settingResultSet = myDatabase.execute('SELECT * FROM Background_images WHERE selected_view=?', '1');
 var this_path = '';
 var this_color = '';
+var this_names ='';
 while (settingResultSet.isValidRow()) {
 	path = settingResultSet.fieldByName('path');
 	this_color = settingResultSet.fieldByName('color_view');
+	this_names = settingResultSet.fieldByName('name');
 	settingResultSet.next();
 }
 settingResultSet.close();
@@ -69,7 +71,7 @@ var background = 'gray';
 var fonts = 'georgia';
 var tmp = (Titanium.Platform.displayCaps.platformHeight * 3.8) / 100;
 var tmp2 = (Titanium.Platform.displayCaps.platformHeight * 2.8) / 100;
-var tmp3 =(Titanium.Platform.displayCaps.platformHeight * 2) / 100;
+var tmp3 = (Titanium.Platform.displayCaps.platformHeight * 2) / 100;
 var corner = Math.round(Ti.Platform.displayCaps.platformWidth * 0.01);
 var width = Math.round(Ti.Platform.displayCaps.platformWidth * 0.003);
 
@@ -199,7 +201,7 @@ secondcompleteGoal.addEventListener('click', function() {
 secondsubselfBottom.add(secondcompleteGoal);
 var secondcompleteGoalicon = Ti.UI.createView({
 	backgroundImage : '/images/Goal_complete.png',
-height : 35,
+	height : 35,
 	width : 35
 });
 secondcompleteGoal.add(secondcompleteGoalicon);
@@ -217,7 +219,7 @@ var secondsetting = Ti.UI.createView({
 secondsubselfBottom.add(secondsetting);
 
 var secondsettingicon = Ti.UI.createView({
-	backgroundImage : '/images/settings.png',
+	backgroundImage : '/images/settings1.png',
 	height : 35,
 	width : 35
 });
@@ -280,8 +282,18 @@ view1.addEventListener('click', function() {
 		fontView5.add(ImageView5);
 	} else if (this_font == 'Alike-Regular') {
 		fontView6.add(ImageView6);
-	} else {
+	} else if (this_font == 'SF Arch Rival') {
 		fontView7.add(ImageView7);
+	} else if (this_font == 'PRINC___') {
+		fontView8.add(ImageView8);
+	} else if (this_font == 'ASENINE_') {
+		fontView9.add(ImageView9);
+	} else if (this_font == 'DejaVuSerif') {
+		fontView10.add(ImageView10);
+	} else if (this_font == 'SplendidN') {
+		fontView11.add(ImageView11);
+	} else {
+		fontView12.add(ImageView12);
 	}
 });
 
@@ -343,7 +355,48 @@ var view2 = Ti.UI.createView({
 	borderWidth : width
 });
 view2.addEventListener('click', function() {
-	subself.add(CARDs);
+	self.add(background_main);
+		subself.opacity = 0.7;
+		var ImageView = Ti.UI.createImageView({
+			image : '/images/tk.png',
+			width : '20%',
+			height : '15%',
+			bottom : 5,
+			right : 5
+		});
+		if (this_names == 'white') {
+			background1.add(ImageView);
+		} else if (this_names == 'yellow') {
+			background2.add(ImageView);
+		} else if (this_names == 'sky') {
+			background3.add(ImageView);
+		} else if (this_names == 'blue') {
+			background4.add(ImageView);
+		} else if (this_names == 'gray') {
+			background21.add(ImageView);
+		} else if (this_names == 'color03') {
+			background22.add(ImageView);
+		} else if (this_names == 'color16') {
+			background23.add(ImageView);
+		} else if (this_names == 'color19') {
+			background24.add(ImageView);
+		} else if (this_names == 'color23') {
+			background31.add(ImageView);
+		} else if (this_names == 'color25') {
+			background32.add(ImageView);
+		} else if (this_names == 'color27') {
+			background33.add(ImageView);
+		} else if (this_names == 'color33') {
+			background34.add(ImageView);
+		} else if (this_names == 'color36') {
+			background41.add(ImageView);
+		} else if (this_names == 'color45') {
+			background42.add(ImageView);
+		} else if (this_names == 'color48') {
+			background43.add(ImageView);
+		} else {
+			background44.add(ImageView);
+		}
 });
 subself.add(view2);
 
@@ -490,7 +543,7 @@ view4.add(Choose_title);
 
 var setReminder = Ti.UI.createButton({
 	height : '90%',
-	width:'30%',
+	width : '30%',
 	top : '5%',
 	font : {
 		fontSize : tmp2
@@ -540,7 +593,7 @@ var background_view = Ti.UI.createView({
 });
 
 var background1 = Ti.UI.createView({
-	backgroundImage : '/images/bg1.png',
+	backgroundImage : '/images/tbg1.png',
 	height : '50%',
 	width : '50%',
 	top : '0%',
@@ -566,7 +619,7 @@ background1.addEventListener('click', function() {
 background_view.add(background1);
 
 var background2 = Ti.UI.createView({
-	backgroundImage : '/images/bg2.png',
+	backgroundImage : '/images/tbg2.png',
 	height : '100%',
 	width : '100%',
 	top : '0%',
@@ -593,7 +646,7 @@ background2.addEventListener('click', function() {
 background_view.add(background2);
 
 var background3 = Ti.UI.createView({
-	backgroundImage : '/images/bg3.png',
+	backgroundImage : '/images/tbg3.png',
 	height : '100%',
 	width : '100%',
 	top : '50%',
@@ -621,7 +674,7 @@ background3.addEventListener('click', function() {
 background_view.add(background3);
 
 var background4 = Ti.UI.createView({
-	backgroundImage : '/images/bg4.png',
+	backgroundImage : '/images/tbg4.png',
 	height : '100%',
 	width : '100%',
 	top : '50%',
@@ -691,6 +744,301 @@ var CARDs = Ti.UI.createScrollableView({
 	views : [background_view, background_view2]
 	//showPagingControl : true
 });
+var background_main = Ti.UI.createView({
+	height : '100%',
+	width : '100%',
+});
+
+var background_sub_main = Ti.UI.createView({
+	//backgroundImage : '/images/topbar_dark.png',
+	height : '90%',
+	width : '90%',
+	borderRadius : 5
+});
+background_main.add(background_sub_main);
+
+var background_view = Ti.UI.createView({
+	height : '100%',
+	width : '100%',
+	borderColor : 'black',
+	borderRadius : 5
+});
+
+var background1 = Ti.UI.createView({
+	backgroundImage : '/images/topbar_dark.png',
+	height : '50%',
+	width : '50%',
+	top : '0%',
+	left : '0%',
+	borderColor : 'black',
+	//borderRadius : 5
+});
+background1.addEventListener('click', function() {
+	backgroundset(background1);
+	backgroundfun('white');
+});
+background_view.add(background1);
+
+var background2 = Ti.UI.createView({
+	backgroundImage : '/images/tbg2.png',
+	height : '50%',
+	width : '50%',
+	top : '0%',
+	left : '50%',
+	borderColor : 'black',
+	//borderRadius : 5
+});
+background2.addEventListener('click', function() {
+	backgroundfun('yellow');
+	backgroundset(background2);
+});
+background_view.add(background2);
+
+var background3 = Ti.UI.createView({
+	backgroundImage : '/images/tbg3.png',
+	height : '50%',
+	width : '50%',
+	top : '50%',
+	left : '0%',
+	borderColor : 'black',
+	//borderRadius : 5
+});
+background3.addEventListener('click', function() {
+	backgroundfun('sky');
+	backgroundset(background3);
+});
+background_view.add(background3);
+
+var background4 = Ti.UI.createView({
+	backgroundImage : '/images/tbg4.png',
+	height : '50%',
+	width : '50%',
+	top : '50%',
+	left : '50%',
+	borderColor : 'black',
+	//borderRadius : 5
+});
+background4.addEventListener('click', function() {
+	backgroundfun('blue');
+	backgroundset(background4);
+});
+background_view.add(background4);
+
+//**************************22222222222222222222222222222*******************************
+
+var background_view2 = Ti.UI.createView({
+	backgroundImage : '/images/topbar_dark.png',
+	height : '100%',
+	width : '100%',
+	borderColor : 'black',
+	borderRadius : 5
+});
+
+var background21 = Ti.UI.createView({
+	backgroundImage : '/images/tbg1.png',
+	height : '50%',
+	width : '50%',
+	top : '0%',
+	left : '0%',
+	borderColor : 'black',
+	//borderRadius : 5
+});
+background21.addEventListener('click', function() {
+	backgroundfun('gray');
+	backgroundset(background21);
+});
+background_view2.add(background21);
+
+var background22 = Ti.UI.createView({
+	backgroundImage : '/images/tbg03.png',
+	height : '50%',
+	width : '50%',
+	top : '0%',
+	left : '50%',
+	borderColor : 'black',
+	//borderRadius : 5
+});
+background22.addEventListener('click', function() {
+	backgroundfun('color03');
+	backgroundset(background22);
+});
+background_view2.add(background22);
+
+var background23 = Ti.UI.createView({
+	backgroundImage : '/images/tbg16.png',
+	height : '50%',
+	width : '50%',
+	top : '50%',
+	left : '0%',
+	borderColor : 'black',
+	//borderRadius : 5
+});
+background23.addEventListener('click', function() {
+	backgroundfun('color16');
+	backgroundset(background23);
+});
+background_view2.add(background23);
+
+var background24 = Ti.UI.createView({
+	backgroundImage : '/images/tbg19.png',
+	height : '50%',
+	width : '50%',
+	top : '50%',
+	left : '50%',
+	borderColor : 'black',
+	//borderRadius : 5
+});
+background24.addEventListener('click', function() {
+	backgroundfun('color19');
+	backgroundset(background24);
+});
+background_view2.add(background24);
+
+//**************************33333333333333333333333333333*******************************
+
+var background_view3 = Ti.UI.createView({
+	backgroundImage : '/images/topbar_dark.png',
+	height : '100%',
+	width : '100%',
+	borderColor : 'black',
+	borderRadius : 5
+});
+
+var background31 = Ti.UI.createView({
+	backgroundImage : '/images/tbg23.png',
+	height : '50%',
+	width : '50%',
+	top : '0%',
+	left : '0%',
+	borderColor : 'black',
+	//borderRadius : 5
+});
+background31.addEventListener('click', function() {
+	backgroundfun('color23');
+	backgroundset(background31);
+});
+background_view3.add(background31);
+
+var background32 = Ti.UI.createView({
+	backgroundImage : '/images/tbg25.png',
+	height : '50%',
+	width : '50%',
+	top : '0%',
+	left : '50%',
+	borderColor : 'black',
+	//borderRadius : 5
+});
+background32.addEventListener('click', function() {
+	backgroundfun('color25');
+	backgroundset(background32);
+});
+background_view3.add(background32);
+
+var background33 = Ti.UI.createView({
+	backgroundImage : '/images/tbg27.png',
+	height : '50%',
+	width : '50%',
+	top : '50%',
+	left : '0%',
+	borderColor : 'black',
+	//borderRadius : 5
+});
+background33.addEventListener('click', function() {
+	backgroundfun('color27');
+	backgroundset(background33);
+});
+background_view3.add(background33);
+
+var background34 = Ti.UI.createView({
+	backgroundImage : '/images/tbg33.png',
+	height : '50%',
+	width : '50%',
+	top : '50%',
+	left : '50%',
+	borderColor : 'black',
+	//borderRadius : 5
+});
+background34.addEventListener('click', function() {
+	backgroundfun('color33');
+	backgroundset(background34);
+});
+background_view3.add(background34);
+
+//**************************4444444444444444444444444444444*******************************
+
+var background_view4 = Ti.UI.createView({
+	backgroundImage : '/images/topbar_dark.png',
+	height : '100%',
+	width : '100%',
+	borderColor : 'black',
+	borderRadius : 5
+});
+
+var background41 = Ti.UI.createView({
+	backgroundImage : '/images/tbg36.png',
+	height : '50%',
+	width : '50%',
+	top : '0%',
+	left : '0%',
+	borderColor : 'black',
+	//borderRadius : 5
+});
+background41.addEventListener('click', function() {
+	backgroundfun('color36');
+	backgroundset(background41);
+});
+background_view4.add(background41);
+
+var background42 = Ti.UI.createView({
+	backgroundImage : '/images/tbg45.png',
+	height : '50%',
+	width : '50%',
+	top : '0%',
+	left : '50%',
+	borderColor : 'black',
+	//borderRadius : 5
+});
+background42.addEventListener('click', function() {
+	backgroundfun('color45');
+	backgroundset(background42);
+});
+background_view4.add(background42);
+
+var background43 = Ti.UI.createView({
+	backgroundImage : '/images/tbg48.png',
+	height : '50%',
+	width : '50%',
+	top : '50%',
+	left : '0%',
+	borderColor : 'black',
+	//borderRadius : 5
+});
+background43.addEventListener('click', function() {
+	backgroundfun('color48');
+	backgroundset(background43);
+});
+background_view4.add(background43);
+
+var background44 = Ti.UI.createView({
+	backgroundImage : '/images/tbg9.png',
+	height : '50%',
+	width : '50%',
+	top : '50%',
+	left : '50%',
+	borderColor : 'black',
+	//borderRadius : 5
+});
+background44.addEventListener('click', function() {
+	backgroundfun('color9');
+	backgroundset(background44);
+});
+background_view4.add(background44);
+
+var CARDs = Ti.UI.createScrollableView({
+	views : [background_view, background_view2, background_view3, background_view4],
+	showPagingControl : true
+});
+background_sub_main.add(CARDs);
 
 //**************************************************************************************Font View*****************************************************
 
@@ -706,7 +1054,7 @@ var font_top_view = Ti.UI.createView({
 });
 font_top_view.addEventListener('click', function() {
 	subself.remove(font_view);
-})
+});
 font_view.add(font_top_view);
 
 var font_bottom_main_view = Ti.UI.createView({
@@ -771,7 +1119,7 @@ var font1 = Ti.UI.createLabel({
 		fontFamily : 'Chantelli_Antiqua'
 	},
 	left : '5%'
-})
+});
 
 fontView1.add(font1);
 
@@ -1066,6 +1414,265 @@ var font7 = Ti.UI.createLabel({
 fontView7.add(font7);
 
 font_bottom_view.add(fontView7);
+
+var fontView8 = Ti.UI.createView({
+	width : '95%',
+	height : hgt * 0.1,
+	borderColor : 'black',
+	borderRadius : 5,
+	borderWidth : 2
+});
+font_bottom_view.add(fontView8);
+
+var ImageView8 = Ti.UI.createImageView({
+	image : '/images/tick.png',
+	width : '10%',
+	height : '50%',
+	right : '5%'
+});
+
+fontView8.addEventListener('click', function() {
+
+	indicator();
+	subself.remove(font_view);
+	fontView8.add(ImageView8);
+	myDatabase.execute('UPDATE Fonts SET selected=?', '0');
+	myDatabase.execute('UPDATE Fonts SET selected=? WHERE name=?', '1', 'PRINC___');
+	var Settings = Titanium.UI.createWindow({
+		backgroundColor : 'white',
+		url : 'Setting.js',
+		navBarHidden : true,
+		fullscreen : true,
+		exitOnClose : true
+	});
+	Settings.open();
+
+});
+
+var font8 = Ti.UI.createLabel({
+	text : 'Print Clearly',
+	color : 'black',
+	font : {
+		fontSize : tmp,
+		fontFamily : 'PRINC___'
+	},
+	left : '5%',
+});
+
+fontView8.add(font8);
+
+var fontView9 = Ti.UI.createView({
+	width : '95%',
+	height : hgt * 0.1,
+	borderColor : 'black',
+	borderRadius : 5,
+	borderWidth : 2
+});
+font_bottom_view.add(fontView9);
+
+var ImageView9 = Ti.UI.createImageView({
+	image : '/images/tick.png',
+	width : '10%',
+	height : '50%',
+	right : '5%'
+});
+
+fontView9.addEventListener('click', function() {
+	indicator();
+	subself.remove(font_view);
+	fontView9.add(ImageView9);
+	myDatabase.execute('UPDATE Fonts SET selected=?', '0');
+	myDatabase.execute('UPDATE Fonts SET selected=? WHERE name=?', '1', 'ASENINE_');
+	var Settings = Titanium.UI.createWindow({
+		backgroundColor : 'white',
+		url : 'Setting.js',
+		navBarHidden : true,
+		fullscreen : true,
+		exitOnClose : true
+	});
+	Settings.open();
+});
+
+var font9 = Ti.UI.createLabel({
+	text : 'Asesine',
+	color : 'black',
+	font : {
+		fontSize : tmp,
+		fontFamily : 'ASENINE_'
+	},
+	left : '5%',
+});
+
+fontView9.add(font9);
+
+var fontView10 = Ti.UI.createView({
+	width : '95%',
+	height : hgt * 0.1,
+	borderColor : 'black',
+	borderRadius : 5,
+	borderWidth : 2
+});
+font_bottom_view.add(fontView10);
+
+var ImageView10 = Ti.UI.createImageView({
+	image : '/images/tick.png',
+	width : '10%',
+	height : '50%',
+	right : '5%'
+});
+
+fontView10.addEventListener('click', function() {
+
+	indicator();
+
+	fontView10.add(ImageView10);
+	subself.remove(font_view);
+	myDatabase.execute('UPDATE Fonts SET selected=?', '0');
+	myDatabase.execute('UPDATE Fonts SET selected=? WHERE name=?', '1', 'DejaVuSerif');
+	var Settings = Titanium.UI.createWindow({
+		backgroundColor : 'white',
+		url : 'Setting.js',
+		navBarHidden : true,
+		fullscreen : true,
+		exitOnClose : true
+	});
+	Settings.open();
+
+});
+
+var font10 = Ti.UI.createLabel({
+	text : 'Deja vu serif',
+	color : 'black',
+	font : {
+		fontSize : tmp,
+		fontFamily : 'DejaVuSerif'
+	},
+	left : '5%',
+});
+
+fontView10.add(font10);
+
+var fontView11 = Ti.UI.createView({
+	width : '95%',
+	height : hgt * 0.1,
+	borderColor : 'black',
+	borderRadius : 5,
+	borderWidth : 2
+});
+font_bottom_view.add(fontView11);
+
+var ImageView11 = Ti.UI.createImageView({
+	image : '/images/tick.png',
+	width : '10%',
+	height : '50%',
+	right : '5%'
+});
+
+fontView11.addEventListener('click', function() {
+
+	indicator();
+	subself.remove(font_view);
+	fontView11.add(ImageView11);
+	myDatabase.execute('UPDATE Fonts SET selected=?', '0');
+	myDatabase.execute('UPDATE Fonts SET selected=? WHERE name=?', '1', 'SplendidN');
+	var Settings = Titanium.UI.createWindow({
+		backgroundColor : 'white',
+		url : 'Setting.js',
+		navBarHidden : true,
+		fullscreen : true,
+		exitOnClose : true
+	});
+	Settings.open();
+
+});
+
+var font11 = Ti.UI.createLabel({
+	text : 'Splendid 66',
+	color : 'black',
+	font : {
+		fontSize : tmp,
+		fontFamily : 'SplendidN'
+	},
+	left : '5%',
+});
+
+fontView11.add(font11);
+
+var fontView12 = Ti.UI.createView({
+	width : '95%',
+	height : hgt * 0.1,
+	borderColor : 'black',
+	borderRadius : 5,
+	borderWidth : 2
+});
+font_bottom_view.add(fontView12);
+
+var ImageView12 = Ti.UI.createImageView({
+	image : '/images/tick.png',
+	width : '10%',
+	height : '50%',
+	right : '5%'
+});
+
+fontView12.addEventListener('click', function() {
+
+	indicator();
+	subself.remove(font_view);
+	fontView12.add(ImageView12);
+	myDatabase.execute('UPDATE Fonts SET selected=?', '0');
+	myDatabase.execute('UPDATE Fonts SET selected=? WHERE name=?', '1', 'daniel');
+	var Settings = Titanium.UI.createWindow({
+		backgroundColor : 'white',
+		url : 'Setting.js',
+		navBarHidden : true,
+		fullscreen : true,
+		exitOnClose : true
+	});
+	Settings.open();
+
+});
+
+var font12 = Ti.UI.createLabel({
+	text : 'Daniel',
+	color : 'black',
+	font : {
+		fontSize : tmp,
+		fontFamily : 'daniel'
+	},
+	left : '5%',
+});
+
+fontView12.add(font12);
+
+function backgroundfun(set) {
+	indicator();
+	myDatabase.execute('UPDATE Background_images SET selected_view=?', '0');
+	myDatabase.execute('UPDATE Background_images SET selected_view=? WHERE name=?', '1', set);
+	var Settings = Titanium.UI.createWindow({
+		backgroundColor : 'white',
+		url : 'Setting.js',
+		navBarHidden : true,
+		fullscreen : true,
+		exitOnClose : true
+	});
+	Settings.open();
+	background_main.remove(CARDs);
+}
+
+function backgroundset(selected) {
+	// Create an ImageView.
+	var anImageView = Ti.UI.createImageView({
+		image : '/images/tk.png',
+		width : '20%',
+		height : '15%',
+		bottom : 5,
+		right : 5
+	});
+
+	// Add to the parent view.
+	selected.add(anImageView);
+
+}
 
 function indicator() {
 	var indicatorView = Ti.UI.createView({

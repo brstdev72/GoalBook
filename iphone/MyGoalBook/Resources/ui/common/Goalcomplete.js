@@ -578,6 +578,7 @@ for (var i = 0; i < count; i++) {
 		backgroundImage : '/images/icon_facebook.png',
 		height : 40,
 		width : 40,
+		top:0,
 		left : '3%',
 		id : i
 	});
@@ -609,6 +610,7 @@ for (var i = 0; i < count; i++) {
 		backgroundImage : '/images/icon_twitter.png',
 		height : 40,
 		width : 40,
+		top:0,
 		right : '35.3%',
 		id : i
 	});
@@ -637,6 +639,7 @@ for (var i = 0; i < count; i++) {
 		backgroundImage : '/images/Pinterest.png',
 		height : 40,
 		width : 40,
+		top:0,
 		right : '3%',
 		id : i
 	});
@@ -731,9 +734,7 @@ if (pWidth > pHeight) {
 	var oriCurrent = 'portrait';
 	secondsubselfBottom.height = '11%';
 	secondsubself.add(secondsubselfcenter);
-	if (buy) {
-
-	} else {
+	if (!buy){
 		secondsubself.add(adView);
 		setTimeout(function() {
 			secondsubself.remove(adView);

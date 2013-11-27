@@ -106,13 +106,6 @@ function AddViews() {
 	});
 	supersubself.add(subself);
 
-	// var subselfcenter = Titanium.UI.createScrollView({
-	// width : '90%',
-	// height : '65%',
-	// top : '18%',
-	// backgroundImage : '/images/topbar.png'
-	// });
-	// subself.add(subselfcenter);
 
 	//**************************************************************View 1*************************************************************
 

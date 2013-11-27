@@ -106,10 +106,10 @@ function getTime() {
 	var minutes = currentTime.getMinutes();
 
 	if (hours < 10) {
-		hours = "0" + hours
+		hours = "0" + hours;
 	};
 	if (minutes < 10) {
-		minutes = "0" + minutes
+		minutes = "0" + minutes;
 	};
 
 	return hours + ":" + minutes;
@@ -219,7 +219,7 @@ var Cancel = Ti.UI.createButton({
 });
 Cancel.addEventListener('click', function() {
 	reminder_View.remove(fromDateview);
-})
+});
 bottombuttons.add(Cancel);
 
 //**********************************************************From time*************************************************************************
@@ -393,7 +393,7 @@ ToSet.addEventListener('click', function() {
 
 	To_date_button.title = searchDate;
 	reminder_View.remove(ToDateview);
-})
+});
 Tobottombuttons.add(ToSet);
 
 var ToCancel = Ti.UI.createButton({
@@ -407,7 +407,7 @@ var ToCancel = Ti.UI.createButton({
 });
 ToCancel.addEventListener('click', function() {
 	reminder_View.remove(ToDateview);
-})
+});
 Tobottombuttons.add(ToCancel);
 
 //**********************************************************To Time*************************************************************************
@@ -643,10 +643,10 @@ Save.addEventListener('click', function() {
 		calendarDialog.addEventListener('click', function(e) {
 			var ci = e.index + 1;
 			var calendar = Ti.Android.Calendar.getCalendarById(ci);
-			Frommonth = Frommonth - 1
+			Frommonth = Frommonth - 1;
 			//alert(Fromyear + "  / " + Frommonth + "  / " + Fromday + "  / " + FromHours + "  / " + Fromminute + "  / " + 0);
 			var eventBegins = new Date(Fromyear, Frommonth, Fromday, FromHours, Fromminute, 2);
-			Tomonth = Tomonth - 1
+			Tomonth = Tomonth - 1;
 			//alert(Toyear + "  / " + Tomonth + "  / " + Today + "  / " + ToHours + "  / " + Tominute + "  / " + 0);
 			var eventEnds = new Date(Toyear, Tomonth, Today, ToHours, Tominute, 2);
 			var hasReminder = true;

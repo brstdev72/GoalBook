@@ -12,6 +12,8 @@ function firstShare() {
 		navBarHidden : true,
 		translucent : false
 	});
+	
+	var show = Ti.App.Properties.getBool('show');
 
 	var module = require('de.marcelpociot.social');
 
@@ -95,7 +97,7 @@ function firstShare() {
 
 	// Create a Button.
 	var facebook = Ti.UI.createButton({
-		backgroundImage : '/images/icon_facebook.png',
+		backgroundImage : '/images/icon_facebook-white.png',
 		height : '35%',
 		width : '35%',
 		left : '10%',
@@ -122,15 +124,8 @@ function firstShare() {
 					Ti.App.Properties.setInt('start', 1);
 					var show = Ti.App.Properties.setBool('show', false);
 					Ti.App.properties.setBool('close', false);
-					var newWindowClass = require('/ui/common/showGoal');
-					var newWindow = new newWindowClass();
-
-					var currentWin = firstShare;
-					newWindow.containingTab = currentWin.containingTab;
-					//currentWin.close();
-					currentWin.containingTab.open(newWindow, {
-						animated : false
-					});
+					var Show_Goal = require('ui/common/Goal_Tab');
+					new Show_Goal('showGoal').open();
 				}
 			},
 			cancel : function() {
@@ -145,7 +140,7 @@ function firstShare() {
 
 	// Create a Button.
 	var twitter = Ti.UI.createButton({
-		backgroundImage : '/images/icon_twitter.png',
+		backgroundImage : '/images/icon_twitter-white.png',
 		height : '35%',
 		width : '35%',
 		bottom : '22%',
@@ -171,15 +166,8 @@ function firstShare() {
 					Ti.App.Properties.setInt('start', 1);
 					var show = Ti.App.Properties.setBool('show', false);
 					Ti.App.properties.setBool('close', false);
-					var newWindowClass = require('/ui/common/showGoal');
-					var newWindow = new newWindowClass();
-
-					var currentWin = firstShare;
-					newWindow.containingTab = currentWin.containingTab;
-					//currentWin.close();
-					currentWin.containingTab.open(newWindow, {
-						animated : false
-					});
+					var Show_Goal = require('ui/common/Goal_Tab');
+					new Show_Goal('showGoal').open();
 				}
 			},
 			cancel : function() {
@@ -213,15 +201,8 @@ function firstShare() {
 		myDatabase.close();
 		Ti.App.Properties.setBool('show', false);
 		Ti.App.Properties.setInt('start', 1);
-		var newWindowClass = require('/ui/common/showGoal');
-		var newWindow = new newWindowClass();
-
-		var currentWin = firstShare;
-		newWindow.containingTab = currentWin.containingTab;
-		//currentWin.close();
-		currentWin.containingTab.open(newWindow, {
-			animated : false
-		});
+		var Show_Goal = require('ui/common/Goal_Tab');
+		new Show_Goal('showGoal').open();
 	});
 
 	// Add to the parent view.
@@ -254,7 +235,21 @@ function firstShare() {
 					Ti.App.Properties.setInt('start', 0);
 					Ti.App.Properties.setBool('show', true);
 					Ti.App.properties.setBool('close', true);
-					firstShare.close();
+					if (!show) {
+						var newWindowClass = require('ui/common/Create_Goal');
+						var newWindow = new newWindowClass();
+
+						var currentWin = firstShare;
+						newWindow.containingTab = currentWin.containingTab;
+						//currentWin.close();
+						currentWin.containingTab.open(newWindow, {
+							animated : false
+						});
+					} else {		
+						var newWindowClass = require('ui/common/Create_Goal');
+						var newWindow = new newWindowClass();
+						newWindow.open();
+					}
 
 					break;
 				//This will never be reached, if you specified cancel for index 1
@@ -262,15 +257,8 @@ function firstShare() {
 					Ti.App.Properties.setInt('start', 1);
 					Ti.App.Properties.setBool('show', false);
 					Ti.App.properties.setBool('close', false);
-					var newWindowClass = require('/ui/common/showGoal');
-					var newWindow = new newWindowClass();
-
-					var currentWin = firstShare;
-					newWindow.containingTab = currentWin.containingTab;
-					//currentWin.close();
-					currentWin.containingTab.open(newWindow, {
-						animated : false
-					});
+					var Show_Goal = require('ui/common/Goal_Tab');
+					new Show_Goal('showGoal').open();
 					break;
 				default:
 					break;

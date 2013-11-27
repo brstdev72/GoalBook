@@ -2,16 +2,6 @@ var Create_Goal = Ti.UI.currentWindow;
 
 var show = Ti.App.Properties.getBool('show');
 
-var myDatabase = Ti.Database.install('/myDatabase.sqlite', 'myDatabase.sqlite');
-var create_goalResultSet = myDatabase.execute('SELECT * FROM create_goal');
-var this_title = [];
-while (create_goalResultSet.isValidRow()) {
-	this_title.push(create_goalResultSet.fieldByName('title'));
-	create_goalResultSet.next();
-}
-var count = this_title.length;
-create_goalResultSet.close();
-
 Create_Goal.orientationModes = [Ti.UI.PORTRAIT];
 
 var tmp = (Titanium.Platform.displayCaps.platformHeight * 3.8) / 100;
@@ -28,13 +18,11 @@ var date = '';
 var achieved = '';
 var check = false;
 var viewdata = '';
-
 check = Ti.App.Properties.getBool('check');
-var viewdat = Ti.App.Properties.getString('data');
-viewdata = parseInt(viewdat) + 1
+viewdata = Ti.App.Properties.getString('data');
 
+buy = Ti.App.Properties.getBool('buy', false);
 var myDatabase = Ti.Database.install('/myDatabase.sqlite', 'myDatabase.sqlite');
-
 var settingResultSet = myDatabase.execute('SELECT * FROM Background_images WHERE selected_view=?', '1');
 var this_path = '';
 var this_name = '';
@@ -46,27 +34,27 @@ while (settingResultSet.isValidRow()) {
 	this_selected_view = settingResultSet.fieldByName('selected_view');
 	settingResultSet.next();
 }
-var count = this_path.length;
 settingResultSet.close();
-
-var create_goalResultSet = myDatabase.execute('SELECT * FROM create_goal where rowid=?', viewdata);
-var this_title = '';
-var this_description = '';
-var this_affirmation = '';
-var this_image = '';
-var this_date = '';
-var this_achieved = '';
-while (create_goalResultSet.isValidRow()) {
-	this_title = create_goalResultSet.fieldByName('title');
-	this_description = create_goalResultSet.fieldByName('description');
-	this_affirmation = create_goalResultSet.fieldByName('affirmation');
-	this_image = create_goalResultSet.fieldByName('image');
-	this_date = create_goalResultSet.fieldByName('date');
-	this_achieved = create_goalResultSet.fieldByName('achieved');
-	create_goalResultSet.next();
+if (check) {
+	var create_goalResultSet = myDatabase.execute('SELECT * FROM create_goal where rowid=?', viewdata);
+	var this_title = '';
+	var this_description = '';
+	var this_affirmation = '';
+	var this_image = '';
+	var this_date = '';
+	var this_achieved = '';
+	while (create_goalResultSet.isValidRow()) {
+		this_title = create_goalResultSet.fieldByName('title');
+		this_description = create_goalResultSet.fieldByName('description');
+		this_affirmation = create_goalResultSet.fieldByName('affirmation');
+		this_image = create_goalResultSet.fieldByName('image');
+		this_date = create_goalResultSet.fieldByName('date');
+		this_achieved = create_goalResultSet.fieldByName('achieved');
+		create_goalResultSet.next();
+	}
+	//alert(this_title +"      "+this_description+"      "+this_affirmation+"      "+this_image+"      "+this_datee+"      "+this_achieved);
+	create_goalResultSet.close();
 }
-var count = this_title.length;
-create_goalResultSet.close();
 
 //****************************************************************************Fonts***************************************************
 
@@ -87,6 +75,29 @@ while (reminderResultSet.isValidRow()) {
 	reminderResultSet.next();
 }
 reminderResultSet.close();
+
+//*****************************************************Test version***************************************************
+
+var create_goalResultSet = myDatabase.execute('SELECT * FROM create_goal');
+var this_titles = [];
+while (create_goalResultSet.isValidRow()) {
+	this_titles.push(create_goalResultSet.fieldByName('title'));
+	//   Ti.API.info(this_username + ' ' + this_user_name + ' ' + this_user_email  + ' ' + this_user_password);
+	create_goalResultSet.next();
+}
+var count = this_titles.length;
+create_goalResultSet.close();
+
+var creates_goalResultSet = myDatabase.execute('SELECT * FROM complete_goal');
+var thats_title = [];
+while (creates_goalResultSet.isValidRow()) {
+	thats_title.push(creates_goalResultSet.fieldByName('title'));
+	//   Ti.API.info(this_username + ' ' + this_user_name + ' ' + this_user_email  + ' ' + this_user_password);
+	creates_goalResultSet.next();
+	// alert(this_account_no+'      '+this_bank_name);
+}
+var count = this_titles.length + thats_title.length;
+creates_goalResultSet.close();
 
 var image = '';
 var filePath = '';
@@ -364,8 +375,8 @@ edit_date.addEventListener('click', function() {
 	var set = Ti.UI.createButton({
 		title : 'set',
 		height : '80%',
-		font:{
-			fontSize:tmp2
+		font : {
+			fontSize : tmp2
 		},
 		width : '20%',
 		top : '10%',
@@ -381,7 +392,7 @@ edit_date.addEventListener('click', function() {
 		newdate = day + "/" + month + "/" + year;
 		date = newdate;
 		edit_date.title = date;
-		Create_Goal.remove(alldateview)
+		Create_Goal.remove(alldateview);
 	});
 
 	// Add to the parent view.
@@ -391,15 +402,15 @@ edit_date.addEventListener('click', function() {
 		title : 'Cancel',
 		height : '80%',
 		width : '25%',
-		font:{
-			fontSize:tmp2
+		font : {
+			fontSize : tmp2
 		},
 		top : '10%',
 		left : '5%'
 	});
 	// Listen for click events.
 	CancelPicker.addEventListener('click', function() {
-		Create_Goal.remove(alldateview)
+		Create_Goal.remove(alldateview);
 	});
 
 	// Add to the parent view.
@@ -453,7 +464,7 @@ subself.add(secondsubselfBottom);
 // Create a Button.
 var Cancel = Ti.UI.createButton({
 	backgroundImage : '/images/cancel.png',
-	height : 35,
+	height : 40,
 	width : 35,
 	left : '2%',
 });
@@ -461,9 +472,18 @@ var Cancel = Ti.UI.createButton({
 // Listen for click events.
 Cancel.addEventListener('click', function() {
 	if (show) {
-		Create_Goal.close();
+		Cancel.backgroundImage = '/images/cancel.png';
+		var app = Titanium.UI.createWindow({
+			backgroundColor : 'white',
+			url : 'app.js',
+			navBarHidden : true,
+			fullscreen : true,
+			exitOnClose : true
+		});
+		app.open();
 	} else {
 		indicator();
+		Cancel.backgroundImage = '/images/cancel.png';
 		var showGoal = Ti.UI.createWindow({
 			backgroundColor : 'white',
 			url : 'showGoal.js',
@@ -479,6 +499,7 @@ Cancel.addEventListener('click', function() {
 secondsubselfBottom.add(Cancel);
 
 if (check) {
+
 	edit_name.value = this_title;
 	edit_description.value = this_description;
 	edit_affirmation.value = this_affirmation;
@@ -490,7 +511,6 @@ if (check) {
 	if (this_date != '') {
 		edit_date.title = this_date;
 	}
-
 } else {
 	edit_name.setvalue = '';
 	edit_description.setvalue = '';
@@ -502,7 +522,7 @@ if (check) {
 // Create a Button.
 var Save = Ti.UI.createButton({
 	backgroundImage : '/images/save.png',
-	height : 35,
+	height : 40,
 	width : 35,
 	right : '2%'
 });
@@ -515,49 +535,91 @@ Save.addEventListener('click', function() {
 	affirmation = edit_affirmation.value;
 	imagepath = filePath;
 	facebook_image = image;
-	//achieved = Achieved;
-	// /*
-	// // // create database============
-	// */
 
 	if (title == '' || date == '') {
 		alert('Please Enter Goal Title and Date');
 	} else {
-		indicator();
+		if (count >= 2 && (!buy)) {
+			if (check) {
+				//Save.image = '/images/save1.png';
+				indicator();
+				myDatabase.execute('UPDATE create_goal SET title=?,description=?,affirmation=?,image=?,date=?,facebook_image=? WHERE rowid=?', title, description, affirmation, imagepath, date, facebook_image, viewdata);
+				var showGoal = Ti.UI.createWindow({
+					backgroundColor : 'white',
+					url : 'showGoal.js',
+					navBarHidden : true,
+					fullscreen : true,
+					exitOnClose : true
+				});
+				showGoal.open();
+			} else {
+				var alertDialog = Titanium.UI.createAlertDialog({
+					title : 'Buy Full Version',
+					message : 'You need full version to create more Goals',
+					buttonNames : ['Cancel', 'Buy'],
+					cancel : 1
+				});
 
-		if (check) {
-			myDatabase.execute('UPDATE create_goal SET title=?,description=?,affirmation=?,image=?,date=?,facebook_image=? WHERE rowid=?', title, description, affirmation, imagepath, date, facebook_image, viewdata);
-			var showGoal = Ti.UI.createWindow({
-				backgroundColor : 'white',
-				url : 'showGoal.js',
-				navBarHidden : true,
-				fullscreen : true,
-				exitOnClose : true
-			});
-			showGoal.open();
+				alertDialog.addEventListener('click', function(theEvent) {
+					if (theEvent.index !== theEvent.cancel) {
+						Ti.API.info('hello');
+					}
+					switch (theEvent.index) {
+						case 1:
+							var Buy = Titanium.UI.createWindow({
+								backgroundColor : 'white',
+								url : 'Buy.js',
+								navBarHidden : true,
+								fullscreen : true,
+							});
+							Buy.open();
+							break;
+						//This will never be reached, if you specified cancel for index 1
+						default:
+							break;
+					}
+				});
+				alertDialog.show();
+			}
+			//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 		} else {
-			Ti.App.Properties.setString('titl', title);
-			Ti.App.Properties.setString('descriptio', description);
-			Ti.App.Properties.setString('affirmatio', affirmation);
-			Ti.App.Properties.setString('imagepat', imagepath);
-			Ti.App.Properties.setString('dat', date);
-			Ti.App.Properties.setString('facebook_imag', facebook_image);
+			indicator();
+			Save.backgroundImage = '/images/save.png';
+			if (check) {
+				myDatabase.execute('UPDATE create_goal SET title=?,description=?,affirmation=?,image=?,date=?,facebook_image=? WHERE rowid=?', title, description, affirmation, imagepath, date, facebook_image, viewdata);
+				var showGoal = Ti.UI.createWindow({
+					backgroundColor : 'white',
+					url : 'showGoal.js',
+					navBarHidden : true,
+					fullscreen : true,
+					exitOnClose : true
+				});
+				showGoal.open();
 
-			var firstShare = Ti.UI.createWindow({
-				backgroundColor : 'black',
-				url : 'firstShare.js',
-				navBarHidden : true,
-				fullscreen : true,
-				exitOnClose : true
-			});
-			firstShare.open();
+			} else {
+				Ti.App.Properties.setString('titl', title);
+				Ti.App.Properties.setString('descriptio', description);
+				Ti.App.Properties.setString('affirmatio', affirmation);
+				Ti.App.Properties.setString('imagepat', imagepath);
+				Ti.App.Properties.setString('dat', date);
+				Ti.App.Properties.setString('facebook_imag', facebook_image);
+
+				var firstShare = Ti.UI.createWindow({
+					backgroundColor : 'black',
+					url : 'firstShare.js',
+					navBarHidden : true,
+					fullscreen : true,
+					exitOnClose : true
+				});
+				firstShare.open();
+
+			}
+			myDatabase.close();
+			var come = Ti.App.Properties.setBool('come', false);
+			//alert('Name' + ': ' + title + ',' + 'Description' + ': ' + description + ',' + 'Affirmation' + ': ' + affirmation + 'imagepath' + ': ' + imagepath + ',' + 'date' + ': ' + date + ',' + 'achieved' + ': ' + achieved);
 
 		}
-		myDatabase.close();
-		var come = Ti.App.Properties.setBool('come', false);
-		//alert('Name' + ': ' + title + ',' + 'Description' + ': ' + description + ',' + 'Affirmation' + ': ' + affirmation + 'imagepath' + ': ' + imagepath + ',' + 'date' + ': ' + date + ',' + 'achieved' + ': ' + achieved);
-
 	}
 });
 

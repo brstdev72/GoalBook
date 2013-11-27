@@ -26,7 +26,7 @@ function update_tweets(txt) {
 				if (e.success) {
 					Ti.App.Properties.setString('twitterAccessTokenKey', null);
 					Ti.App.Properties.setString('twitterAccessTokenSecret', null);
-					alert('Successfully Shared')
+					alert('Successfully Shared');
 				} else {
 					Ti.App.Properties.setString('twitterAccessTokenKey', null);
 					Ti.App.Properties.setString('twitterAccessTokenSecret', null);
@@ -115,6 +115,8 @@ while (reminderResultSet.isValidRow()) {
 	reminderResultSet.next();
 }
 reminderResultSet.close();
+
+buy = Ti.App.Properties.getBool('buy', false);
 
 var tmp = (Titanium.Platform.displayCaps.platformHeight * 3.8) / 100;
 var tmp2 = (Titanium.Platform.displayCaps.platformHeight * 2.3) / 100;
@@ -221,7 +223,7 @@ var secondcompleteGoal = Ti.UI.createView({
 secondsubselfBottom.add(secondcompleteGoal);
 
 var secondcompleteGoalicon = Ti.UI.createView({
-	backgroundImage : '/images/Goal_complete.png',
+	backgroundImage : '/images/Goal_complete1.png',
 	height : 35,
 	width : 35
 });
@@ -292,10 +294,54 @@ var secondhomeicon = Ti.UI.createView({
 });
 secondhome.add(secondhomeicon);
 
+var tftModule = require('com.tapfortap.ti');
+Ti.API.info("module is => " + tftModule);
+
+var tft = tftModule.createTapForTap();
+tft.initializeWithApiKey("9b510387a2449fa08cc3be137c35b760");
+
+var interstitial = tftModule.createInterstitial();
+interstitial.addEventListener("receive", function(d) {
+	Ti.API.info("Interstitial received");
+});
+
+interstitial.addEventListener("show", function(d) {
+	Ti.API.info("Interstitial shown");
+});
+
+interstitial.addEventListener("dismiss", function(d) {
+	Ti.API.info("Interstitial dismissed");
+});
+
+interstitial.addEventListener("fail", function(d) {
+	Ti.API.info("Interstitial dismissed failed because: ", JSON.stringify(d, null, 2));
+});
+var adView = tftModule.createAdView({
+	width : '100%',
+	height : '12%',
+	top : 0,
+	left : 0
+});
+
+Ti.API.info("adView is => " + adView);
+
+adView.addEventListener("tap", function(d) {
+	Ti.API.info("Banner was tapped");
+});
+
+adView.addEventListener("receive", function(d) {
+	Ti.API.info("Banner was received");
+});
+
+adView.addEventListener("error", function(d) {
+	Ti.API.info("Failed to receive banner because ", JSON.stringify(d, null, 2));
+});
+
 Titanium.Gesture.addEventListener('orientationchange', function(e) {
 	switch(e.orientation) {
 		case Ti.UI.PORTRAIT:
 		case Ti.UI.UPSIDE_PORTRAIT:
+			secondsubselfBottom.height = '11%';
 			var cardopen = CARDs.getCurrentPage();
 			secondsubself.remove(secondsubselfcenterLandscape);
 			secondsubself.add(secondsubselfcenter);
@@ -304,6 +350,7 @@ Titanium.Gesture.addEventListener('orientationchange', function(e) {
 			break;
 		case Ti.UI.LANDSCAPE_LEFT:
 		case Ti.UI.LANDSCAPE_RIGHT:
+			secondsubselfBottom.height = '13%';
 			var cardop = CARD.getCurrentPage();
 			secondsubself.remove(secondsubselfcenter);
 			secondsubself.add(secondsubselfcenterLandscape);
@@ -437,7 +484,7 @@ for (var i = 0; i < count; i++) {
 	view[i].add(affirmationView);
 
 	var Affirmation = Ti.UI.createLabel({
-		text : this_affirmation[i],
+		text : "Well done you, you rock!  You've achieved your goal!  Give yourself a slap on the back!  Share you success with your friends.",
 		color : 'black',
 		font : {
 			fontSize : tmp2,
@@ -460,7 +507,7 @@ for (var i = 0; i < count; i++) {
 	view[i].add(dateView);
 
 	var DateCompletion = Ti.UI.createLabel({
-		text : 'Date for completion:',
+		text : 'Goal Achieved:',
 		color : 'black',
 		font : {
 			fontSize : tmp2,
@@ -494,11 +541,11 @@ for (var i = 0; i < count; i++) {
 
 	// Create a Button.
 	var facebook = Ti.UI.createButton({
-	backgroundImage : '/images/icon_facebook.png',
-	height : 35,
-	width : 35,
-	left : '3%',
-	id : i
+		backgroundImage : '/images/icon_facebook.png',
+		height : 40,
+		width : 40,
+		left : '3%',
+		id : i
 	});
 
 	// Listen for click events.
@@ -512,11 +559,11 @@ for (var i = 0; i < count; i++) {
 
 	// Create a Button.
 	var twitter = Ti.UI.createButton({
-	backgroundImage : '/images/icon_twitter.png',
-	height : 35,
-	width : 35,
-	right : '36.5%',
-	id : i
+		backgroundImage : '/images/icon_twitter.png',
+		height : 40,
+		width : 40,
+		right : '36.5%',
+		id : i
 	});
 
 	// Listen for click events.
@@ -528,11 +575,11 @@ for (var i = 0; i < count; i++) {
 	});
 
 	var pinterest = Ti.UI.createButton({
-	backgroundImage : '/images/Pinterest.png',
-	height : 35,
-	width : 35,
-	right : '3%',
-	id : i
+		backgroundImage : '/images/Pinterest.png',
+		height : 40,
+		width : 40,
+		right : '3%',
+		id : i
 	});
 	pinterest.addEventListener('click', function(e) {
 		temp = e.source.id;
@@ -546,21 +593,41 @@ for (var i = 0; i < count; i++) {
 		SocialView.add(twitter);
 		SocialView.add(pinterest);
 	}
-	// Create an ImageView.
-	var completeImage = Ti.UI.createImageView({
-		image : '/images/mark_sign2.png',
-		width : '70%',
-		height : '60%'
-	});
-	view[i].add(completeImage);
+	// // Create an ImageView.
+	// var completeImage = Ti.UI.createImageView({
+	// image : '/images/mark_sign2.png',
+	// width : '70%',
+	// height : '60%'
+	// });
+	// view[i].add(completeImage);
 }
 
 var CARD = Ti.UI.createScrollableView({
 	views : view,
 	//showPagingControl : true
 });
-CARD.addEventListener('click', function(e) {
-});
+if (!buy) {
+	viewNumber = 0;
+	var swipecount = 0;
+	CARD.addEventListener('scroll', function(e) {
+		if (viewNumber != e.currentPage) {
+			viewNumber = e.currentPage;
+			swipecount++;
+			// And saving for next time change notification
+			if (swipecount > 4) {
+				swipecount = 0;
+				CARD.fireEvent('pageChanged', e);
+			}
+			// And I am fire my pageChanged event on scroller
+		}
+		//Do something here
+	});
+
+	CARD.addEventListener('pageChanged', function(e) {
+		interstitial.show();
+		//Do something here
+	});
+}
 if (count == 0) {
 	// Create a Label.
 	var No_Goals = Ti.UI.createLabel({
@@ -596,6 +663,12 @@ if (pWidth > pHeight) {
 } else {
 	var oriCurrent = 'portrait';
 	secondsubself.add(secondsubselfcenter);
+	if (!buy) {
+		secondsubself.add(adView);
+		setTimeout(function() {
+			secondsubself.remove(adView);
+		}, 15000);
+	}
 }
 
 var viewer = [];
@@ -706,7 +779,7 @@ for (var r = 0; r < count; r++) {
 	viewer[r].add(affirmationView);
 
 	var Affirmation = Ti.UI.createLabel({
-		text : this_affirmation[r],
+		text : "Well done you, you rock!  You've achieved your goal!  Give yourself a slap on the back!  Share you success with your friends.",
 		color : 'black',
 		font : {
 			fontSize : tmp2,
@@ -726,7 +799,7 @@ for (var r = 0; r < count; r++) {
 	viewer[r].add(dateView);
 
 	var DateCompletion = Ti.UI.createLabel({
-		text : 'Date for completion:',
+		text : 'Goal Achieved:',
 		color : 'black',
 		font : {
 			fontSize : tmp2,
@@ -753,12 +826,12 @@ for (var r = 0; r < count; r++) {
 
 	// Create a Button.
 	var facebook = Ti.UI.createButton({
-	backgroundImage : '/images/icon_facebook.png',
-	height : 35,
-	width : 35,
-	right : '45%',
-	bottom : '0%',
-	id : r
+		backgroundImage : '/images/icon_facebook.png',
+		height : 40,
+		width : 40,
+		right : '45%',
+		bottom : '0%',
+		id : r
 	});
 
 	// Listen for click events.
@@ -771,12 +844,12 @@ for (var r = 0; r < count; r++) {
 
 	// Create a Button.
 	var twitter = Ti.UI.createButton({
-	backgroundImage : '/images/icon_twitter.png',
-	height : 35,
-	width : 35,
-	right : '23.5%',
-	bottom : '0%',
-	id : r
+		backgroundImage : '/images/icon_twitter.png',
+		height : 40,
+		width : 40,
+		right : '23.5%',
+		bottom : '0%',
+		id : r
 	});
 
 	// Listen for click events.
@@ -788,12 +861,12 @@ for (var r = 0; r < count; r++) {
 	});
 
 	var pinterest = Ti.UI.createButton({
-	backgroundImage : '/images/Pinterest.png',
-	height : 35,
-	width : 35,
-	right : '3%',
-	bottom : '0%',
-	id : i
+		backgroundImage : '/images/Pinterest.png',
+		height : 40,
+		width : 40,
+		right : '3%',
+		bottom : '0%',
+		id : i
 	});
 	pinterest.addEventListener('click', function(e) {
 		temp = e.source.id;
@@ -808,12 +881,12 @@ for (var r = 0; r < count; r++) {
 		dateView.add(pinterest);
 	}
 
-	var completeImage = Ti.UI.createImageView({
-		image : '/images/mark_sign2.png',
-		width : '60%',
-		height : '70%',
-	});
-	viewer[r].add(completeImage);
+	// var completeImage = Ti.UI.createImageView({
+	// image : '/images/mark_sign2.png',
+	// width : '60%',
+	// height : '70%',
+	// });
+	// viewer[r].add(completeImage);
 
 }
 

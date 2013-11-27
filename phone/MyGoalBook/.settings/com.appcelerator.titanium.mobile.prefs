@@ -1,6 +1,14 @@
+android/ATTR_MINIFY=true
+android/ATTR_PROJECT_NAME=MyGoalBook
+android/abi=x86
 android/alias=tbi
+android/distribute_path=/Users/brst/Desktop
 android/keystore=E\:\\BackUp\\guri.keystore
+android/keystore_alias=tbi
+android/keystore_password=guri123
+android/keystore_path=/Users/brst/Documents/Titanium_Studio_Workspace/guri
 android/output_location=C\:\\Users\\brst\\Desktop
-android/recent_output=C\:\\Users\\brst\\Desktop
+android/recent_output=/Users/brst/Desktop
 android/sdk=Google APIs (Android 2.2)
+android/sdk_version=Android 2.3.3
 eclipse.preferences.version=1

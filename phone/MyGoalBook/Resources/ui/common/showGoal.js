@@ -33,7 +33,8 @@ while (reminderResultSet.isValidRow()) {
 }
 reminderResultSet.close();
 
-var create_goalResultSet = myDatabase.execute('SELECT * FROM create_goal');
+var create_goalResultSet = myDatabase.execute('SELECT rowid,* FROM create_goal');
+var this_row = [];
 var this_title = [];
 var this_description = [];
 var this_affirmation = [];
@@ -42,6 +43,7 @@ var this_date = [];
 var this_achieved = [];
 var facebook_image = [];
 while (create_goalResultSet.isValidRow()) {
+	this_row.push(create_goalResultSet.fieldByName('rowid'));
 	this_title.push(create_goalResultSet.fieldByName('title'));
 	this_description.push(create_goalResultSet.fieldByName('description'));
 	this_affirmation.push(create_goalResultSet.fieldByName('affirmation'));
@@ -54,8 +56,10 @@ while (create_goalResultSet.isValidRow()) {
 var count = this_title.length;
 create_goalResultSet.close();
 
+buy = Ti.App.Properties.getBool('buy', false);
+
 var tmp = (Titanium.Platform.displayCaps.platformHeight * 3.8) / 100;
-var tmp2 = (Titanium.Platform.displayCaps.platformHeight * 2.3) / 100;
+var tmp2 = (Titanium.Platform.displayCaps.platformHeight * 2.2) / 100;
 var corner = Math.round(Ti.Platform.displayCaps.platformWidth * 0.01);
 var corner1 = Math.round(Ti.Platform.displayCaps.platformWidth * 0.02);
 var width = Math.round(Ti.Platform.displayCaps.platformWidth * 0.003);
@@ -97,7 +101,7 @@ var secondmyGoalBook = Ti.UI.createView({
 secondsubselfBottom.add(secondmyGoalBook);
 
 var secondmyGoalBookicon = Ti.UI.createView({
-	backgroundImage : '/images/MyGoalBook.png',
+	backgroundImage : '/images/MyGoalBook1.png',
 	height : 35,
 	width : 35
 });
@@ -234,10 +238,54 @@ var secondhomeicon = Ti.UI.createView({
 });
 secondhome.add(secondhomeicon);
 
+var tftModule = require('com.tapfortap.ti');
+Ti.API.info("module is => " + tftModule);
+
+var tft = tftModule.createTapForTap();
+tft.initializeWithApiKey("9b510387a2449fa08cc3be137c35b760");
+
+var interstitial = tftModule.createInterstitial();
+interstitial.addEventListener("receive", function(d) {
+	Ti.API.info("Interstitial received");
+});
+
+interstitial.addEventListener("show", function(d) {
+	Ti.API.info("Interstitial shown");
+});
+
+interstitial.addEventListener("dismiss", function(d) {
+	Ti.API.info("Interstitial dismissed");
+});
+
+interstitial.addEventListener("fail", function(d) {
+	Ti.API.info("Interstitial dismissed failed because: ", JSON.stringify(d, null, 2));
+});
+var adView = tftModule.createAdView({
+	width : '100%',
+	height : '12%',
+	top : 0,
+	left : 0
+});
+
+Ti.API.info("adView is => " + adView);
+
+adView.addEventListener("tap", function(d) {
+	Ti.API.info("Banner was tapped");
+});
+
+adView.addEventListener("receive", function(d) {
+	Ti.API.info("Banner was received");
+});
+
+adView.addEventListener("error", function(d) {
+	Ti.API.info("Failed to receive banner because ", JSON.stringify(d, null, 2));
+});
+
 Titanium.Gesture.addEventListener('orientationchange', function(e) {
 	switch(e.orientation) {
 		case Ti.UI.PORTRAIT:
 		case Ti.UI.UPSIDE_PORTRAIT:
+			secondsubselfBottom.height = '11%';
 			var cardopen = CARDs.getCurrentPage();
 			secondsubself.remove(secondsubselfcenterLandscape);
 			secondsubself.add(secondsubselfcenter);
@@ -246,6 +294,7 @@ Titanium.Gesture.addEventListener('orientationchange', function(e) {
 			break;
 		case Ti.UI.LANDSCAPE_LEFT:
 		case Ti.UI.LANDSCAPE_RIGHT:
+			secondsubselfBottom.height = '13%';
 			var cardop = CARD.getCurrentPage();
 			secondsubself.remove(secondsubselfcenter);
 			secondsubself.add(secondsubselfcenterLandscape);
@@ -267,7 +316,6 @@ var secondsubselfcenter = Titanium.UI.createView({
 
 var view = [];
 for (var i = 0; i < count; i++) {
-
 	view[i] = Ti.UI.createView({
 		height : '100%',
 		width : '100%',
@@ -279,6 +327,7 @@ for (var i = 0; i < count; i++) {
 		id : i,
 		height : '6.7%',
 		top : '0%',
+		rowid:this_row[i]
 	});
 	view[i].add(TitleView);
 
@@ -304,11 +353,12 @@ for (var i = 0; i < count; i++) {
 		height : '46%',
 		top : '8%',
 		borderRadius : corner1,
+		rowid:this_row[i]
 		// borderWidth : width,
 		// borderColor : 'black',
 	});
 	GoalImage.addEventListener('click', function(e) {
-		temp = e.source.id;
+		temp = e.source.rowid;
 		var check = Ti.App.Properties.setBool('check', true);
 		var viewdata = Ti.App.Properties.setString('data', temp);
 		var Create_Goal = Titanium.UI.createWindow({
@@ -324,11 +374,12 @@ for (var i = 0; i < count; i++) {
 
 	var deleteImage = Ti.UI.createImageView({
 		image : '/images/delete-icon.png',
-		width : '10%',
+		width : '8%',
 		id : i,
-		height : '8%',
+		height : '6%',
 		right : '1%',
-		top : '4%',
+		top : '0%',
+		rowid:this_row[i]
 	});
 	view[i].add(deleteImage);
 
@@ -337,11 +388,11 @@ for (var i = 0; i < count; i++) {
 		id : i,
 		height : '10%',
 		right : '0%',
-		top : '2%',
+		top : '0%',
+		rowid:this_row[i]
 	});
 	deleteView.addEventListener('click', function(e) {
-		comp = e.source.id;
-		complt = comp + 1;
+		complt = e.source.rowid;
 		var alertDialog = Titanium.UI.createAlertDialog({
 			title : 'Delete Goal',
 			message : 'Do you want to delete this Goal?',
@@ -352,7 +403,7 @@ for (var i = 0; i < count; i++) {
 		alertDialog.addEventListener('click', function(theEvent) {
 			switch (theEvent.index) {
 				case 0:
-					if (count > 1) {
+					if (count > 0) {
 						myDatabase.execute('DELETE FROM create_goal WHERE rowid=?', complt);
 					} else {
 						myDatabase.execute('DELETE FROM create_goal');
@@ -388,10 +439,11 @@ for (var i = 0; i < count; i++) {
 		},
 		left : '5%',
 		top : '55%',
-		id : i
+		id : i,
+		rowid:this_row[i]
 	});
 	Description.addEventListener('click', function(e) {
-		temp = e.source.id;
+		temp = e.source.rowid;
 		var check = Ti.App.Properties.setBool('check', true);
 		var viewdata = Ti.App.Properties.setString('data', temp);
 		var Create_Goal = Titanium.UI.createWindow({
@@ -412,13 +464,14 @@ for (var i = 0; i < count; i++) {
 		width : '43%',
 		left : '5%',
 		id : i,
+		rowid:this_row[i],
 		// borderRadius : corner1,
 		// borderWidth : width,
 		// borderColor : 'black',
 		layout : 'vertical'
 	});
 	detailView.addEventListener('click', function(e) {
-		temp = e.source.id;
+		temp = e.source.rowid;
 		var check = Ti.App.Properties.setBool('check', true);
 		var viewdata = Ti.App.Properties.setString('data', temp);
 		var Create_Goal = Titanium.UI.createWindow({
@@ -441,7 +494,8 @@ for (var i = 0; i < count; i++) {
 			fontFamily : this_font
 		},
 		left : 0,
-		id : i
+		id : i,
+		rowid:this_row[i]
 	});
 
 	// Add to the parent view.
@@ -456,10 +510,11 @@ for (var i = 0; i < count; i++) {
 		},
 		left : '51%',
 		top : '55%',
-		id : i
+		id : i,
+		rowid:this_row[i]
 	});
 	AffirmationTitle.addEventListener('click', function(e) {
-		temp = e.source.id;
+		temp = e.source.rowid;
 		var check = Ti.App.Properties.setBool('check', true);
 		var viewdata = Ti.App.Properties.setString('data', temp);
 		var Create_Goal = Titanium.UI.createWindow({
@@ -480,13 +535,14 @@ for (var i = 0; i < count; i++) {
 		width : '44%',
 		right : '5%',
 		id : i,
+		rowid:this_row[i],
 		// borderRadius : corner1,
 		// borderWidth : width,
 		// borderColor : 'black',
 		layout : 'vertical'
 	});
 	affirmationView.addEventListener('click', function(e) {
-		temp = e.source.id;
+		temp = e.source.rowid;
 		var check = Ti.App.Properties.setBool('check', true);
 		var viewdata = Ti.App.Properties.setString('data', temp);
 		var Create_Goal = Titanium.UI.createWindow({
@@ -508,7 +564,8 @@ for (var i = 0; i < count; i++) {
 			fontFamily : this_font
 		},
 		left : 0,
-		id : i
+		id : i,
+		rowid:this_row[i]
 	});
 
 	affirmationView.add(Affirmation);
@@ -519,11 +576,12 @@ for (var i = 0; i < count; i++) {
 		width : '44%',
 		right : '5%',
 		id : i,
+		rowid:this_row[i],
 		layout : 'vertical'
 	});
 
 	dateView.addEventListener('click', function(e) {
-	})
+	});
 	view[i].add(dateView);
 
 	var DateCompletion = Ti.UI.createLabel({
@@ -534,13 +592,14 @@ for (var i = 0; i < count; i++) {
 			fontFamily : this_font
 		},
 		left : '0%',
-		top : '10%'
+		top : '10%',
+		
 	});
 
 	// Add to the parent view.
 	dateView.add(DateCompletion);
 
-	var Date = Ti.UI.createLabel({
+	var datelabel = Ti.UI.createLabel({
 		text : this_date[i],
 		color : 'black',
 		font : {
@@ -551,7 +610,7 @@ for (var i = 0; i < count; i++) {
 	});
 
 	// Add to the parent view.
-	dateView.add(Date);
+	dateView.add(datelabel);
 
 	checkImageView = Ti.UI.createView({
 		top : '90%',
@@ -559,16 +618,26 @@ for (var i = 0; i < count; i++) {
 		width : '44%',
 		right : '5%',
 		id : i,
+		rowid:this_row[i],
 		layout : 'horizontal'
 	});
+
+	var pickerdate = new Date();
+	var day = pickerdate.getDate();
+	var months = pickerdate.getMonth();
+	var month = months + parseInt('1');
+	var year = pickerdate.getFullYear();
+	newdate = day + "/" + month + "/" + year;
+	var date = newdate;
+
 	checkImageView.addEventListener('click', function(e) {
 		var comp = e.source.id;
-		var complt = parseInt(comp + 1);
+		var compltg = e.source.rowid;
 		indicator();
 
-		myDatabase.execute('INSERT INTO complete_goal (title,description,affirmation,image,date,facebook_image) VALUES(?,?,?,?,?,?)', this_title[comp], this_description[comp], this_affirmation[comp], this_image[comp], this_date[comp], facebook_image[comp]);
-		if (count > 1) {
-			myDatabase.execute('DELETE FROM create_goal WHERE rowid=?', complt);
+		myDatabase.execute('INSERT INTO complete_goal (title,description,affirmation,image,date,facebook_image) VALUES(?,?,?,?,?,?)', this_title[comp], this_description[comp], this_affirmation[comp], this_image[comp], date, facebook_image[comp]);
+		if (count > 0) {
+			myDatabase.execute('DELETE FROM create_goal WHERE rowid=?', compltg);
 		} else {
 			myDatabase.execute('DELETE FROM create_goal');
 		}
@@ -582,7 +651,7 @@ for (var i = 0; i < count; i++) {
 			exitOnClose : true
 		});
 		Goalcomplete.open();
-	})
+	});
 	view[i].add(checkImageView);
 
 	var checkImage = Ti.UI.createImageView({
@@ -593,7 +662,8 @@ for (var i = 0; i < count; i++) {
 		top : '0%',
 		left : '0%',
 		borderColor : 'black',
-		borderWidth : width
+		borderWidth : width,
+		rowid:this_row[i]
 	});
 	checkImage.addEventListener('click', function(e) {
 	});
@@ -609,7 +679,8 @@ for (var i = 0; i < count; i++) {
 		},
 		textAlign : 'center',
 		left : '3%',
-		id : i
+		id : i,
+		rowid:this_row[i]
 	});
 
 	// Add to the parent view.
@@ -626,15 +697,15 @@ for (var i = 0; i < count; i++) {
 		textAlign : 'center',
 		top : '95%',
 		left : '51%',
-		id : i
+		id : i,
+		rowid:this_row[i]
 	});
 	narrative2.addEventListener('click', function(e) {
 		indicator();
-
 		var comp = e.source.id;
-		var complt = parseInt(comp + 1)
-		myDatabase.execute('INSERT INTO complete_goal (title,description,affirmation,image,date,facebook_image) VALUES(?,?,?,?,?,?)', this_title[comp], this_description[comp], this_affirmation[comp], this_image[comp], this_date[comp], facebook_image[comp]);
-		if (count > 1) {
+		var complt = e.source.rowid;
+		myDatabase.execute('INSERT INTO complete_goal (title,description,affirmation,image,date,facebook_image) VALUES(?,?,?,?,?,?)', this_title[comp], this_description[comp], this_affirmation[comp], this_image[comp], date, facebook_image[comp]);
+		if (count > 0) {
 			myDatabase.execute('DELETE FROM create_goal WHERE rowid=?', complt);
 		} else {
 			myDatabase.execute('DELETE FROM create_goal');
@@ -658,6 +729,29 @@ var CARD = Ti.UI.createScrollableView({
 	views : view,
 	//showPagingControl : true
 });
+
+if (!buy) {
+	viewNumber = 0;
+	var swipecount = 0;
+	CARD.addEventListener('scroll', function(e) {
+		if (viewNumber != e.currentPage) {
+			viewNumber = e.currentPage;
+			swipecount++;
+			// And saving for next time change notification
+			if (swipecount > 4) {
+				swipecount = 0;
+				CARD.fireEvent('pageChanged', e);
+			}
+			// And I am fire my pageChanged event on scroller
+		}
+		//Do something here
+	});
+
+	CARD.addEventListener('pageChanged', function(e) {
+		interstitial.show();
+		//Do something here
+	});
+}
 if (count == 0) {
 
 	// Create a Label.
@@ -694,6 +788,13 @@ if (pWidth > pHeight) {
 } else {
 	var oriCurrent = 'portrait';
 	secondsubself.add(secondsubselfcenter);
+	if (!buy) {
+		secondsubself.add(adView);
+		setTimeout(function() {
+			secondsubself.remove(adView);
+		}, 15000);
+	}
+
 }
 
 var viewer = [];
@@ -707,9 +808,11 @@ for (var r = 0; r < count; r++) {
 	var TitleView_land = Ti.UI.createView({
 		width : '45%',
 		left : '3%',
-		id : i,
+		id : r,
 		height : '10%',
 		top : '1%',
+		rowid:this_row[r]
+
 	});
 	viewer[r].add(TitleView_land);
 
@@ -735,11 +838,12 @@ for (var r = 0; r < count; r++) {
 		height : '88%',
 		top : '12%',
 		left : '3%',
+		rowid:this_row[r]
 		// borderWidth : width,
 		// borderColor : 'black',
 	});
 	GoalImage.addEventListener('click', function(e) {
-		temp = e.source.id;
+		temp = e.source.rowid;
 		var check = Ti.App.Properties.setBool('check', true);
 		var viewdata = Ti.App.Properties.setString('data', temp);
 		var Create_Goal = Titanium.UI.createWindow({
@@ -763,10 +867,11 @@ for (var r = 0; r < count; r++) {
 		},
 		left : '52%',
 		top : '5%',
-		id : r
+		id : r,
+		rowid:this_row[r]
 	});
 	Description.addEventListener('click', function(e) {
-		temp = e.source.id;
+		temp = e.source.rowid;
 		var check = Ti.App.Properties.setBool('check', true);
 		var viewdata = Ti.App.Properties.setString('data', temp);
 		var Create_Goal = Titanium.UI.createWindow({
@@ -787,12 +892,13 @@ for (var r = 0; r < count; r++) {
 		width : '45%',
 		right : '3%',
 		id : r,
+		rowid:this_row[r],
 		// borderWidth : width,
 		// borderColor : 'black',
 		layout : 'vertical'
 	});
 	detailView.addEventListener('click', function(e) {
-		temp = e.source.id;
+		temp = e.source.rowid;
 		var check = Ti.App.Properties.setBool('check', true);
 		var viewdata = Ti.App.Properties.setString('data', temp);
 		var Create_Goal = Titanium.UI.createWindow({
@@ -822,11 +928,12 @@ for (var r = 0; r < count; r++) {
 
 	var deleteImage = Ti.UI.createImageView({
 		image : '/images/delete-icon.png',
-		width : '8%',
+		width : '6%',
 		id : r,
-		height : '11%',
+		rowid:this_row[r],
+		height : '9%',
 		right : '0.5%',
-		top : '5.5%',
+		top : '2.5%',
 	});
 	viewer[r].add(deleteImage);
 
@@ -835,11 +942,12 @@ for (var r = 0; r < count; r++) {
 		id : i,
 		height : '13%',
 		right : '0%',
-		top : '2%',
+		top : '0%',
+		rowid:this_row[r]
 	});
 	deleteView.addEventListener('click', function(e) {
 		comp = e.source.id;
-		complt = comp + 1;
+		complt = e.source.rowid;
 		var alertDialog = Titanium.UI.createAlertDialog({
 			title : 'Delete Goal',
 			message : 'Do you want to delete this Goal?',
@@ -850,7 +958,7 @@ for (var r = 0; r < count; r++) {
 		alertDialog.addEventListener('click', function(theEvent) {
 			switch (theEvent.index) {
 				case 0:
-					if (count > 1) {
+					if (count > 0) {
 						myDatabase.execute('DELETE FROM create_goal WHERE rowid=?', complt);
 					} else {
 						myDatabase.execute('DELETE FROM create_goal');
@@ -885,10 +993,11 @@ for (var r = 0; r < count; r++) {
 		},
 		left : '52%',
 		top : '49%',
-		id : r
+		id : r,
+		rowid:this_row[r]
 	});
 	AffirmationTitle.addEventListener('click', function(e) {
-		temp = e.source.id;
+		temp = e.source.rowid;
 		var check = Ti.App.Properties.setBool('check', true);
 		var viewdata = Ti.App.Properties.setString('data', temp);
 		var Create_Goal = Titanium.UI.createWindow({
@@ -913,10 +1022,11 @@ for (var r = 0; r < count; r++) {
 		id : r,
 		// borderWidth : width,
 		// borderColor : 'black',
-		layout : 'vertical'
+		layout : 'vertical',
+		rowid:this_row[r]
 	});
 	affirmationView.addEventListener('click', function(e) {
-		temp = e.source.id;
+		temp = e.source.rowid;
 		var check = Ti.App.Properties.setBool('check', true);
 		var viewdata = Ti.App.Properties.setString('data', temp);
 		var Create_Goal = Titanium.UI.createWindow({
@@ -951,7 +1061,7 @@ for (var r = 0; r < count; r++) {
 	});
 	dateView.addEventListener('click', function(e) {
 
-	})
+	});
 	viewer[r].add(dateView);
 
 	var DateCompletion = Ti.UI.createLabel({
@@ -963,14 +1073,15 @@ for (var r = 0; r < count; r++) {
 		},
 		left : '0%',
 		top : '5%',
-		id : r
+		id : r,
+		rowid:this_row[r]
 	});
 	DateCompletion.addEventListener('click', function(e) {
 	});
 	// Add to the parent view.
 	dateView.add(DateCompletion);
 
-	var Date = Ti.UI.createLabel({
+	var datelabel = Ti.UI.createLabel({
 		text : this_date[r],
 		color : 'black',
 		font : {
@@ -978,12 +1089,13 @@ for (var r = 0; r < count; r++) {
 			fontFamily : this_font
 		},
 		left : '0%',
-		id : r
+		id : r,
+		rowid:this_row[r]
 	});
-	Date.addEventListener('click', function(e) {
+	datelabel.addEventListener('click', function(e) {
 	});
 	// Add to the parent view.
-	dateView.add(Date);
+	dateView.add(datelabel);
 
 	checkImageView = Ti.UI.createView({
 		top : '92%',
@@ -991,6 +1103,7 @@ for (var r = 0; r < count; r++) {
 		width : '12%',
 		left : '52%',
 		id : r,
+		rowid:this_row[r]
 	});
 	checkImageView.addEventListener('click', function(e) {
 
@@ -1018,6 +1131,7 @@ for (var r = 0; r < count; r++) {
 		width : '40%',
 		left : '65%',
 		id : r,
+		rowid:this_row[r]
 	});
 	viewer[r].add(narrative_label);
 	narrative_label = Ti.UI.createLabel({
@@ -1032,6 +1146,7 @@ for (var r = 0; r < count; r++) {
 		width : '40%',
 		left : '65%',
 		id : r,
+		rowid:this_row[r]
 	});
 	viewer[r].add(narrative_label);
 
@@ -1041,6 +1156,7 @@ for (var r = 0; r < count; r++) {
 		width : '44%',
 		left : '52%',
 		id : r,
+		rowid:this_row[r]
 	});
 	checktickView.addEventListener('click', function(e) {
 
@@ -1048,8 +1164,8 @@ for (var r = 0; r < count; r++) {
 
 		var comp = e.source.id;
 		var complt = parseInt(comp + 1);
-		myDatabase.execute('INSERT INTO complete_goal (title,description,affirmation,image,date) VALUES(?,?,?,?,?)', this_title[comp], this_description[comp], this_affirmation[comp], this_image[comp], this_date[comp]);
-		if (count > 1) {
+		myDatabase.execute('INSERT INTO complete_goal (title,description,affirmation,image,date) VALUES(?,?,?,?,?)', this_title[comp], this_description[comp], this_affirmation[comp], this_image[comp], date);
+		if (count > 0) {
 			myDatabase.execute('DELETE FROM create_goal WHERE rowid=?', complt);
 		} else {
 			myDatabase.execute('DELETE FROM create_goal');
@@ -1066,7 +1182,6 @@ for (var r = 0; r < count; r++) {
 		Goalcomplete.open();
 	});
 	viewer[r].add(checktickView);
-
 }
 
 var CARDs = Ti.UI.createScrollableView({

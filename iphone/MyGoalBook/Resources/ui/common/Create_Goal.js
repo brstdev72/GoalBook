@@ -15,13 +15,13 @@ function Create_Goal() {
 
 	Create_Goal.addEventListener('focus', function() {
 		var close = Ti.App.properties.getBool('close', false);
+		buy = Ti.App.properties.getBool('buy', false);
 		if (close) {
-			Create_Goal.close();
+			//Create_Goal.close();
 			Ti.App.properties.removeProperty('close');
 		}
 	});
-
-	buy = Ti.App.properties.getBool('buy', false);
+	var show = Ti.App.Properties.getBool('show');
 
 	Create_Goal.orientationModes = [Ti.UI.PORTRAIT];
 	var tmp = 18;
@@ -37,11 +37,9 @@ function Create_Goal() {
 	var date = '';
 	var achieved = '';
 	var check = false;
-	var viewdata = '';
 
 	check = Ti.App.Properties.getBool('check');
-	var viewdat = Ti.App.Properties.getString('data');
-	viewdata = parseInt(viewdat) + 1;
+	var viewdata = Ti.App.Properties.getString('data');
 
 	var myDatabase = Ti.Database.install('/myDatabase.sqlite', 'myDatabase.sqlite');
 
@@ -400,7 +398,10 @@ function Create_Goal() {
 			height : '80%',
 			width : '20%',
 			top : '10%',
-			right : '5%'
+			right : '5%',
+			font : {
+				fontSize : tmp2
+			}
 		});
 		// Listen for click events.
 		set.addEventListener('click', function() {
@@ -422,7 +423,9 @@ function Create_Goal() {
 			title : 'Cancel',
 			height : '80%',
 			width : '25%',
-
+			font : {
+				fontSize : tmp2
+			},
 			top : '10%',
 			left : '5%'
 		});
@@ -489,10 +492,10 @@ function Create_Goal() {
 
 	// Listen for click events.
 	Cancel.addEventListener('click', function() {
-		Cancel_image.image = '/images/cancel1.png';
-		Create_Goal.close({
-			animated : false
-		});
+		Cancel_image.image = '/images/cancel1.png';	
+			Create_Goal.close({
+				animated : false
+			});
 	});
 
 	var Cancel_image = Ti.UI.createImageView({
@@ -573,15 +576,11 @@ function Create_Goal() {
 						}
 						switch (theEvent.index) {
 							case 1:
-								var newWindowClass = require('/ui/common/Buy');
-					var newWindow = new newWindowClass();
-
-					var currentWin = Create_Goal;
-					newWindow.containingTab = currentWin.containingTab;
-					//currentWin.close();
-					currentWin.containingTab.open(newWindow, {
-						animated : false
-					});
+								var newWindowClass = Ti.UI.createWindow({
+									url : 'ui/common/Buy.js',
+									backgroundColor : 'white'
+								});
+								newWindowClass.open();
 								break;
 							//This will never be reached, if you specified cancel for index 1
 							default:
@@ -614,15 +613,21 @@ function Create_Goal() {
 					Ti.App.Properties.setString('descriptio', description);
 					Ti.App.Properties.setString('affirmatio', affirmation);
 					Ti.App.Properties.setString('dat', date);
+					if (!show) {
 						var newWindowClass = require('/ui/common/firstShare');
-					var newWindow = new newWindowClass();
+						var newWindow = new newWindowClass();
 
-					var currentWin = Create_Goal;
-					newWindow.containingTab = currentWin.containingTab;
-					//currentWin.close();
-					currentWin.containingTab.open(newWindow, {
-						animated : false
-					});
+						var currentWin = Create_Goal;
+						newWindow.containingTab = currentWin.containingTab;
+						//currentWin.close();
+						currentWin.containingTab.open(newWindow, {
+							animated : false
+						});
+					} else {
+						var newWindowClass = require('ui/common/firstShare');
+						var newWindow = new newWindowClass();
+						newWindow.open();
+					}
 				}
 				myDatabase.close();
 				//alert('Name' + ': ' + title + ',' + 'Description' + ': ' + description + ',' + 'Affirmation' + ': ' + affirmation + 'imagepath' + ': ' + imagepath + ',' + 'date' + ': ' + date + ',' + 'achieved' + ': ' + achieved);

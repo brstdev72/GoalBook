@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ti:app xmlns:ti="http://ti.appcelerator.org">
-    <id>com.my.goal.book</id>
+    <id>com.my.goalbook</id>
     <name>MyGoalBook</name>
-    <version>1.0</version>
+    <version>1.0.1</version>
     <publisher>brst981</publisher>
     <url>http://</url>
     <description>not specified</description>
@@ -40,6 +40,9 @@
     <modules>
         <module platform="iphone">de.marcelpociot.social</module>
         <module platform="iphone">com.gs.calendar</module>
+        <module platform="iphone">ti.storekit</module>
+        <module platform="iphone">com.apptentive.titanium</module>
+        <module platform="iphone">com.tapfortap.ti</module>
     </modules>
     <deployment-targets>
         <target device="android">false</target>

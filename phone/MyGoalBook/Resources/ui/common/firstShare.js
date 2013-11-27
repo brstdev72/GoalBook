@@ -74,8 +74,8 @@ share.add(sharelabel);
 
 // Create a Button.
 var facebook = Ti.UI.createButton({
-	backgroundImage : '/images/icon_facebook.png',
-	height : '35%',
+	backgroundImage : '/images/icon_facebook-white.png',
+	height : '30%',
 	width : '35%',
 	left : '10%',
 	bottom : '22%'
@@ -91,8 +91,8 @@ facebook.addEventListener('click', function(e) {
 
 // Create a Button.
 var twitter = Ti.UI.createButton({
-	backgroundImage : '/images/icon_twitter.png',
-	height : '35%',
+	backgroundImage : '/images/icon_twitter-white.png',
+	height : '30%',
 	width : '35%',
 	bottom : '22%',
 	right : '10%'
@@ -263,7 +263,7 @@ function showAlert() {
 				Ti.App.Properties.setInt('start', 0);
 				var app = Titanium.UI.createWindow({
 					backgroundColor : 'white',
-					url : 'app.js',
+					url : 'ui/common/Create_Goal.js',
 					navBarHidden : true,
 					fullscreen : true,
 					exitOnClose : true
