@@ -492,10 +492,10 @@ function Create_Goal() {
 
 	// Listen for click events.
 	Cancel.addEventListener('click', function() {
-		Cancel_image.image = '/images/cancel1.png';	
-			Create_Goal.close({
-				animated : false
-			});
+		Cancel_image.image = '/images/cancel1.png';
+		Create_Goal.close({
+			animated : false
+		});
 	});
 
 	var Cancel_image = Ti.UI.createImageView({
@@ -566,7 +566,7 @@ function Create_Goal() {
 					var alertDialog = Titanium.UI.createAlertDialog({
 						title : 'Buy Full Version',
 						message : 'You need full version to create more Goals',
-						buttonNames : ['Cancel', 'Buy'],
+						buttonNames : ['Buy', 'Restore your purchase', 'Cancel'],
 						cancel : 1
 					});
 
@@ -575,12 +575,27 @@ function Create_Goal() {
 							//alert('hello');
 						}
 						switch (theEvent.index) {
+							case 0:
+								Ti.App.properties.setBool('restore', false);
+			
+	
+						var ListMapWindow = require('/ui/common/BuyWindow');
+						var newWindow=new ListMapWindow();
+		              newWindow.containingTab = Create_Goal.containingTab;
+	                        Create_Goal.containingTab.open(newWindow);
+							
+							
+
+								break;
 							case 1:
-								var newWindowClass = Ti.UI.createWindow({
-									url : 'ui/common/Buy.js',
-									backgroundColor : 'white'
-								});
-								newWindowClass.open();
+								Ti.App.properties.setBool('restore', true);
+					
+							var ListMapWindow = require('/ui/common/BuyWindow');
+						var newWindow=new ListMapWindow();
+		              newWindow.containingTab = Create_Goal.containingTab;
+	                        Create_Goal.containingTab.open(newWindow);
+							
+
 								break;
 							//This will never be reached, if you specified cancel for index 1
 							default:

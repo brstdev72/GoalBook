@@ -40,9 +40,9 @@
     <modules>
         <module platform="iphone">de.marcelpociot.social</module>
         <module platform="iphone">com.gs.calendar</module>
-        <module platform="iphone">ti.storekit</module>
         <module platform="iphone">com.apptentive.titanium</module>
         <module platform="iphone">com.tapfortap.ti</module>
+        <module platform="iphone">ti.storekit</module>
     </modules>
     <deployment-targets>
         <target device="android">false</target>

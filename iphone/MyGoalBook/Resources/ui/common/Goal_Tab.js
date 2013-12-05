@@ -5,6 +5,7 @@ function Goal_Tab(window) {
 
 
 
+
 	//create app tabs
 	var showGoalClass = require('ui/common/'+window);
 	var showGoalWindow = new showGoalClass();
